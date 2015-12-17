@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="continueButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="continueButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>171, 86</value>
+  </data>
+  <data name="continueButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 24</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="continueButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="continueButton.Text" xml:space="preserve">
+    <value>Continue Evaluation</value>
+  </data>
+  <data name="&gt;&gt;continueButton.Name" xml:space="preserve">
+    <value>continueButton</value>
+  </data>
+  <data name="&gt;&gt;continueButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;continueButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;continueButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="installLicenseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="installLicenseButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 86</value>
+  </data>
+  <data name="installLicenseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 24</value>
+  </data>
+  <data name="installLicenseButton.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="installLicenseButton.Text" xml:space="preserve">
+    <value>Install License</value>
+  </data>
+  <data name="&gt;&gt;installLicenseButton.Name" xml:space="preserve">
+    <value>installLicenseButton</value>
+  </data>
+  <data name="&gt;&gt;installLicenseButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;installLicenseButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;installLicenseButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="exitButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="exitButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>302, 86</value>
+  </data>
+  <data name="exitButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 24</value>
+  </data>
+  <data name="exitButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="exitButton.Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="&gt;&gt;exitButton.Name" xml:space="preserve">
+    <value>exitButton</value>
+  </data>
+  <data name="&gt;&gt;exitButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exitButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;exitButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="evaluationDaysLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="evaluationDaysLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="evaluationDaysLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="evaluationDaysLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 59</value>
+  </data>
+  <data name="evaluationDaysLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>432, 24</value>
+  </data>
+  <data name="evaluationDaysLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="evaluationDaysLabel.Text" xml:space="preserve">
+    <value>You are on day {0} of your {1} day evaluation</value>
+  </data>
+  <data name="evaluationDaysLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="&gt;&gt;evaluationDaysLabel.Name" xml:space="preserve">
+    <value>evaluationDaysLabel</value>
+  </data>
+  <data name="&gt;&gt;evaluationDaysLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;evaluationDaysLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;evaluationDaysLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="messageLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="messageLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 14</value>
+  </data>
+  <data name="messageLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>397, 34</value>
+  </data>
+  <data name="messageLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="messageLabel.Text" xml:space="preserve">
+    <value>Thank you for evaluating {0}.   To continue your evaluation please click the "Continue Evaluation" button.</value>
+  </data>
+  <data name="&gt;&gt;messageLabel.Name" xml:space="preserve">
+    <value>messageLabel</value>
+  </data>
+  <data name="&gt;&gt;messageLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;messageLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;messageLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="evaluationTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>456, 128</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAIAICAAAAEAIACoEAAAJgAAABAQAAABACAAaAQAAM4QAAAoAAAAIAAAAEAAAAABACAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA39/fYd/f373f39/n39/f/9/f3//f39//39/f/9/f
+        3//f39//39/f/9/f3//f39//39/f/97e3v/e3t7/3t7e/97e3v/e3t7/3t7e/97e3v/e3t7/3t7e+97e
+        3ufe3t7S3t7evN7e3pTc3NwWAAAAAAAAAAAAAAAA29vbB+Hh4aPh4eH/4eHh/+Hh4f/h4eH/4eHh/+Hh
+        4f/h4eH/4eHh/+Hh4f/h4eH/4eHh/+Hh4f/g4OD/4ODg/+Dg4P/g4OD/4ODg/+Dg4P/g4OD/4ODg/+Dg
+        4P/g4OD/4ODg/+Dg4P/g4OD/4ODg/+Dg4O7f399YAAAAAAAAAADi4uJy4+Pj/+Pj4//j4+P/qKio/zg4
+        OP8ODg7/AAAA/xQUFP9DQ0P/fn5+/+Dg4P/i4uL/4uLi/+Li4v/i4uL/4uLi/+Li4v/i4uL/4uLi/+Li
+        4v/i4uL/4uLi/+Li4v/i4uL/4uLi/+Li4v/i4uL/4uLi/+Li4vbm5uYe7e3tDuXl5ezl5eX/5eXl/3Nz
+        c/8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/PDw8/9HR0f/k5OT/5OTk/+Tk5P/k5OT/5OTk/+Tk
+        5P/k5OT/5OTk/+Tk5P/k5OT/5OTk/+Tk5P/k5OT/5OTk/+Tk5P/k5OT/5OTk/+Tk5KLo6Oh65+fn/+fn
+        5/+rq6v/AgIC/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/Ghoa/9TU1P/m5ub/5ubm/+bm
+        5v/m5ub/5ubm/+bm5v/m5ub/5ubm/+bm5v/m5ub/5ubm/+bm5v/m5ub/5ubm/+bm5v/m5ub/5ubm2unp
+        6a3p6en/6enp/01NTf8AAAD/AAAA/wAAAP9SUlL/ubm5/7S0tP81NTX/AAAA/wAAAP8AAAD/WFhY/+jo
+        6P/o6Oj/6Ojo/+jo6P/o6Oj/6Ojo/+jo6P/o6Oj/6Ojo/+jo6P/o6Oj/6Ojo/+jo6P/o6Oj/6Ojo/+jo
+        6P/o6Ojx6+vrzevr6//o6Oj/ExMT/wAAAP8AAAD/EBAQ/+Hh4f/q6ur/6urq/+Li4v8RERH/AAAA/wAA
+        AP8FBQX/2NjY/+rq6v/q6ur/yNnj/6DF2P+TudL/i7TL/4evxf+Bp77/eqC4/3Sbsf9ulaz/aY+l/4Sh
+        sf+esr//6urq/+rq6v/t7e3m7e3t/+3t7f/s7Oz/2dnZ/8DAwP+/v7//7Ozs/+zs7P/s7Oz/7Ozs/2pq
+        av8AAAD/AAAA/wAAAP+NjY3/7Ozs/+zs7P+qz+L/mtr2/5fX8/+U0/L/kdDt/5DM6/+Nx+n/isXl/4jC
+        4v+Gvt7/hLva/3mYqv/s7Oz/7Ozs/+/v7+bu7u7/7u7u/+7u7v/u7u7/7u7u/+7u7v/u7u7/7u7u/+7u
+        7v/u7u7/oqKi/wAAAP8AAAD/AAAA/15eXv/u7u7/7u7u/6nP5v+b3Pf/mNj1/5bV8v+U0vD/OU1W/zlN
+        Vv+LyOj/icTk/4jA4P+Gvdz/ZY2j/+7u7v/u7u7/8PDw5PDw8P/w8PD/8PDw//Dw8P/W1tb/ZmZm/zIy
+        Mv8WFhb/RUVF/5iYmP/Dw8P/AAAA/wAAAP8AAAD/Nzc3//Dw8P/w8PD/rdXp/53e+f+b2vf/mNf0/5bU
+        8v8tO0H/LTtB/4/K6f+Nx+f/icPj/4fA3/9pkKb/8PDw//Dw8P/y8vLj8vLy//Ly8v/y8vL/qamp/xER
+        Ef8AAAD/AAAA/wAAAP8AAAD/AAAA/0pKSv8AAAD/AAAA/wAAAP8jIyP/8vLy//Ly8v+x2e3/nuD6/53c
+        +P+a2vb/hbzW/y07Qf8tO0H/fK/K/43K6P+Kxeb/iMLi/26UrP/y8vL/8fHx//T09OL09PT/9PT0/8zM
+        zP8GBgb/AAAA/wAAAP8AAAD/CQkJ/wQEBP8AAAD/AAAA/wAAAP8AAAD/AAAA/xgYGP/09PT/9PT0/7be
+        8P+g4vv/neD5/5zc+P8tO0H/LTtB/y07Qf8tO0H/j8vq/4vH6P+KxOX/cpiv//Pz8//z8/P/9vb24Pb2
+        9v/19fX/Ojo6/wAAAP8AAAD/AAAA/4mJif/y8vL/19fX/2FhYf8AAAD/AAAA/wAAAP8AAAD/EhIS//b2
+        9v/29vb/u+L0/6Pm/P+f4/r/nd/5/y07Qf8tO0H/LTtB/y07Qf+Qze3/j8vq/4vG5v92nbX/9fX1//X1
+        9f/4+Pjf+Pj4/9XV1f8AAAD/AAAA/wAAAP9GRkb/+Pj4//j4+P/4+Pj/+Pj4/z8/P/8AAAD/AAAA/wAA
+        AP8eHh7/+Pj4//j4+P/O6vb/pOf9/6Ll+/+f4fr/gbXM/y07Qf8tO0H/e6/H/5PQ7/+Qzev/jcrp/4aq
+        vv/39/f/9/f3//r6+t36+vr/sLCw/wAAAP8AAAD/AAAA/4yMjP/6+vr/+vr6//r6+v/6+vr/g4OD/wAA
+        AP8AAAD/AAAA/ysrK//6+vr/+vr6/+r1+f/P6/b/uODy/7HZ7P+s0+j/lbrN/4+1yP+XwNb/kbnP/4uz
+        yv+RtMj/2OLo//n5+f/5+fn//Pz83Pz8/P+QkJD/AAAA/wAAAP8AAAD/pqam//z8/P/8/Pz//Pz8//z8
+        /P+UlJT/AAAA/wAAAP8AAAD/TU1N//z8/P/8/Pz//Pz8/9rv8P+XrK3/+/v7//v7+//7+/v/+/v7//v7
+        +//7+/v/0+jq/7HAwf/7+/v/+/v7//v7+//+/v7a/v7+/6qqqv8AAAD/AAAA/wAAAP+ZmZn//v7+//7+
+        /v/+/v7//v7+/3h4eP8AAAD/AAAA/wAAAP97e3v//v7+//7+/v/+/v7/4fL0/5uytP/9/f3//f39//39
+        /f/9/f3//f39//39/f/X6+z/vsvM//39/f/9/f3//f39/////9n/////09PT/wAAAP8AAAD/AAAA/2lp
+        af/////////////////7+/v/JSUl/wAAAP8AAAD/AAAA/8DAwP/////////////////t+vv/qcXG////
+        /////////////////////////////87g4f/H0dP/////////////////////2P/////5+fn/GBgY/wAA
+        AP8AAAD/CQkJ/6SkpP/8/Pz/+/v7/2lpaf8AAAD/AAAA/wAAAP8dHR3//f39//////////////////L9
+        ///S7O7/utDS///////////////////////R5eb/x9rb/9HZ2f/////////////////////W////////
+        //+qqqr/AAAA/wAAAP8AAAD/AAAA/x0dHf8RERH/AAAA/wAAAP8AAAD/AAAA/6urq///////////////
+        /////////////+38/v/X8/X/vd3g/7jX2v+51dj/zOTm/9nq6//L2Nr/////////////////////////
+        /9X///////////////9iYmL/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wQEBP+Pj4//////////
+        /////////////////////////////+/8///p/P3/5Pr7/+T5+v/m+fr/2+fo////////////////////
+        ////////////0/////////////////////+mpqb/EhIS/wAAAP8AAAD/AAAA/wAAAP8eHh7/vb29////
+        ////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////S///////////////////////////7+/v/1NTU/6ampv+srKz/4+Pj////
+        ////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////9D/////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////unAc6rpxHOq6cRzqunEc6rpxHOq6cRzqunEc6rpx
+        HOq6cRzqunEc6rpxHOq6cRzqunEc6rpxHOq6cRzqunEc6rtyHeu7ch3ru3Id67tyHeu7ch3ru3Id67ty
+        Heu7ch3ru3Id67tyHeu7ch7ru3Ie67tyHuu7ch7ru3Ie67tyH+TBdyD/wXcg/8J3If/CdyH/wnch/8J3
+        If/CdyH/wnch/8J3If/CdyH/wnch/8J3If/CdyH/wnch/8J3If/CdyH/wnch/8J3If/CdyH/wnch/8J3
+        If/CdyH/wnch/8J3If/CdyH/wnch/8J3If/CdyH/wnch/8J3If/CdyH/wnch+Ml+J//Jfif/yX4n/8l+
+        J//Jfif/2qds/92veP/YomT/zIY1/9WaVv/Sk0v/26hu/9efXv/UmFP/2KFi/9qma//Rkkn/3Kty/9qm
+        av/VnFn/16Bg/86HNv/drHP/0pJJ/9WYU//QjkH/zog4/8p+J//Kfif/yn4n/8p+J//Jfifz0YUt6tGF
+        Lf/RhS3/0YUt/9GFLf/lu4n/0YUt/9GFLf/isXn/5LiE/96oav/hr3X/6MGU/+S3g//kuIX/36pu/9+r
+        b//jtH7/6sih/+S3g//isnz/47WA/9KHMv/mvIv/5LeE/9yjYv/YmE//0YUu/9GFLv/RhS7/0YUu/9GG
+        LtHYjDXM2Iw0/9iMNP/YjDT/2Iw0/+3Lo//ou4f/4aVh/+e4gv/jrG3/46ln/+e3gP/mtHv/6LuH/+e2
+        f//ip2T/4aVg/+i6hv/pvIj/782n/+i5g//ho13/57eA/+Wwcv/rxJf/68SV/9yVQv/ZjTT/2Y00/9mN
+        NP/ZjTT/2Y00qN+TOmHgkzr/4JM6/+CTOv/gkzr/7sWW/+2/iv/osG//4JM6/+CTOv/gkzr/4JM6/+CT
+        Ov/qt3v/4JM6/+CTOv/gkzr/4JQ6/+CUOv/ormv/5aZc/+CVPP/glDr/4JQ7/+CUO//glDv/4JQ7/+CU
+        O//glDv/4JQ7/+GUO/zglD0yAAAAAOmbQaromkH/6JpB/+iaQf/omkH/6JpB/+iaQf/omkH/6JtB/+ib
+        Qf/om0H/6JtB/+ibQf/om0H/6JtB/+ibQf/om0H/6JtB/+ibQf/om0H/6JtB/+ibQf/om0H/6JtB/+ib
+        Qf/om0H/6JtB/+ibQf/om0H86JtBbgAAAAAAAAAAAAAAAPChRlTvoke676JH1e+iR+/vokf476JH+O+i
+        R/nvokf576JH+e+iR/rvokf676JH+u+iR/vwokf78KJH/PCiR/zwokf88KJH/fCiR/3wokf98KJH/vCi
+        R/7wokf/8KJH//CiR/7wokfZ76JIpO+hR0EAAAAAAAAAAOAAAAOAAAABgAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAHAAAADKAAAABAAAAAgAAAAAQAgAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADv7+5M7+/vme/v78/v7+7t7+/u/+/v7v/v7+7/7+/v/+/v
+        7v/v7+7/7+/u7e/v7szv7+5/AAAAAAAAAAAAAAAA8vLyv/Tz8//z8/P/2tra/93d3f/z8/P/8/Pz//Pz
+        8//z8vP/8vLz//Ly8//z8/P/8vLz//Py878AAAAA7OzshvLy8v/z8/P/SkpK/wAAAP8AAAD/RERE/+fo
+        6P/29vb/9vf3//b29v/39/f/9vb3//f29v/19fX/8PDwhuzs7P/y8vL/qaio/wAAAP94eHn/nZ6e/wMD
+        A/9kZGT/+vv6//r6+v/6+/r/+vr6//r6+v/6+vr/9fX1//Hw8P/s7Oz/8vLy//j4+P/o6ej/7Ozt//n4
+        +P9BQUH/Dw8Q//7+/v///v7/lrvH/4CmtP+AprT/cJKe//b19v/w8fD/7Ozs//Ly8v/29/b/YmJi/wIC
+        Av8PDw//KCgo/wAAAP/q6ur//////7XY4f+12OH/tdjh/3CSnv/29fX/8PDw/+zs7P/y8vL/mpqa/wAA
+        AP+NjY3/wcHB/woKCv8AAAD/5OTk//////+12OH/tdjh/7XY4f+Wu8f/9vb2//Hx8P/s7Oz/8vLy/2Ni
+        Yv8AAAD/9/f3//////87Ozv/AQEB//T09P//////a2dg////////////a2dg//b19v/w8PH/7Ozs//Ly
+        8v92dnb/AAAA/9vb2//09PT/FRUV/ywsLP///////////2tnYP///////////2tnYP/29fb/8fHw/+zs
+        7P/y8vL/19jX/w8PD/8YGBj/Hx8f/wEBAf+srKz////////////q6un/a2dg/2tnYP/m5uX/9vb1//Hw
+        8f/s7Oz/8vLy//r5+f/b29v/dnZ2/2xsbP/BwcH/////////////////////////////////+vv7//b2
+        9v/x8fD/7Ozs//Ly8v/6+fr///////////////////////////////////////////////////////v6
+        +v/19fb/8fHw/61lEv+1axb/tWsW/7VrFv+1axb/tWsW/7VrFv+1axb/tWsW/7VrFv+1axb/tWsW/7Vr
+        Fv+1axb/tWsW/61lEv+1axb/3Ior/9yKK//mrWv/3Ior/9yKK//mrWv/3Ior/+ata//ciiv/3Ior/+at
+        a//ciiv/3Ior/9yKK/+1axb/tWsWj9ODJv/rljP/8bVw/+uWM//xtXD/8bVw/+uWM//xtXD/8bVw/+uW
+        M//xtXD/65Yz/+uWM//Tgyb/tWsWjwAAAADXijG79KZL5vSmS//0pkv/9KZL//SmS//0pkv/9KZL//Sm
+        S//0pkv/9KZL//SmS//0pkvN14oxjwAAAACAA6xBgAGsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAA
+        rEEAAKxBAACsQQAArEEAAKxBAACsQQAArEGAAaxB
+</value>
+  </data>
+  <data name="$this.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="$this.RightToLeftLayout" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Welcome to {0}</value>
+  </data>
+  <data name="&gt;&gt;evaluationTimer.Name" xml:space="preserve">
+    <value>evaluationTimer</value>
+  </data>
+  <data name="&gt;&gt;evaluationTimer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>EvaluationDialog</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>
