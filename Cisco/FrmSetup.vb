@@ -156,18 +156,6 @@ Public Class FrmSetup
         validConfig = CheckConfig(True)
     End Sub
 
-    Private Sub Button1_Click_1(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-
-            Dim _license As AuthenticatedLicense
-            Dim licenseForm As New AuthenticatedLicenseInstallForm
-            Dim _licenseFile As String = _
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\AuthenticatedApp\AuthenticatedApp.lic"
-            Dim provider As New AuthenticatedLicenseProvider
-            _license = provider.GetLicense(My.MyApplication.LICENSE_PARAMETERS, _licenseFile, True)
-            'licenseForm.Text = "Welcome to SPA Call Manager Pro"
-            _license = licenseForm.ShowDialog(_licenseFile, _license)
-    End Sub
-
     Function CheckConfig(checkIPaddress As Boolean)
         Dim ValidConfig As Boolean = True
         If TxtphoneIP.Text <> "" Then

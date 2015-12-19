@@ -42,7 +42,6 @@ Partial Class FrmSetup
         Me.imgLinksysKeySystemEnabled = New System.Windows.Forms.PictureBox()
         Me.lblLinksysKeySystemEnabled = New System.Windows.Forms.Label()
         Me.btnRecheck = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.imgDebugServerSet = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TxtSharedFolder = New System.Windows.Forms.TextBox()
@@ -50,18 +49,18 @@ Partial Class FrmSetup
         Me.SharedFBD = New System.Windows.Forms.FolderBrowserDialog()
         Me.txtpassword = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        CType(Me.imgCTIEnabled, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.imgDebugFull, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.imgStationSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.imgLinksysKeySystemEnabled, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.imgDebugServerSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+        CType(Me.imgCTIEnabled,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.imgDebugFull,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.imgStationSet,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.imgLinksysKeySystemEnabled,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.imgDebugServerSet,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.SuspendLayout
         '
         'LbldebugAddress
         '
-        Me.LbldebugAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LbldebugAddress.AutoSize = True
+        Me.LbldebugAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.LbldebugAddress.AutoSize = true
         Me.LbldebugAddress.BackColor = System.Drawing.Color.Transparent
         Me.LbldebugAddress.ForeColor = System.Drawing.Color.White
         Me.LbldebugAddress.Location = New System.Drawing.Point(30, 275)
@@ -72,7 +71,7 @@ Partial Class FrmSetup
         '
         'LblLocalIp
         '
-        Me.LblLocalIp.AutoSize = True
+        Me.LblLocalIp.AutoSize = true
         Me.LblLocalIp.BackColor = System.Drawing.Color.Transparent
         Me.LblLocalIp.ForeColor = System.Drawing.Color.White
         Me.LblLocalIp.Location = New System.Drawing.Point(7, 49)
@@ -83,18 +82,18 @@ Partial Class FrmSetup
         '
         'Btnsave
         '
-        Me.Btnsave.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btnsave.Location = New System.Drawing.Point(8, 403)
+        Me.Btnsave.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.Btnsave.Location = New System.Drawing.Point(9, 375)
         Me.Btnsave.Name = "Btnsave"
         Me.Btnsave.Size = New System.Drawing.Size(265, 23)
         Me.Btnsave.TabIndex = 6
         Me.Btnsave.Text = "Save Settings"
-        Me.Btnsave.UseVisualStyleBackColor = True
+        Me.Btnsave.UseVisualStyleBackColor = true
         '
         'CmbLocalIP
         '
-        Me.CmbLocalIP.FormattingEnabled = True
+        Me.CmbLocalIP.FormattingEnabled = true
         Me.CmbLocalIP.Location = New System.Drawing.Point(10, 64)
         Me.CmbLocalIP.Name = "CmbLocalIP"
         Me.CmbLocalIP.Size = New System.Drawing.Size(262, 21)
@@ -109,7 +108,7 @@ Partial Class FrmSetup
         '
         'LblPhoneIp
         '
-        Me.LblPhoneIp.AutoSize = True
+        Me.LblPhoneIp.AutoSize = true
         Me.LblPhoneIp.BackColor = System.Drawing.Color.Transparent
         Me.LblPhoneIp.ForeColor = System.Drawing.Color.White
         Me.LblPhoneIp.Location = New System.Drawing.Point(7, 8)
@@ -120,25 +119,25 @@ Partial Class FrmSetup
         '
         'btnImportCsv
         '
-        Me.btnImportCsv.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnImportCsv.Location = New System.Drawing.Point(9, 374)
+        Me.btnImportCsv.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.btnImportCsv.Location = New System.Drawing.Point(9, 346)
         Me.btnImportCsv.Name = "btnImportCsv"
         Me.btnImportCsv.Size = New System.Drawing.Size(128, 23)
         Me.btnImportCsv.TabIndex = 12
         Me.btnImportCsv.Text = "Import CSV File"
-        Me.btnImportCsv.UseVisualStyleBackColor = True
+        Me.btnImportCsv.UseVisualStyleBackColor = true
         '
         'btnExportCsv
         '
-        Me.btnExportCsv.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnExportCsv.Location = New System.Drawing.Point(145, 374)
+        Me.btnExportCsv.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.btnExportCsv.Location = New System.Drawing.Point(145, 346)
         Me.btnExportCsv.Name = "btnExportCsv"
         Me.btnExportCsv.Size = New System.Drawing.Size(128, 23)
         Me.btnExportCsv.TabIndex = 13
         Me.btnExportCsv.Text = "Export CSV File"
-        Me.btnExportCsv.UseVisualStyleBackColor = True
+        Me.btnExportCsv.UseVisualStyleBackColor = true
         '
         'SFDExport
         '
@@ -146,9 +145,9 @@ Partial Class FrmSetup
         '
         'lblCTIEnabled
         '
-        Me.lblCTIEnabled.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblCTIEnabled.AutoSize = True
+        Me.lblCTIEnabled.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.lblCTIEnabled.AutoSize = true
         Me.lblCTIEnabled.BackColor = System.Drawing.Color.Transparent
         Me.lblCTIEnabled.ForeColor = System.Drawing.Color.White
         Me.lblCTIEnabled.Location = New System.Drawing.Point(30, 185)
@@ -159,33 +158,33 @@ Partial Class FrmSetup
         '
         'imgCTIEnabled
         '
-        Me.imgCTIEnabled.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.imgCTIEnabled.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.imgCTIEnabled.BackColor = System.Drawing.Color.Transparent
         Me.imgCTIEnabled.Image = Global.Pss.Cisco.My.Resources.Resources.Cross
         Me.imgCTIEnabled.Location = New System.Drawing.Point(8, 185)
         Me.imgCTIEnabled.Name = "imgCTIEnabled"
         Me.imgCTIEnabled.Size = New System.Drawing.Size(16, 16)
         Me.imgCTIEnabled.TabIndex = 15
-        Me.imgCTIEnabled.TabStop = False
+        Me.imgCTIEnabled.TabStop = false
         '
         'imgDebugFull
         '
-        Me.imgDebugFull.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.imgDebugFull.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.imgDebugFull.BackColor = System.Drawing.Color.Transparent
         Me.imgDebugFull.Image = Global.Pss.Cisco.My.Resources.Resources.Cross
         Me.imgDebugFull.Location = New System.Drawing.Point(8, 208)
         Me.imgDebugFull.Name = "imgDebugFull"
         Me.imgDebugFull.Size = New System.Drawing.Size(16, 16)
         Me.imgDebugFull.TabIndex = 17
-        Me.imgDebugFull.TabStop = False
+        Me.imgDebugFull.TabStop = false
         '
         'lblDebugLevelFull
         '
-        Me.lblDebugLevelFull.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblDebugLevelFull.AutoSize = True
+        Me.lblDebugLevelFull.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.lblDebugLevelFull.AutoSize = true
         Me.lblDebugLevelFull.BackColor = System.Drawing.Color.Transparent
         Me.lblDebugLevelFull.ForeColor = System.Drawing.Color.White
         Me.lblDebugLevelFull.Location = New System.Drawing.Point(30, 208)
@@ -196,21 +195,21 @@ Partial Class FrmSetup
         '
         'imgStationSet
         '
-        Me.imgStationSet.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.imgStationSet.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.imgStationSet.BackColor = System.Drawing.Color.Transparent
         Me.imgStationSet.Image = Global.Pss.Cisco.My.Resources.Resources.Cross
         Me.imgStationSet.Location = New System.Drawing.Point(8, 231)
         Me.imgStationSet.Name = "imgStationSet"
         Me.imgStationSet.Size = New System.Drawing.Size(16, 16)
         Me.imgStationSet.TabIndex = 19
-        Me.imgStationSet.TabStop = False
+        Me.imgStationSet.TabStop = false
         '
         'lblStationNameSet
         '
-        Me.lblStationNameSet.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblStationNameSet.AutoSize = True
+        Me.lblStationNameSet.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.lblStationNameSet.AutoSize = true
         Me.lblStationNameSet.BackColor = System.Drawing.Color.Transparent
         Me.lblStationNameSet.ForeColor = System.Drawing.Color.White
         Me.lblStationNameSet.Location = New System.Drawing.Point(30, 231)
@@ -221,21 +220,21 @@ Partial Class FrmSetup
         '
         'imgLinksysKeySystemEnabled
         '
-        Me.imgLinksysKeySystemEnabled.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.imgLinksysKeySystemEnabled.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.imgLinksysKeySystemEnabled.BackColor = System.Drawing.Color.Transparent
         Me.imgLinksysKeySystemEnabled.Image = Global.Pss.Cisco.My.Resources.Resources.Cross
         Me.imgLinksysKeySystemEnabled.Location = New System.Drawing.Point(8, 253)
         Me.imgLinksysKeySystemEnabled.Name = "imgLinksysKeySystemEnabled"
         Me.imgLinksysKeySystemEnabled.Size = New System.Drawing.Size(16, 16)
         Me.imgLinksysKeySystemEnabled.TabIndex = 21
-        Me.imgLinksysKeySystemEnabled.TabStop = False
+        Me.imgLinksysKeySystemEnabled.TabStop = false
         '
         'lblLinksysKeySystemEnabled
         '
-        Me.lblLinksysKeySystemEnabled.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblLinksysKeySystemEnabled.AutoSize = True
+        Me.lblLinksysKeySystemEnabled.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.lblLinksysKeySystemEnabled.AutoSize = true
         Me.lblLinksysKeySystemEnabled.BackColor = System.Drawing.Color.Transparent
         Me.lblLinksysKeySystemEnabled.ForeColor = System.Drawing.Color.White
         Me.lblLinksysKeySystemEnabled.Location = New System.Drawing.Point(30, 253)
@@ -246,41 +245,30 @@ Partial Class FrmSetup
         '
         'btnRecheck
         '
-        Me.btnRecheck.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnRecheck.Location = New System.Drawing.Point(10, 317)
+        Me.btnRecheck.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.btnRecheck.Location = New System.Drawing.Point(9, 317)
         Me.btnRecheck.Name = "btnRecheck"
         Me.btnRecheck.Size = New System.Drawing.Size(263, 23)
         Me.btnRecheck.TabIndex = 22
         Me.btnRecheck.Text = "Recheck Configuration"
-        Me.btnRecheck.UseVisualStyleBackColor = True
-        '
-        'Button1
-        '
-        Me.Button1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(10, 345)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(263, 23)
-        Me.Button1.TabIndex = 23
-        Me.Button1.Text = "License Maintenance"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnRecheck.UseVisualStyleBackColor = true
         '
         'imgDebugServerSet
         '
-        Me.imgDebugServerSet.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.imgDebugServerSet.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.imgDebugServerSet.BackColor = System.Drawing.Color.Transparent
         Me.imgDebugServerSet.Image = Global.Pss.Cisco.My.Resources.Resources.Cross
         Me.imgDebugServerSet.Location = New System.Drawing.Point(8, 275)
         Me.imgDebugServerSet.Name = "imgDebugServerSet"
         Me.imgDebugServerSet.Size = New System.Drawing.Size(16, 16)
         Me.imgDebugServerSet.TabIndex = 24
-        Me.imgDebugServerSet.TabStop = False
+        Me.imgDebugServerSet.TabStop = false
         '
         'Label1
         '
-        Me.Label1.AutoSize = True
+        Me.Label1.AutoSize = true
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(7, 91)
@@ -303,7 +291,7 @@ Partial Class FrmSetup
         Me.btnsharedFolder.Size = New System.Drawing.Size(28, 23)
         Me.btnsharedFolder.TabIndex = 27
         Me.btnsharedFolder.Text = "..."
-        Me.btnsharedFolder.UseVisualStyleBackColor = True
+        Me.btnsharedFolder.UseVisualStyleBackColor = true
         '
         'txtpassword
         '
@@ -315,7 +303,7 @@ Partial Class FrmSetup
         '
         'Label3
         '
-        Me.Label3.AutoSize = True
+        Me.Label3.AutoSize = true
         Me.Label3.BackColor = System.Drawing.Color.Transparent
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(7, 138)
@@ -326,17 +314,16 @@ Partial Class FrmSetup
         '
         'FrmSetup
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.ClientSize = New System.Drawing.Size(284, 438)
+        Me.ClientSize = New System.Drawing.Size(284, 411)
         Me.Controls.Add(Me.txtpassword)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.btnsharedFolder)
         Me.Controls.Add(Me.TxtSharedFolder)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.imgDebugServerSet)
-        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.btnRecheck)
         Me.Controls.Add(Me.imgLinksysKeySystemEnabled)
         Me.Controls.Add(Me.lblLinksysKeySystemEnabled)
@@ -355,21 +342,21 @@ Partial Class FrmSetup
         Me.Controls.Add(Me.LblLocalIp)
         Me.Controls.Add(Me.LbldebugAddress)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
+        Me.Icon = CType(resources.GetObject("$this.Icon"),System.Drawing.Icon)
+        Me.MaximizeBox = false
+        Me.MinimizeBox = false
         Me.Name = "FrmSetup"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "SPA Call Manager Pro Setup"
-        CType(Me.imgCTIEnabled, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.imgDebugFull, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.imgStationSet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.imgLinksysKeySystemEnabled, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.imgDebugServerSet, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        CType(Me.imgCTIEnabled,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.imgDebugFull,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.imgStationSet,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.imgLinksysKeySystemEnabled,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.imgDebugServerSet,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ResumeLayout(false)
+        Me.PerformLayout
 
-    End Sub
+End Sub
     Friend WithEvents LbldebugAddress As System.Windows.Forms.Label
     Friend WithEvents LblLocalIp As System.Windows.Forms.Label
     Friend WithEvents Btnsave As System.Windows.Forms.Button
@@ -389,7 +376,6 @@ Partial Class FrmSetup
     Friend WithEvents imgLinksysKeySystemEnabled As System.Windows.Forms.PictureBox
     Friend WithEvents lblLinksysKeySystemEnabled As System.Windows.Forms.Label
     Friend WithEvents btnRecheck As System.Windows.Forms.Button
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents imgDebugServerSet As System.Windows.Forms.PictureBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents TxtSharedFolder As System.Windows.Forms.TextBox
