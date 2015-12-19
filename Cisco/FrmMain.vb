@@ -1,6 +1,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Net
+Imports System.Runtime.Remoting.Messaging
 Imports Microsoft.VisualBasic
 
 Public Class FrmMain
@@ -47,64 +48,57 @@ Public Class FrmMain
         End If
 
         'Try and ping the IP address of the phone before trying to communicate with it as this just casues a long delay waiting for things to timeout.
-        If My.Computer.Network.Ping(MyStoredPhoneSettings.PhoneIP) Then
-            'download phone settings
-            MyPhoneSettings.password = MyStoredPhoneSettings.password
-            MyPhone.password = MyPhoneSettings.password
-            LoginPassword = MyPhoneSettings.password
-            MyPhoneSettings = MyPhone.DownloadPhoneSettings(MyStoredPhoneSettings.PhoneIP)
-
-            'check for incorrect data
-            If MyStoredPhoneSettings.LocalIP <> MyPhoneSettings.Debug_Server_Address Then MsgBox("The ""Debug Server Address"" specified in the phone setup isn't the same as this PC IP address.  The phone will be unable to send status updates to the PC until this is corrected on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
-            If MyPhoneSettings.CTI_Enable = "No" Then MsgBox("CTI is not enabled on this handset.  SPA Call Manager Pro will be unable to initiate any calls for you until this setting is enabled.  Please see the support pages on www.spacallmanager.com for guidance on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
-            If MyPhoneSettings.DebugLevel <> "full" Then MsgBox("The Debug Level on the phone is not set to ""Full"".  SPA Call Manager Pro will not receive detailed status updates from the handset.  Please see the support pages on www.spacallmanager.com for guidance on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
-            If MyPhoneSettings.StationName = vbLf Then MsgBox("The station name has not been set on the phone, if this setting is not populated SPA Call Manager Pro will be unable to send commands to the handset.  Please see the support pages on www.spacallmanager.com for guidance on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
-            If MyPhoneSettings.LinksysKeySystem <> "Yes" Then MsgBox("Linksys Key System is not enabled on this handset.  SPA Call Manager Pro will be unable to initiate any calls for you until this setting is enabled.  Please see the support pages on www.spacallmanager.com for guidance on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
-            'save settings to registery
-            MyPhoneSettings.PhoneIP = MyStoredPhoneSettings.PhoneIP
-            MyPhoneSettings.PhonePort = MyStoredPhoneSettings.PhonePort
-            MyPhoneSettings.LocalPort = MyStoredPhoneSettings.LocalPort
-          
-            MyPhone.IpPort = MyStoredPhoneSettings.LocalPort
-            MyPhone.Startlistening()
-
-
-            TmrFadeNotification.Enabled = True
-            For x As Integer = 1 To 4
-                FrmFade(x) = False
-            Next
-
-            'retrieve call data from phone
-            GetPhoneDir("http://" & MyStoredPhoneSettings.PhoneIP & "/pdir.htm")
-            GetPhoneCalled("http://" & MyStoredPhoneSettings.PhoneIP & "/calllog.htm")
-            GetPhoneAnswered("http://" & MyStoredPhoneSettings.PhoneIP & "/calllog.htm")
-            GetPhoneMissed("http://" & MyStoredPhoneSettings.PhoneIP & "/calllog.htm")
-            LoadPhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
-            If SharedDataDir <> "" Then
-                FSW.Path = SharedDataDir
-                FrmSetup.TxtSharedFolder.Text = SharedDataDir
-                LoadSharedPhoneBook(SharedDataDir & "Phonebook.csv")
-            End If
-
-
-            For x As Integer = 0 To DgvPersonal.Rows.Count - 1
-                CmbNumber.Items.Add(MyPhoneBook(x).FirstName & " " & MyPhoneBook(x).Surname)
-            Next x
-
-            Me.Text = "SPA Call Manager Pro - " & MyStoredPhoneSettings.StationName & " - " & MyStoredPhoneSettings.PhoneModel & "-" & MyStoredPhoneSettings.PhoneSoftwareVersion
+        If String.IsNullOrEmpty(MyStoredPhoneSettings.PhoneIP) Then
+            MsgBox("IP address of hanbdset has not been set up")
         Else
-            MsgBox("No ping response from handset IP (" & MyStoredPhoneSettings.PhoneIP & ") - Failed to load data from handset")
-            LoadPhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
-            If SharedDataDir <> "" Then
-                FSW.Path = SharedDataDir
-                FrmSetup.TxtSharedFolder.Text = SharedDataDir
-                LoadSharedPhoneBook(SharedDataDir & "Phonebook.csv")
+            Dim pingError As Exception = Nothing
+            Dim pingSuccess As Boolean = PingHandset(pingError)
+
+            If Not pingSuccess Then
+                If pingError Is Nothing Then
+                    MsgBox("No ping response from handset IP (" & MyStoredPhoneSettings.PhoneIP & ") - Failed to load data from handset")
+                Else
+                    MsgBox("An error ocurred while attempting to reach the handset on ip address (" & MyStoredPhoneSettings.PhoneIP & ").")
+                End If
             End If
 
-            For x As Integer = 0 To DgvPersonal.Rows.Count - 1
-                CmbNumber.Items.Add(MyPhoneBook(x).FirstName & " " & MyPhoneBook(x).Surname)
-            Next x
+            If pingSuccess Then
+                'download phone settings
+                MyPhoneSettings.password = MyStoredPhoneSettings.password
+                MyPhone.password = MyPhoneSettings.password
+                LoginPassword = MyPhoneSettings.password
+                MyPhoneSettings = MyPhone.DownloadPhoneSettings(MyStoredPhoneSettings.PhoneIP)
+
+                'check for incorrect data
+                If MyStoredPhoneSettings.LocalIP <> MyPhoneSettings.Debug_Server_Address Then MsgBox("The ""Debug Server Address"" specified in the phone setup isn't the same as this PC IP address.  The phone will be unable to send status updates to the PC until this is corrected on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
+                If MyPhoneSettings.CTI_Enable = "No" Then MsgBox("CTI is not enabled on this handset.  SPA Call Manager Pro will be unable to initiate any calls for you until this setting is enabled.  Please see the support pages on www.spacallmanager.com for guidance on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
+                If MyPhoneSettings.DebugLevel <> "full" Then MsgBox("The Debug Level on the phone is not set to ""Full"".  SPA Call Manager Pro will not receive detailed status updates from the handset.  Please see the support pages on www.spacallmanager.com for guidance on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
+                If MyPhoneSettings.StationName = vbLf Then MsgBox("The station name has not been set on the phone, if this setting is not populated SPA Call Manager Pro will be unable to send commands to the handset.  Please see the support pages on www.spacallmanager.com for guidance on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
+                If MyPhoneSettings.LinksysKeySystem <> "Yes" Then MsgBox("Linksys Key System is not enabled on this handset.  SPA Call Manager Pro will be unable to initiate any calls for you until this setting is enabled.  Please see the support pages on www.spacallmanager.com for guidance on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
+                'save settings to registery
+                MyPhoneSettings.PhoneIP = MyStoredPhoneSettings.PhoneIP
+                MyPhoneSettings.PhonePort = MyStoredPhoneSettings.PhonePort
+                MyPhoneSettings.LocalPort = MyStoredPhoneSettings.LocalPort
+
+                MyPhone.IpPort = MyStoredPhoneSettings.LocalPort
+                MyPhone.Startlistening()
+
+                TmrFadeNotification.Enabled = True
+                For x As Integer = 1 To 4
+                    FrmFade(x) = False
+                Next
+
+                'retrieve call data from phone
+                GetPhoneDir("http://" & MyStoredPhoneSettings.PhoneIP & "/pdir.htm")
+                GetPhoneCalled("http://" & MyStoredPhoneSettings.PhoneIP & "/calllog.htm")
+                GetPhoneAnswered("http://" & MyStoredPhoneSettings.PhoneIP & "/calllog.htm")
+                GetPhoneMissed("http://" & MyStoredPhoneSettings.PhoneIP & "/calllog.htm")
+
+                Me.Text = "SPA Call Manager Pro - " & MyStoredPhoneSettings.StationName & " - " & MyStoredPhoneSettings.PhoneModel & "-" & MyStoredPhoneSettings.PhoneSoftwareVersion
+            End If
         End If
+
+        InitializePhonebooks()
 
         Me.SPAToolTips.SetToolTip(Me.CmbNumber, "Type a number directly into this field and press return to dial," & vbCrLf & "or search the currently selected directory by typing a contacts name.")
         Me.SPAToolTips.SetToolTip(Me.BtnDial1, "Click to dial on this line.  Click while on a call to place the call on hold")
@@ -112,6 +106,20 @@ Public Class FrmMain
         Me.SPAToolTips.SetToolTip(Me.BtnDial3, "Click to dial on this line.  Click while on a call to place the call on hold")
         Me.SPAToolTips.SetToolTip(Me.BtnDial4, "Click to dial on this line.  Click while on a call to place the call on hold")
 
+    End Sub
+
+    Private Sub InitializePhonebooks()
+        LoadPhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
+
+        If MyStoredPhoneSettings.SharedDataDir <> "" Then
+            FSW.Path = MyStoredPhoneSettings.SharedDataDir
+            FrmSetup.TxtSharedFolder.Text = MyStoredPhoneSettings.SharedDataDir
+            LoadSharedPhoneBook(MyStoredPhoneSettings.SharedDataDir & "Phonebook.csv")
+        End If
+
+        For x As Integer = 0 To DgvPersonal.Rows.Count - 1
+            CmbNumber.Items.Add(MyPhoneBook(x).FirstName & " " & MyPhoneBook(x).Surname)
+        Next x
     End Sub
 
     Private Sub FrmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -138,7 +146,7 @@ Public Class FrmMain
     Private Sub BtnAddPhoneEntry_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnAddPhoneEntry.Click
 
         'opens form to add new phonebook entry
-        Dim NewFrmPhonebook As New FrmPhoneBook("", "", "", -1, "DgvPersonal")
+        Dim NewFrmPhonebook As New FrmPhoneBook(nothing, -1, "DgvPersonal")
         NewFrmPhonebook.ShowDialog()
         CmbNumber.Items.Clear()
         For x As Integer = 0 To DgvPersonal.Rows.Count - 1
@@ -158,9 +166,9 @@ Public Class FrmMain
         If LinePhoneStatus(PhoneStatusdata.Id).Status = ClsPhone.ePhoneStatus.Dialing Then LinePhoneStatus(PhoneStatusdata.Id).CallerNumber = ""
 
 
-        For x As Integer = 0 To MyPhoneBook.GetUpperBound(0) - 1
-            If LinePhoneStatus(PhoneStatusdata.Id).CallerNumber = MyPhoneBook(x).Number Then
-                LinePhoneStatus(PhoneStatusdata.Id).CallerName = MyPhoneBook(x).FirstName & " " & MyPhoneBook(x).Surname
+        For each entry in MyPhoneBook
+            If LinePhoneStatus(PhoneStatusdata.Id).CallerNumber = entry.Number Then
+                LinePhoneStatus(PhoneStatusdata.Id).CallerName = entry.FullName
                 PhoneStatusdata.CallerName = LinePhoneStatus(PhoneStatusdata.Id).CallerName
             End If
         Next
@@ -517,7 +525,7 @@ UDPRXError:
 
                 End If
 
-          
+
             Loop Until Counter = 60
 
         Catch ex As Exception
@@ -658,6 +666,7 @@ UDPRXError:
     End Sub
 
     Private Sub DGWAnswered_CellContentClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGWAnswered.CellContentClick
+        If sender.CurrentCell Is Nothing Then Return
 
         'calls the number in the grid row, when the call button is clicked 
 
@@ -676,6 +685,7 @@ UDPRXError:
     End Sub
 
     Private Sub DGWdialled_CellContentClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGWdialled.CellContentClick
+        If sender.CurrentCell Is Nothing Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If sender.CurrentCell.ColumnIndex = 3 Then
@@ -693,6 +703,7 @@ UDPRXError:
     End Sub
 
     Private Sub DGWMissed_CellContentClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGWMissed.CellContentClick
+        If sender.CurrentCell Is Nothing Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If sender.CurrentCell.ColumnIndex = 3 Then
@@ -710,6 +721,7 @@ UDPRXError:
     End Sub
 
     Private Sub DgvPersonal_CellContentClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DgvPersonal.CellContentClick
+        If sender.CurrentCell Is Nothing Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If sender.CurrentCell.ColumnIndex = 3 Then
@@ -752,6 +764,7 @@ UDPRXError:
     End Sub
 
     Private Sub DgvPersonal_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DgvPersonal.DoubleClick
+        If sender.CurrentCell Is Nothing Then Return
 
         'gets the number in the grid row  and opens up the form to edit the dtails 
         If sender.CurrentCell.ColumnIndex <> 3 Then
@@ -1019,6 +1032,7 @@ UDPRXError:
     End Sub
 
     Private Sub DGVPhoneDir_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DGVPhoneDir.DoubleClick
+        If sender.CurrentCell Is Nothing Then Return
 
         If sender.CurrentCell.ColumnIndex <> 3 Then
             Dim NewFrmPhonebook As New FrmPhoneBook(sender.Item(1, sender.CurrentCell.RowIndex).Value, "", sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
@@ -1028,6 +1042,7 @@ UDPRXError:
     End Sub
 
     Private Sub DGWAnswered_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DGWAnswered.DoubleClick
+        If sender.CurrentCell Is Nothing Then Return
 
         If sender.CurrentCell.ColumnIndex <> 3 Then
             Dim NewFrmPhonebook As New FrmPhoneBook(sender.Item(1, sender.CurrentCell.RowIndex).Value, "", sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
@@ -1037,6 +1052,7 @@ UDPRXError:
     End Sub
 
     Private Sub DGWMissed_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DGWMissed.DoubleClick
+        If sender.CurrentCell Is Nothing Then Return
 
         If sender.CurrentCell.ColumnIndex <> 3 Then
             Dim NewFrmPhonebook As New FrmPhoneBook(sender.Item(1, sender.CurrentCell.RowIndex).Value, "", sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
@@ -1046,6 +1062,7 @@ UDPRXError:
     End Sub
 
     Private Sub DGWdialled_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DGWdialled.DoubleClick
+        If sender.CurrentCell Is Nothing Then Return
 
         If sender.CurrentCell.ColumnIndex <> 3 Then
             Dim NewFrmPhonebook As New FrmPhoneBook(sender.Item(1, sender.CurrentCell.RowIndex).Value, "", sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
@@ -1065,15 +1082,14 @@ UDPRXError:
           (Process.GetCurrentProcess.ProcessName).Length > 1 Then
 
             MessageBox.Show _
-             ("SPA Call Manager Pro is already running.  This instance will now close", _
-                 "SPA Call Manager Pro", _
-                  MessageBoxButtons.OK, _
+             ("SPA Call Manager Pro is already running.",
+                 "SPA Call Manager Pro",
+                  MessageBoxButtons.OK,
                  MessageBoxIcon.Exclamation)
             Application.Exit()
         End If
     End Sub
 
-   
     Private Sub TbDirectories_Click(sender As Object, e As System.EventArgs) Handles TbDirectories.Click
 
         ' refreshes data from the phone when the tab is clicked so that all data is up to date
@@ -1090,7 +1106,7 @@ UDPRXError:
                     CmbNumber.Items.Add(DGVSharedDir.Rows(x).Cells(1).Value)
                 Next x
             Case 2
-                If My.Computer.Network.Ping(MyStoredPhoneSettings.PhoneIP) Then
+                If PingHandset() Then
                     GetPhoneDir("http://" & MyStoredPhoneSettings.PhoneIP & "/pdir.htm")
                     CmbNumber.Items.Clear()
                     For x As Integer = 0 To DGVPhoneDir.Rows.Count - 1
@@ -1104,15 +1120,15 @@ UDPRXError:
                     Next x
                 End If
             Case 3
-                If My.Computer.Network.Ping(MyStoredPhoneSettings.PhoneIP) Then
+                If PingHandset() Then
                     GetPhoneCalled("http://" & MyStoredPhoneSettings.PhoneIP & "/calllog.htm")
                 End If
             Case 4
-                If My.Computer.Network.Ping(MyStoredPhoneSettings.PhoneIP) Then
+                If PingHandset() Then
                     GetPhoneAnswered("http://" & MyStoredPhoneSettings.PhoneIP & "/calllog.htm")
                 End If
             Case 5
-                If My.Computer.Network.Ping(MyStoredPhoneSettings.PhoneIP) Then
+                If PingHandset() Then
                     GetPhoneMissed("http://" & MyStoredPhoneSettings.PhoneIP & "/calllog.htm")
                 End If
         End Select
@@ -1137,15 +1153,15 @@ UDPRXError:
 
     End Sub
 
-    Private Sub DGVSharedDir_DoubleClick(sender As Object, e As System.EventArgs) Handles DGVSharedDir.DoubleClick
-
+    Private Sub DGVSharedDir_DoubleClick(sender As DatagridView, e As MouseEventArgs) Handles DGVSharedDir.DoubleClick
+        If sender.CurrentCell Is Nothing Then Return
 
         If sender.CurrentCell.ColumnIndex <> 3 Then
-            Dim item = sender.Item(1, sender.CurrentCell.RowIndex)
-            Dim itemValue = item.Value
-            Dim TmpName() As String = itemValue.split(" ")
-            Dim NewFrmPhonebook As New FrmPhoneBook(TmpName(0), TmpName(1), sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
-            NewFrmPhonebook.ShowDialog()
+
+            Dim entry =  CType(SharedContactsDataSource(sender.CurrentCell.RowIndex) ,Models.PhoneBookEntry)
+            
+            Dim newFrmPhonebook As New FrmPhoneBook(entry, sender.CurrentCell.RowIndex, sender.name)
+            newFrmPhonebook.ShowDialog()
         End If
 
     End Sub
@@ -1160,8 +1176,8 @@ UDPRXError:
                 MySharedPhoneBook(sender.CurrentCell.RowIndex).FirstName = ""
                 MySharedPhoneBook(sender.CurrentCell.RowIndex).Surname = ""
                 MySharedPhoneBook(sender.CurrentCell.RowIndex).Number = ""
-                SaveSharedPhoneBook(SharedDataDir & "Phonebook.csv")
-                LoadSharedPhoneBook(SharedDataDir & "Phonebook.csv")
+                SaveSharedPhoneBook(MyStoredPhoneSettings.SharedDataDir & "Phonebook.csv")
+                LoadSharedPhoneBook(MyStoredPhoneSettings.SharedDataDir & "Phonebook.csv")
             End If
         End If
 
@@ -1169,8 +1185,8 @@ UDPRXError:
 
     Private Sub FSW_Changed(sender As Object, e As System.IO.FileSystemEventArgs) Handles FSW.Changed
 
-
-        LoadSharedPhoneBook(SharedDataDir & "Phonebook.csv")
+        LoadSharedPhoneBook(MyStoredPhoneSettings.SharedDataDir & "Phonebook.csv")
 
     End Sub
+    
 End Class

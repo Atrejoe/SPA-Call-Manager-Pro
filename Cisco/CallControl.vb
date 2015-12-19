@@ -10,7 +10,7 @@
         Dial = 7
     End Enum
 
-    Public Function ConstructHeaderMessage(ByVal PhoneStatus As ClsPhone.sPhoneStatus, ByVal PhoneSettings As ClsPhone.sPhoneSettings) As String
+    Public Function ConstructHeaderMessage(ByVal PhoneStatus As ClsPhone.sPhoneStatus, ByVal PhoneSettings As Settings) As String
 
         Dim SPATemplate As String = "NOTIFY sip:" & PhoneSettings.StationName & "@" & PhoneSettings.PhoneIP & ":" & PhoneSettings.PhonePort & " SIP/2.0" & vbCr & _
                       "Via: SIP/2.0/UDP " & PhoneSettings.LocalIP & ":" & PhoneSettings.LocalPort & vbCr & _
@@ -26,7 +26,7 @@
 
     End Function
 
-    Public Function PhoneAction(ByVal Action As CallControl.eAction, ByVal PhoneStatus As ClsPhone.sPhoneStatus, ByVal PhoneSettings As ClsPhone.sPhoneSettings) As String
+    Public Function PhoneAction(ByVal Action As CallControl.eAction, ByVal PhoneStatus As ClsPhone.sPhoneStatus, ByVal PhoneSettings As Settings) As String
 
         Dim SPACommand As String
         Dim qt As String = Chr(34)

@@ -26,30 +26,13 @@ Public Class ClsPhone
         Dim ref As Integer
     End Structure
 
-    Public Structure sPhoneSettings
-        Dim PhoneModel As String ' Product_Name
-        Dim PhoneSoftwareVersion As String 'Software_Version
-        Dim CTI_Enable As String ' CTI_Enable
-        Dim Debug_Server_Address As String 'Address the phone will send data to
-        Dim StationName As String ' Station_Name
-        Dim DebugLevel As String ' SIP_Debug_Option_1_
-        Dim LocalIP As String 'local Ip address of the PC
-        Dim LocalPort As Integer 'Pc port
-        Dim PhoneIP As String 'Ipaddress of phone
-        Dim PhonePort As Integer 'phone port
-        Dim username As String 'Phone username
-        Dim password As String 'Phone password
-        Dim LinksysKeySystem As String 'Linksys Key System Setting
-
-    End Structure
-
     Public Event UDPRxdata(ByVal PhoneStatusdata As sPhoneStatus) 'event raised when phone sends data to pc
     Public RemoteIpEndPoint As New System.Net.IPEndPoint(System.Net.IPAddress.Any, 0) 'receiving ip address
     Public strReturnData As String 'data received from phone
     Public receivingUdpClient As New Net.Sockets.UdpClient 'UDP socket
     Public udpClient As New Net.Sockets.UdpClient
     Public Ipaddress() As String
-    Dim PhoneSettings As sPhoneSettings 'durrent phone settings
+    Dim PhoneSettings As Settings 'durrent phone settings
     Dim UdpRXPort As Integer = 0
     Dim _UserName As String
     Dim _password As String
@@ -87,7 +70,7 @@ Public Class ClsPhone
         End Set
 
     End Property
-    Public Function DownloadPhoneSettings(ByVal IPAddress As String) As sPhoneSettings
+    Public Function DownloadPhoneSettings(ByVal IPAddress As String) As Settings
         ' A Function to download settings from the Phones XML configuration file.
         Dim strUrl As String = "http://" & IPAddress & "/admin/spacfg.xml"
         Dim reader As XmlTextReader = New XmlTextReader(strUrl)

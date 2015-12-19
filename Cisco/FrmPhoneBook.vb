@@ -21,27 +21,23 @@ Public Class FrmPhoneBook
     Private Sub btnSavePersonal_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnSavePersonal.Click
 
         Try
+            Dim entry = New Models.PhoneBookEntry
+            With entry
+                .FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
+                .Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
+                .Number = txtNumber.Text.Replace(" ", "")
+            End With
+
             If GridRowId = -1 Then
-                If MyPhoneBook Is Nothing Then
-                    ReDim Preserve MyPhoneBook(0)
-                Else
-                    ReDim Preserve MyPhoneBook(MyPhoneBook.GetUpperBound(0) + 1)
-                End If
-                MyPhoneBook(MyPhoneBook.GetUpperBound(0)).FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
-                MyPhoneBook(MyPhoneBook.GetUpperBound(0)).Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
-                MyPhoneBook(MyPhoneBook.GetUpperBound(0)).Number = txtNumber.Text.Replace(" ", "")
+                MyPhoneBook.Add(entry)
             Else
                 If NewGridName = "DgvPersonal" Then
-                    MyPhoneBook(GridRowId).FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
-                    MyPhoneBook(GridRowId).Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
-                    MyPhoneBook(GridRowId).Number = txtNumber.Text.Replace(" ", "")
+                    MyPhoneBook(GridRowId) = entry
                 Else
-                    ReDim Preserve MyPhoneBook(MyPhoneBook.GetUpperBound(0) + 1)
-                    MyPhoneBook(MyPhoneBook.GetUpperBound(0)).FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
-                    MyPhoneBook(MyPhoneBook.GetUpperBound(0)).Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
-                    MyPhoneBook(MyPhoneBook.GetUpperBound(0)).Number = txtNumber.Text.Replace(" ", "")
+                    MyPhoneBook.Add(entry)
                 End If
             End If
+
             SavePhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
             LoadPhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
             Me.Close()
@@ -50,6 +46,21 @@ Public Class FrmPhoneBook
 
         End Try
 
+    End Sub
+
+    Public Sub New(entry As Models.PhoneBookEntry, ByVal GridID As Integer, GridName As String)
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        If (entry IsNot Nothing) Then
+            TxtFirstname.Text = entry.FirstName
+            TxtSurname.Text = entry.Surname
+            txtNumber.Text = entry.Number
+        End If
+
+        GridRowId = GridID
+        NewGridName = GridName
     End Sub
 
     Public Sub New(ByVal FirstName As String, ByVal Surname As String, ByVal Number As String, ByVal GridID As Integer, GridName As String)
@@ -66,33 +77,29 @@ Public Class FrmPhoneBook
 
     End Sub
 
-   
+
     Private Sub btnSavedShared_Click(sender As System.Object, e As System.EventArgs) Handles btnSavedShared.Click
 
         Try
+            Dim entry = New Models.PhoneBookEntry
+            With entry
+                .FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
+                .Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
+                .Number = txtNumber.Text.Replace(" ", "")
+            End With
+
             If GridRowId = -1 Then
-                If MySharedPhoneBook Is Nothing Then
-                    ReDim Preserve MySharedPhoneBook(0)
-                Else
-                    ReDim Preserve MySharedPhoneBook(MySharedPhoneBook.GetUpperBound(0) + 1)
-                End If
-                MySharedPhoneBook(MySharedPhoneBook.GetUpperBound(0)).FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
-                MySharedPhoneBook(MySharedPhoneBook.GetUpperBound(0)).Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
-                MySharedPhoneBook(MySharedPhoneBook.GetUpperBound(0)).Number = txtNumber.Text.Replace(" ", "")
+                MySharedPhoneBook.Add(entry)
             Else
                 If NewGridName = "DGVSharedDir" Then
-                    MySharedPhoneBook(GridRowId).FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
-                    MySharedPhoneBook(GridRowId).Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
-                    MySharedPhoneBook(GridRowId).Number = txtNumber.Text.Replace(" ", "")
+                    MySharedPhoneBook(GridRowId) = entry
                 Else
-                    ReDim Preserve MySharedPhoneBook(MySharedPhoneBook.GetUpperBound(0) + 1)
-                    MySharedPhoneBook(MySharedPhoneBook.GetUpperBound(0)).FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
-                    MySharedPhoneBook(MySharedPhoneBook.GetUpperBound(0)).Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
-                    MySharedPhoneBook(MySharedPhoneBook.GetUpperBound(0)).Number = txtNumber.Text.Replace(" ", "")
+                    MySharedPhoneBook.Add(entry)
                 End If
             End If
-            SaveSharedPhoneBook(SharedDataDir & "Phonebook.csv")
-            LoadSharedPhoneBook(SharedDataDir & "Phonebook.csv")
+
+            SaveSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
+            LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
             Me.Close()
 
         Catch ex As Exception

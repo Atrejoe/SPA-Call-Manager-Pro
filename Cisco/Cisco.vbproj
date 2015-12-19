@@ -137,6 +137,7 @@
     <Compile Include="FrmSetup.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Models\PhoneBookEntry.vb" />
     <Compile Include="ModMain.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -154,6 +155,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ClsPhone.vb" />
+    <Compile Include="NetworkUtils.vb" />
+    <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmCall.resx">
