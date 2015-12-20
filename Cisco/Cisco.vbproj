@@ -26,7 +26,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://raw.githubusercontent.com/atrejoe/SPA-Call-Manager-Pro/deploy/stable/</InstallUrl>
+    <InstallUrl>https://raw.githubusercontent.com/Atrejoe/SPA-Call-Manager-Pro/master/deploy/stable/</InstallUrl>
     <SupportUrl>http://www.spacallmanager.com</SupportUrl>
     <ErrorReportUrl>https://github.com/Atrejoe/SPA-Call-Manager-Pro/issues</ErrorReportUrl>
     <ProductName>SPA Call Manager</ProductName>
