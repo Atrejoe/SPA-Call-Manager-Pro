@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>....\deploy\stable\|..\publish\|publish\</PublishUrlHistory>
+    <InstallUrlHistory>https://raw.githubusercontent.com/atrejoe/SPA-Call-Manager-Pro/deploy/stable/|http://raw.github.io/SPA-Call-Manager-Pro/deploy/stable/|http://atrejoe.github.io/SPA-Call-Manager-Pro/deploy/stable/|http://atrejoe.github.io/Gallifrey.Releases/deploy/stable/</InstallUrlHistory>
+    <SupportUrlHistory>http://www.spacallmanager.com</SupportUrlHistory>
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory>https://github.com/Atrejoe/SPA-Call-Manager-Pro/issues</ErrorReportUrlHistory>
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+  </PropertyGroup>
+</Project>

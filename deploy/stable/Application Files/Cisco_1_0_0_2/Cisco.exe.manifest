@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="Cisco.exe" version="1.0.0.2" publicKeyToken="c7e3178b003c42fc" language="neutral" processorArchitecture="x86" type="win32" />
+  <description asmv2:iconFile="Dialup.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Cisco" version="0.0.0.0" language="neutral" processorArchitecture="x86" />
+    <commandLine file="Cisco.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- UAC Manifest Options
+             If you want to change the Windows User Account Control level replace the 
+             requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+            Specifying requestedExecutionLevel element will disable file and registry virtualization. 
+            Remove this element if your application requires this virtualization for backwards
+            compatibility.
+        -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Cisco.exe" size="782256">
+      <assemblyIdentity name="Cisco" version="0.0.0.0" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>OeG/gBxuKsH/uDf76NKzfdso6Vo=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Dialup.ico" size="97434">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>kqdaMIjBsYyNY9apzsSUKFGlEsY=</dsig:DigestValue>
+    </hash>
+  </file>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- A list of the Windows versions that this application has been tested on and is
+           is designed to work with. Uncomment the appropriate elements and Windows will 
+           automatically selected the most compatible environment. -->
+      <!-- Windows Vista -->
+      <!--<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}" />-->
+      <!-- Windows 7 -->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />-->
+      <!-- Windows 8 -->
+      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}" />-->
+      <!-- Windows 8.1 -->
+      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />-->
+      <!-- Windows 10 -->
+      <!--<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />-->
+    </application>
+  </compatibility>
+<publisherIdentity name="CN=LaptopRobert\Robert" issuerKeyHash="7ecfb8488f8cb7b9fbfb528240b447ea52a27fb9" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>aodTgJ6vqs9Kbrlvk+a3nHuMv1g=</DigestValue></Reference></SignedInfo><SignatureValue>ccFJXNxfeaE0JpelpIrjR2id7D6OHvHQ8+GAucMvfsmUfjXF22NJLmiyC8bd30yzrY5k5StkhjgTlINixQWD4/cFzJkdLcTj07Rd7RLh0NO27bksEXcgh+l/x6JBRWbdRwJJW9xYCJ9x4CyAeZFwGW5Qigoehc59niZyPu0ontk=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>h6MgrBZK6648gg7dRms2VPVjQfso+RtCUIefW0ygzlYMgxMShJvzn8pTndl50vYk68lgWJi2z73j0KUsvt33seZxccnSVq3ZuFklChDzTJi/TaCGRigr3U48/Sj53SWQuQl9zwrvLIFNqkRqTdOfOCoq94NwO3G/rw9EGxxoF+0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="58bf8c7b9cb7e6936fb96e4acfaaaf9e8053876a" Description="" Url=""><as:assemblyIdentity name="Cisco.exe" version="1.0.0.2" publicKeyToken="c7e3178b003c42fc" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=LaptopRobert\Robert</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>2gbHSoK2bvNG9+OeX6jlJ+HKpd8=</DigestValue></Reference></SignedInfo><SignatureValue>hRZiXwCw6HKw+azdEEZR/GYq5JJeUgqnSLLjLRfB7kUpjnSYrZVYSp7uNi10yM9+WvTmsterHwVEPz3WLG7Yo+9orDTPsG0CE7amRjZFGo52NdPYC2T4pmsa7HK+0nE1wb8nHmw8tliRoaUw5LkhHhkmKQpnzCPwphbW7cw06Io=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>h6MgrBZK6648gg7dRms2VPVjQfso+RtCUIefW0ygzlYMgxMShJvzn8pTndl50vYk68lgWJi2z73j0KUsvt33seZxccnSVq3ZuFklChDzTJi/TaCGRigr3U48/Sj53SWQuQl9zwrvLIFNqkRqTdOfOCoq94NwO3G/rw9EGxxoF+0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB5TCCAU6gAwIBAgIQH+7/HWudi7NLq34c6UHteTANBgkqhkiG9w0BAQUFADAxMS8wLQYDVQQDHiYATABhAHAAdABvAHAAUgBvAGIAZQByAHQAXABSAG8AYgBlAHIAdDAeFw0xNTEyMjAxMjE1NDZaFw0xNjEyMTkxODE1NDZaMDExLzAtBgNVBAMeJgBMAGEAcAB0AG8AcABSAG8AYgBlAHIAdABcAFIAbwBiAGUAcgB0MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCHoyCsFkrrrjyCDt1GazZU9WNB+yj5G0JQh59bTKDOVgyDExKEm/OfylOd2XnS9iTryWBYmLbPvePQpSy+3fex5nFxydJWrdm4WSUKEPNMmL9NoIZGKCvdTjz9KPndJZC5CX3PCu8sgU2qRGpN0584Kir3g3A7cb+vD0QbHGgX7QIDAQABMA0GCSqGSIb3DQEBBQUAA4GBAHhReRYrQluv+EA7yFdrlxiQMIStdeiyCErdN2XjXSfG+ThomxbiqmO9CuOTY/Yj8MzBSUmmLHg5cjkHoGc7Plc7Va17T7NGv+FF25myaKDWCaCIta/cArHt4rHlImEvh+9//fhD9mNyFzBbuCBJRsJzcQvLwEZ1BaHJCGGIt0xp</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

@@ -31,6 +31,6 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitleAttribute("SPA Call Manager Pro")> 
 <Assembly: AssemblyDescriptionAttribute("SPA Call Manager Pro")> 
-<Assembly: AssemblyCompanyAttribute("www.spacallmanger.com")> 
+<Assembly: AssemblyCompany("www.spacallmanager.com")> 
 <Assembly: AssemblyProductAttribute("SPA Call Manager Pro")> 
-<Assembly: AssemblyCopyrightAttribute("www.spacallmanger.com")> 
+<Assembly: AssemblyCopyright("www.spacallmanager.com")> 
