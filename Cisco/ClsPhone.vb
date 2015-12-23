@@ -111,7 +111,7 @@ Public Class ClsPhone
                                     .LinksysKeySystem = reader.Value
                                 Case "SIP_Port_1_"
                                     reader.Read()
-                                    .PhonePort = reader.Value
+                                    .PhonePort = Cint(reader.Value)
                             End Select
                     End Select
                 Loop
@@ -223,17 +223,17 @@ Public Class ClsPhone
 
         MessageContent = message.Substring(message.IndexOf("<spa-status>"))
 
-        Dim spl() As String = MessageContent.Split(" ")
+        Dim spl() As String = MessageContent.Split(" ".ToCharArray())
         If spl IsNot Nothing Then
             For x As Integer = 0 To spl.GetUpperBound(0)
                 SplLn = Split(spl(x), "=")
                 Select Case SplLn(0).Replace(Chr(34), "")
                     Case "id"
-                        PhoneStatus.Id = SplLn(1).Replace(Chr(34), "")
+                        PhoneStatus.Id = CInt(SplLn(1).Replace(Chr(34), ""))
                     Case "ref"
-                        PhoneStatus.ref = SplLn(1).Replace(Chr(34), "")
+                        PhoneStatus.ref = CInt(SplLn(1).Replace(Chr(34), ""))
                     Case "ext"
-                        PhoneStatus.LineNumber = SplLn(1).Replace(Chr(34), "")
+                        PhoneStatus.LineNumber = CInt(SplLn(1).Replace(Chr(34), ""))
                     Case "state"
                         Select Case SplLn(1).Substring(0, SplLn(1).IndexOf(Chr(34), 1)).Replace(Chr(34), "")
                             Case "dialing"

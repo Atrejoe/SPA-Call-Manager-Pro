@@ -60,7 +60,7 @@ Public Class FrmSetup
             Dim tmp() As String
             ' Hold the amount of lines already read in a 'counter-variable'
             Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
-                tmp = sr.ReadLine.Split(",")
+                tmp = sr.ReadLine.Split(",".ToCharArray())
                 Dim entry = New Models.PhoneBookEntry
                 With entry
 
@@ -129,8 +129,8 @@ Public Class FrmSetup
     Private Sub FrmSetup_Paint(sender As Object, e As Windows.Forms.PaintEventArgs) Handles Me.Paint
 
         On Error Resume Next
-        If sender.width = 0 Then Exit Sub
-        If sender.height = 0 Then Exit Sub
+        If me.width = 0 Then Exit Sub
+        If me.height = 0 Then Exit Sub
 
         Dim a As New LinearGradientBrush(New RectangleF(0, 0, Me.Width, Me.Height), Color.SlateGray, Color.Black, LinearGradientMode.Vertical)
         Dim gg As Graphics = e.Graphics
@@ -142,7 +142,7 @@ Public Class FrmSetup
         validConfig = CheckConfig(True)
     End Sub
 
-    Function CheckConfig(checkIPaddress As Boolean)
+    Function CheckConfig(checkIPaddress As Boolean) As Boolean
         Dim ValidConfig As Boolean = True
         If TxtphoneIP.Text <> "" Then
             If CmbLocalIP.Text <> "" Then
@@ -158,7 +158,7 @@ Public Class FrmSetup
                         MyPhone.password = LoginPassword
                         MyPhoneSettings = MyPhone.DownloadPhoneSettings(TxtphoneIP.Text)
                         MyPhoneSettings = MyPhone.DownloadPhoneSettings(TxtphoneIP.Text)
-                        MyPhoneSettings.LocalPort = "514"
+                        MyPhoneSettings.LocalPort = 514
                         MyPhoneSettings.PhoneIP = TxtphoneIP.Text
                         If MyPhoneSettings.CTI_Enable = "Yes" Then imgCTIEnabled.Image = My.Resources.Resources.greentick Else ValidConfig = False
                         If MyPhoneSettings.DebugLevel = "full" Then imgDebugFull.Image = My.Resources.Resources.greentick Else ValidConfig = False

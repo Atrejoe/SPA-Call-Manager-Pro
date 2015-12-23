@@ -23,8 +23,8 @@ Public Class FrmCall
        
         e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
 
-        Dim fillBrush As New System.Drawing.Drawing2D.LinearGradientBrush(New RectangleF(0, 0, sender.Width, sender.Height), Color.White, Color.Gray, LinearGradientMode.Vertical)
-        drawRoundRectFill(g, fillBrush, 2, 2, sender.Width - 4, sender.Height - 4, 15)
+        Dim fillBrush As New System.Drawing.Drawing2D.LinearGradientBrush(New RectangleF(0, 0, me.Width, me.Height), Color.White, Color.Gray, LinearGradientMode.Vertical)
+        drawRoundRectFill(g, fillBrush, 2, 2, me.Width - 4, me.Height - 4, 15)
 
         g.DrawString("Incoming Call Line: " & FrmCallPhoneStatus.Id, textFont, Brushes.Black, 10, 10)
 
@@ -65,8 +65,8 @@ Public Class FrmCall
         Dim CallImage As New Bitmap(My.Resources.Phone1, 60, 60)
         Dim CallImageNew As Graphics = Graphics.FromImage(CallImage)
 
-        DrawRoundRectControl(sender, 0, 0, sender.width, sender.height, 5)
-        PaintGradient(sender, e, Color.Green, Color.DarkGreen)
+        DrawRoundRectControl(BtnAnswer, 0, 0, me.width, me.height, 5)
+        PaintGradient(BtnAnswer, e, Color.Green, Color.DarkGreen)
         g.DrawImage(CallImage, 15, 0)
 
 
@@ -100,8 +100,8 @@ Public Class FrmCall
         Dim CallImage As New Bitmap(My.Resources.Phone2, 60, 60)
         Dim CallImageNew As Graphics = Graphics.FromImage(CallImage)
 
-        DrawRoundRectControl(sender, 0, 0, sender.width, sender.height, 5)
-        PaintGradient(sender, e, Color.Red, Color.DarkRed)
+        DrawRoundRectControl(BtnReject, 0, 0, me.width, me.height, 5)
+        PaintGradient(BtnReject, e, Color.Red, Color.DarkRed)
         g.DrawImage(CallImage, 15, 0)
 
     End Sub

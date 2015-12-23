@@ -22,9 +22,9 @@ Public Class FrmMain
         CheckForExistingInstance()
 
         ' sets the app data folder and creates one if there isnt one already
-        dataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-        If Directory.Exists(dataDir & "\CiscoPhone") = False Then
-            Directory.CreateDirectory(dataDir & "\CiscoPhone")
+        DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+        If Directory.Exists(DataDir & "\CiscoPhone") = False Then
+            Directory.CreateDirectory(DataDir & "\CiscoPhone")
         End If
 
         'Get stored settings for the phone and local Ip address of the PC
@@ -109,12 +109,12 @@ Public Class FrmMain
     End Sub
 
     Private Sub InitializePhonebooks()
-        LoadPhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
+        LoadPhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
 
-        If MyStoredPhoneSettings.SharedDataDir <> "" Then
-            FSW.Path = MyStoredPhoneSettings.SharedDataDir
-            FrmSetup.TxtSharedFolder.Text = MyStoredPhoneSettings.SharedDataDir
-            LoadSharedPhoneBook(MyStoredPhoneSettings.SharedDataDir & "Phonebook.csv")
+        If MyStoredPhoneSettings.sharedDataDir <> "" Then
+            FSW.Path = MyStoredPhoneSettings.sharedDataDir
+            FrmSetup.TxtSharedFolder.Text = MyStoredPhoneSettings.sharedDataDir
+            LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
         End If
 
         For x As Integer = 0 To DgvPersonal.Rows.Count - 1
@@ -131,8 +131,8 @@ Public Class FrmMain
     Private Sub FrmMain_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
         'paints form with slight gradient
         On Error Resume Next
-        If sender.width = 0 Then Exit Sub
-        If sender.height = 0 Then Exit Sub
+        If Me.Width = 0 Then Exit Sub
+        If Me.Height = 0 Then Exit Sub
 
         Dim a As New LinearGradientBrush(New RectangleF(0, 0, Me.Width, Me.Height), Color.SlateGray, Color.Black, LinearGradientMode.Vertical)
         Dim gg As Graphics = e.Graphics
@@ -146,7 +146,7 @@ Public Class FrmMain
     Private Sub BtnAddPhoneEntry_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnAddPhoneEntry.Click
 
         'opens form to add new phonebook entry
-        Dim NewFrmPhonebook As New FrmPhoneBook(nothing, -1, "DgvPersonal")
+        Dim NewFrmPhonebook As New FrmPhoneBook(Nothing, -1, "DgvPersonal")
         NewFrmPhonebook.ShowDialog()
         CmbNumber.Items.Clear()
         For x As Integer = 0 To DgvPersonal.Rows.Count - 1
@@ -166,16 +166,16 @@ Public Class FrmMain
         If LinePhoneStatus(PhoneStatusdata.Id).Status = ClsPhone.ePhoneStatus.Dialing Then LinePhoneStatus(PhoneStatusdata.Id).CallerNumber = ""
 
 
-        For each entry in MyPhoneBook
+        For Each entry In MyPhoneBook
             If LinePhoneStatus(PhoneStatusdata.Id).CallerNumber = entry.Number Then
                 LinePhoneStatus(PhoneStatusdata.Id).CallerName = entry.FullName
                 PhoneStatusdata.CallerName = LinePhoneStatus(PhoneStatusdata.Id).CallerName
             End If
         Next
 
-        For x As Integer = 0 To DGVPhoneDir.Rows.Count - 1
-            If LinePhoneStatus(PhoneStatusdata.Id).CallerNumber = DGVPhoneDir.Rows(x).Cells(2).Value Then
-                LinePhoneStatus(PhoneStatusdata.Id).CallerName = DGVPhoneDir.Rows(x).Cells(1).Value
+        For x = 0 To DGVPhoneDir.Rows.Count - 1
+            If LinePhoneStatus(PhoneStatusdata.Id).CallerNumber.Equals(DGVPhoneDir.Rows(x).Cells(2).Value) Then
+                LinePhoneStatus(PhoneStatusdata.Id).CallerName = CStr(DGVPhoneDir.Rows(x).Cells(1).Value)
                 PhoneStatusdata.CallerName = LinePhoneStatus(PhoneStatusdata.Id).CallerName
             End If
         Next
@@ -184,7 +184,7 @@ Public Class FrmMain
             Case ClsPhone.ePhoneStatus.Ringing
                 MyPhoneStatus = PhoneStatusdata
                 Select Case MyPhoneStatus.Id
-                    Case "1"
+                    Case 1
                         LblLine1.Text = "Ringing " & LinePhoneStatus(PhoneStatusdata.Id).CallerName
                         BtnDial1.Image = IlButtons.Images(0)
                         newFrmCallLine1 = New FrmCall(MyPhoneStatus)
@@ -196,7 +196,7 @@ Public Class FrmMain
                             newFrmCallLine2.Top = SystemInformation.WorkingArea.Height - (newFrmCallLine2.Height * 2)
                         End If
                         BtnHang1.Enabled = True
-                    Case "2"
+                    Case 2
                         LblLine2.Text = "Ringing " & LinePhoneStatus(PhoneStatusdata.Id).CallerName
                         BtnDial2.Image = IlButtons.Images(0)
                         newFrmCallLine2 = New FrmCall(MyPhoneStatus)
@@ -208,7 +208,7 @@ Public Class FrmMain
                             newFrmCallLine2.Top = SystemInformation.WorkingArea.Height - (newFrmCallLine2.Height * 2)
                         End If
                         BtnHang2.Enabled = True
-                    Case "3"
+                    Case 3
                         LblLine3.Text = "Ringing " & LinePhoneStatus(PhoneStatusdata.Id).CallerName
                         BtnDial3.Image = IlButtons.Images(0)
                         newFrmCallLine3 = New FrmCall(MyPhoneStatus)
@@ -220,7 +220,7 @@ Public Class FrmMain
                         If newFrmCallLine1 IsNot Nothing And newFrmCallLine2 Is Nothing Then newFrmCallLine3.Top = SystemInformation.WorkingArea.Height - (newFrmCallLine2.Height * 2)
                         If newFrmCallLine1 Is Nothing And newFrmCallLine2 Is Nothing Then newFrmCallLine3.Top = SystemInformation.WorkingArea.Height - (newFrmCallLine2.Height)
                         BtnHang3.Enabled = True
-                    Case "4"
+                    Case 4
                         LblLine4.Text = "Ringing " & LinePhoneStatus(PhoneStatusdata.Id).CallerName
                         BtnDial4.Image = IlButtons.Images(0)
                         newFrmCallLine4 = New FrmCall(MyPhoneStatus)
@@ -408,20 +408,21 @@ UDPRXError:
         'Function to download the entire personal address book from the phone handset into an array.  This is used to autofill the combobox for dialing numbers
 
         Try
-            Dim client As WebClient = New WebClient()
-            Dim BookName As String = ""
-            Dim BookNumber As String = ""
-            Dim FindElement As Integer = 0
-            Dim Counter As Integer = 0
-            Dim dirdata As IO.Stream = client.OpenRead(URL)
-            Dim reader As StreamReader = New StreamReader(dirdata)
-            Dim strdata As String = reader.ReadToEnd
 
-            'Dim tr As IO.TextReader = New IO.StreamReader("C:\audio\Phonedir.html")
+            Dim BookName = ""
+            Dim BookNumber = ""
+            Dim FindElement = 0
+            Dim Counter = 0
 
-            'strdata = tr.ReadToEnd
+            Dim strdata As String
 
-
+            Using client As New WebClient()
+                Dim dirdata = client.OpenRead(URL)
+                Dim reader As StreamReader = New StreamReader(dirdata)
+                
+                strdata = reader.ReadToEnd
+            End Using
+            
             DGVPhoneDir.Rows.Clear()
 
             Do
@@ -429,7 +430,7 @@ UDPRXError:
                 If FindElement = -1 Then Exit Do
                 Dim Number As String = strdata.Substring(strdata.IndexOf("value=", FindElement) + 7, strdata.IndexOf(Chr(34), strdata.IndexOf("value=", FindElement) + 7) - (strdata.IndexOf("value=", FindElement) + 7))
                 If Number.StartsWith("n=") Then
-                    Dim tempdata() As String = Number.Split(";")
+                    Dim tempdata() As String = Number.Split(";".ToCharArray())
                     For f As Integer = 0 To tempdata.GetUpperBound(0)
                         Select Case tempdata(f).Substring(0, 1)
                             Case "n"
@@ -490,7 +491,7 @@ UDPRXError:
             Do
                 FindElement = strdata.IndexOf("<td>&nbsp;", FindElement + 1)
                 If FindElement = -1 Then Exit Do
-                Dim Number() As String = strdata.Substring(FindElement + 10, strdata.IndexOf("<", FindElement + 10) - (FindElement + 10)).Split(",")
+                Dim Number() As String = strdata.Substring(FindElement + 10, strdata.IndexOf("<", FindElement + 10) - (FindElement + 10)).Split(",".ToCharArray())
                 DGWdialled.Rows.Add()
                 DGWdialled.Rows(Counter).Cells(3).Value = "Call"
                 If oldFiletype = True Then
@@ -561,7 +562,7 @@ UDPRXError:
             Do
                 FindElement = strdata.IndexOf("<td>&nbsp;", FindElement + 1)
                 If FindElement = -1 Then Exit Do
-                Dim Number() As String = strdata.Substring(FindElement + 10, strdata.IndexOf("<", FindElement + 10) - (FindElement + 10)).Split(",")
+                Dim Number() As String = strdata.Substring(FindElement + 10, strdata.IndexOf("<", FindElement + 10) - (FindElement + 10)).Split(",".ToCharArray())
                 DGWAnswered.Rows.Add()
                 DGWAnswered.Rows(Counter).Cells(3).Value = "Call"
                 If oldFiletype = True Then
@@ -625,7 +626,7 @@ UDPRXError:
             Do
                 FindElement = strdata.IndexOf("<td>&nbsp;", FindElement + 1)
                 If FindElement = -1 Then Exit Do
-                Dim Number() As String = strdata.Substring(FindElement + 10, strdata.IndexOf("<", FindElement + 10) - (FindElement + 10)).Split(",")
+                Dim Number() As String = strdata.Substring(FindElement + 10, strdata.IndexOf("<", FindElement + 10) - (FindElement + 10)).Split(",".ToCharArray())
                 DGWMissed.Rows.Add()
                 DGWMissed.Rows(Counter).Cells(3).Value = "Call"
                 If oldFiletype = True Then
@@ -666,52 +667,50 @@ UDPRXError:
     End Sub
 
     Private Sub DGWAnswered_CellContentClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGWAnswered.CellContentClick
-        If sender.CurrentCell Is Nothing Then Return
+        If DGWAnswered.CurrentCell Is Nothing Then Return
 
         'calls the number in the grid row, when the call button is clicked 
 
-        If sender.CurrentCell.ColumnIndex = 3 Then
+        If DGWAnswered.CurrentCell.ColumnIndex = 3 Then
             Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
             If result = 0 Then Exit Sub
             Dim MycallControl As New CallControl
             LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = sender.Item(2, sender.CurrentCell.RowIndex).Value
+            LinePhoneStatus(result).CallerNumber = CStr(DGWAnswered.Item(2, DGWAnswered.CurrentCell.RowIndex).Value)
             CmbNumber.Text = LinePhoneStatus(result).CallerNumber
             Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
             MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
-            MycallControl = Nothing
         End If
 
     End Sub
 
     Private Sub DGWdialled_CellContentClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGWdialled.CellContentClick
-        If sender.CurrentCell Is Nothing Then Return
+        If DGWdialled.CurrentCell Is Nothing Then Return
 
         'calls the number in the grid row, when the call button is clicked 
-        If sender.CurrentCell.ColumnIndex = 3 Then
+        If DGWdialled.CurrentCell.ColumnIndex = 3 Then
             Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
             If result = 0 Then Exit Sub
             Dim MycallControl As New CallControl
             LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = sender.Item(2, sender.CurrentCell.RowIndex).Value
+            LinePhoneStatus(result).CallerNumber = CStr(DGWdialled.Item(2, DGWdialled.CurrentCell.RowIndex).Value)
             CmbNumber.Text = LinePhoneStatus(result).CallerNumber
             Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
             MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
-            MycallControl = Nothing
         End If
 
     End Sub
 
     Private Sub DGWMissed_CellContentClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGWMissed.CellContentClick
-        If sender.CurrentCell Is Nothing Then Return
+        If DGWMissed.CurrentCell Is Nothing Then Return
 
         'calls the number in the grid row, when the call button is clicked 
-        If sender.CurrentCell.ColumnIndex = 3 Then
+        If DGWMissed.CurrentCell.ColumnIndex = 3 Then
             Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
             If result = 0 Then Exit Sub
             Dim MycallControl As New CallControl
             LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = sender.Item(2, sender.CurrentCell.RowIndex).Value
+            LinePhoneStatus(result).CallerNumber = CStr(DGWMissed.Item(2, DGWMissed.CurrentCell.RowIndex).Value)
             CmbNumber.Text = LinePhoneStatus(result).CallerNumber
             Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
             MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
@@ -721,16 +720,16 @@ UDPRXError:
     End Sub
 
     Private Sub DgvPersonal_CellContentClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DgvPersonal.CellContentClick
-        If sender.CurrentCell Is Nothing Then Return
+        If DgvPersonal.CurrentCell Is Nothing Then Return
 
         'calls the number in the grid row, when the call button is clicked 
-        If sender.CurrentCell.ColumnIndex = 3 Then
+        If DgvPersonal.CurrentCell.ColumnIndex = 3 Then
             Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
             If result = 0 Then Exit Sub
             Dim MycallControl As New CallControl
             LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = sender.Item(2, sender.CurrentCell.RowIndex).Value
-            LinePhoneStatus(result).CallerName = sender.Item(1, sender.CurrentCell.RowIndex).Value
+            LinePhoneStatus(result).CallerNumber = CStr(DgvPersonal.Item(2, DgvPersonal.CurrentCell.RowIndex).Value)
+            LinePhoneStatus(result).CallerName = CStr(DgvPersonal.Item(1, DgvPersonal.CurrentCell.RowIndex).Value)
             CmbNumber.Text = LinePhoneStatus(result).CallerName
             Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
             MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
@@ -743,13 +742,13 @@ UDPRXError:
     Private Sub DGVPhoneDir_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGVPhoneDir.CellContentClick
 
         'calls the number in the grid row, when the call button is clicked 
-        If sender.CurrentCell.ColumnIndex = 3 Then
+        If DGVPhoneDir.CurrentCell.ColumnIndex = 3 Then
             Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
             If result = 0 Then Exit Sub
             Dim MycallControl As New CallControl
             LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = sender.Item(2, sender.CurrentCell.RowIndex).Value
-            LinePhoneStatus(result).CallerName = sender.Item(1, sender.CurrentCell.RowIndex).Value
+            LinePhoneStatus(result).CallerNumber = CStr(DGVPhoneDir.Item(2, DGVPhoneDir.CurrentCell.RowIndex).Value)
+            LinePhoneStatus(result).CallerName = CStr(DGVPhoneDir.Item(1, DGVPhoneDir.CurrentCell.RowIndex).Value)
             If LinePhoneStatus(result).CallerName = "" Then
                 CmbNumber.Text = LinePhoneStatus(result).CallerNumber
             Else
@@ -764,12 +763,12 @@ UDPRXError:
     End Sub
 
     Private Sub DgvPersonal_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DgvPersonal.DoubleClick
-        If sender.CurrentCell Is Nothing Then Return
+        If DgvPersonal.CurrentCell Is Nothing Then Return
 
         'gets the number in the grid row  and opens up the form to edit the dtails 
-        If sender.CurrentCell.ColumnIndex <> 3 Then
-            Dim TmpName() As String = sender.Item(1, sender.CurrentCell.RowIndex).Value.split(" ")
-            Dim NewFrmPhonebook As New FrmPhoneBook(TmpName(0), TmpName(1), sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
+        If DgvPersonal.CurrentCell.ColumnIndex <> 3 Then
+            Dim TmpName() As String = CStr(DgvPersonal.Item(1, DgvPersonal.CurrentCell.RowIndex).Value).Split(" ".ToCharArray())
+            Dim NewFrmPhonebook As New FrmPhoneBook(TmpName(0), TmpName(1), CStr(DgvPersonal.Item(2, DgvPersonal.CurrentCell.RowIndex).Value), DgvPersonal.CurrentCell.RowIndex, DgvPersonal.Name)
             NewFrmPhonebook.ShowDialog()
         End If
 
@@ -780,14 +779,12 @@ UDPRXError:
         ' Deletes the entry in the selected row by hitting the delete key
 
         If e.KeyData = Keys.Delete Then
-            Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & sender.Item(1, sender.CurrentCell.RowIndex).Value & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
+            Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & CStr(DgvPersonal.Item(1, DgvPersonal.CurrentCell.RowIndex).Value) & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
             If result = MsgBoxResult.Yes Then
                 'removes entry from the myphonebook array
-                MyPhoneBook(sender.CurrentCell.RowIndex).FirstName = ""
-                MyPhoneBook(sender.CurrentCell.RowIndex).Surname = ""
-                MyPhoneBook(sender.CurrentCell.RowIndex).Number = ""
-                SavePhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
-                LoadPhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
+                MyPhoneBook.RemoveAt(DgvPersonal.CurrentCell.RowIndex)
+                SavePhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
+                LoadPhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
             End If
         End If
 
@@ -825,7 +822,7 @@ UDPRXError:
 
         Dim MycallControl As New CallControl
 
-        Select Case sender.name
+        Select Case Ctype(sender,Control).name
             Case "BtnDial1"
                 MyPhoneStatus.Id = 1
             Case "BtnDial2"
@@ -865,9 +862,9 @@ UDPRXError:
                             If TbDirectories.SelectedIndex = 0 Then
                                 LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = MyPhoneBook(CmbNumber.SelectedIndex).Number
                             ElseIf TbDirectories.SelectedIndex = 1 Then
-                                LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = DGVSharedDir.Rows(CmbNumber.SelectedIndex).Cells(2).Value
+                                LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = CStr(DGVSharedDir.Rows(CmbNumber.SelectedIndex).Cells(2).Value)
                             ElseIf TbDirectories.SelectedIndex = 2 Then
-                                LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = DGVPhoneDir.Rows(CmbNumber.SelectedIndex).Cells(2).Value
+                                LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = CStr(DGVPhoneDir.Rows(CmbNumber.SelectedIndex).Cells(2).Value)
                                 Exit Sub
                             End If
                         End If
@@ -875,13 +872,11 @@ UDPRXError:
                     LinePhoneStatus(MyPhoneStatus.Id).Id = MyPhoneStatus.Id
                     Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Dial, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                     MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
-                    MycallControl = Nothing
                 End If
             Case ClsPhone.ePhoneStatus.Ringing
                 ' If the line is ringing then answer
                 Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Answer, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                 MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
-                MycallControl = Nothing
 
         End Select
 
@@ -894,7 +889,7 @@ UDPRXError:
 
         Dim MycallControl As New CallControl
 
-        Select Case sender.name
+        Select Case CType(sender, Control).name
             Case "BtnDial1"
                 MyPhoneStatus.Id = 1
             Case "BtnDial2"
@@ -963,9 +958,9 @@ UDPRXError:
 
     Private Sub TmrFlash_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TmrFlash.Tick
 
-        index = IIf(index = 0, 3, 0)
-
-        For x As Integer = 1 To 4
+        index = If(index = 0, 3, 0)
+        
+        For x = 1 To 4
             If HoldFlash(x) = True Then
                 Select Case x
                     Case 1
@@ -1013,7 +1008,7 @@ UDPRXError:
                         MyPhoneBook(CmbNumber.SelectedIndex).Number = MyPhoneBook(CmbNumber.SelectedIndex).Number.Replace("-", "")
                         LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = MyPhoneBook(CmbNumber.SelectedIndex).Number
                     Else
-                        Dim TmpNumber As String = DGVPhoneDir.Rows(CmbNumber.SelectedIndex).Cells(2).Value
+                        Dim TmpNumber = Cstr(DGVPhoneDir.Rows(CmbNumber.SelectedIndex).Cells(2).Value)
                         TmpNumber = TmpNumber.Replace(" ", "")
                         TmpNumber = TmpNumber.Replace("(", "")
                         TmpNumber = TmpNumber.Replace(")", "")
@@ -1032,43 +1027,34 @@ UDPRXError:
     End Sub
 
     Private Sub DGVPhoneDir_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DGVPhoneDir.DoubleClick
-        If sender.CurrentCell Is Nothing Then Return
+        EditPhoneEntry(DGVPhoneDir)
+    End Sub
 
-        If sender.CurrentCell.ColumnIndex <> 3 Then
-            Dim NewFrmPhonebook As New FrmPhoneBook(sender.Item(1, sender.CurrentCell.RowIndex).Value, "", sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
-            NewFrmPhonebook.ShowDialog()
+    Private Sub EditPhoneEntry(dataGridView As DataGridView)
+
+        If dataGridView.CurrentCell Is Nothing Then Return
+
+        If dataGridView.CurrentCell.ColumnIndex <> 3 Then
+            Dim newFrmPhonebook As New FrmPhoneBook(
+                CStr(dataGridView.Item(1, dataGridView.CurrentCell.RowIndex).Value),
+                "",
+                CStr(dataGridView.Item(2, dataGridView.CurrentCell.RowIndex).Value),
+                dataGridView.CurrentCell.RowIndex,
+                dataGridView.Name)
+            newFrmPhonebook.ShowDialog()
         End If
-
     End Sub
 
     Private Sub DGWAnswered_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DGWAnswered.DoubleClick
-        If sender.CurrentCell Is Nothing Then Return
-
-        If sender.CurrentCell.ColumnIndex <> 3 Then
-            Dim NewFrmPhonebook As New FrmPhoneBook(sender.Item(1, sender.CurrentCell.RowIndex).Value, "", sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
-            NewFrmPhonebook.ShowDialog()
-        End If
-
+        EditPhoneEntry(DGWAnswered)
     End Sub
 
     Private Sub DGWMissed_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DGWMissed.DoubleClick
-        If sender.CurrentCell Is Nothing Then Return
-
-        If sender.CurrentCell.ColumnIndex <> 3 Then
-            Dim NewFrmPhonebook As New FrmPhoneBook(sender.Item(1, sender.CurrentCell.RowIndex).Value, "", sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
-            NewFrmPhonebook.ShowDialog()
-        End If
-
+        EditPhoneEntry(DGWMissed)
     End Sub
 
     Private Sub DGWdialled_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DGWdialled.DoubleClick
-        If sender.CurrentCell Is Nothing Then Return
-
-        If sender.CurrentCell.ColumnIndex <> 3 Then
-            Dim NewFrmPhonebook As New FrmPhoneBook(sender.Item(1, sender.CurrentCell.RowIndex).Value, "", sender.Item(2, sender.CurrentCell.RowIndex).Value, sender.CurrentCell.RowIndex, sender.name)
-            NewFrmPhonebook.ShowDialog()
-        End If
-
+        EditPhoneEntry(DGWdialled)
     End Sub
 
 
@@ -1109,9 +1095,9 @@ UDPRXError:
                 If PingHandset() Then
                     GetPhoneDir("http://" & MyStoredPhoneSettings.PhoneIP & "/pdir.htm")
                     CmbNumber.Items.Clear()
-                    For x As Integer = 0 To DGVPhoneDir.Rows.Count - 1
-                        If DGVPhoneDir.Rows(x).Cells(2).Value <> "" Then
-                            If DGVPhoneDir.Rows(x).Cells(1).Value <> "" Then
+                    For x = 0 To DGVPhoneDir.Rows.Count - 1
+                        If Not String.IsNullOrWhiteSpace(CStr(DGVPhoneDir.Rows(x).Cells(2).Value)) Then
+                            If Not String.IsNullOrWhiteSpace(CStr(DGVPhoneDir.Rows(x).Cells(1).Value)) Then
                                 CmbNumber.Items.Add(DGVPhoneDir.Rows(x).Cells(1).Value)
                             Else
                                 CmbNumber.Items.Add(DGVPhoneDir.Rows(x).Cells(2).Value)
@@ -1136,48 +1122,51 @@ UDPRXError:
 
     End Sub
 
-    Private Sub DGVSharedDir_CellContentClick(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DGVSharedDir.CellContentClick
+    Private Sub DGVSharedDir_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGVSharedDir.CellContentClick
+        If e.RowIndex = -1 Then Return
 
-        If sender.CurrentCell.ColumnIndex = 3 Then
-            Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
+        If e.ColumnIndex = 2 Then
+            Dim result = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
             If result = 0 Then Exit Sub
-            Dim MycallControl As New CallControl
+            Dim mycallControl As New CallControl
             LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = sender.Item(2, sender.CurrentCell.RowIndex).Value
-            LinePhoneStatus(result).CallerName = sender.Item(1, sender.CurrentCell.RowIndex).Value
+
+            Dim entry = CType(SharedContactsDataSource(e.RowIndex), Models.PhoneBookEntry)
+
+            LinePhoneStatus(result).CallerNumber = entry.Number
+            LinePhoneStatus(result).CallerName = entry.FullName
             CmbNumber.Text = LinePhoneStatus(result).CallerName
-            Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
-            MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
-            MycallControl = Nothing
+
+            Dim callString As String = mycallControl.PhoneAction(CallControl.eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
+            MyPhone.SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
         End If
 
     End Sub
 
-    Private Sub DGVSharedDir_DoubleClick(sender As DatagridView, e As MouseEventArgs) Handles DGVSharedDir.DoubleClick
-        If sender.CurrentCell Is Nothing Then Return
+    Private Sub DGVSharedDir_DoubleClick(sender As Object, e As EventArgs) Handles DGVSharedDir.DoubleClick
+        If DGVSharedDir.CurrentCell Is Nothing Then Return
 
-        If sender.CurrentCell.ColumnIndex <> 3 Then
+        If DGVSharedDir.CurrentCell.ColumnIndex <> 3 Then
 
-            Dim entry =  CType(SharedContactsDataSource(sender.CurrentCell.RowIndex) ,Models.PhoneBookEntry)
-            
-            Dim newFrmPhonebook As New FrmPhoneBook(entry, sender.CurrentCell.RowIndex, sender.name)
+            Dim entry = CType(SharedContactsDataSource(DGVSharedDir.CurrentCell.RowIndex), Models.PhoneBookEntry)
+
+            Dim newFrmPhonebook As New FrmPhoneBook(entry, DGVSharedDir.CurrentCell.RowIndex, DGVSharedDir.Name)
             newFrmPhonebook.ShowDialog()
         End If
 
     End Sub
 
-    Private Sub DGVSharedDir_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles DGVSharedDir.KeyDown
-
+    Private Sub DGVSharedDir_KeyDown(sender As Object, e As KeyEventArgs) Handles DGVSharedDir.KeyDown
+        Dim grid = DGVSharedDir
 
         If e.KeyData = Keys.Delete Then
-            Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & sender.Item(1, sender.CurrentCell.RowIndex).Value & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
+            Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & grid.Item(1, grid.CurrentCell.RowIndex).Value.ToString() & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
             If result = MsgBoxResult.Yes Then
                 'removes entry from the myphonebook array
-                MySharedPhoneBook(sender.CurrentCell.RowIndex).FirstName = ""
-                MySharedPhoneBook(sender.CurrentCell.RowIndex).Surname = ""
-                MySharedPhoneBook(sender.CurrentCell.RowIndex).Number = ""
-                SaveSharedPhoneBook(MyStoredPhoneSettings.SharedDataDir & "Phonebook.csv")
-                LoadSharedPhoneBook(MyStoredPhoneSettings.SharedDataDir & "Phonebook.csv")
+                SharedContactsDataSource.RemoveAt(grid.CurrentCell.RowIndex)
+
+                SaveSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
+                LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
             End If
         End If
 
@@ -1185,8 +1174,8 @@ UDPRXError:
 
     Private Sub FSW_Changed(sender As Object, e As System.IO.FileSystemEventArgs) Handles FSW.Changed
 
-        LoadSharedPhoneBook(MyStoredPhoneSettings.SharedDataDir & "Phonebook.csv")
+        LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
 
     End Sub
-    
+
 End Class

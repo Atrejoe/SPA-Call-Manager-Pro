@@ -4,9 +4,9 @@ Namespace Models
     ''' </summary>
     Public Class PhoneBookEntry
 
-        Public FirstName As String
-        Public Surname As String
-        Public Number As String
+        Public Property FirstName As String
+        Public Property Surname As String
+        Public Property Number As String
 
         Public ReadOnly Property FullName As String
             Get

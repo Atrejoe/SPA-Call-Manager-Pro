@@ -9,7 +9,7 @@ Public Module NetworkUtils
     ''' </summary>
     ''' <param name="exception">Optional exception, will be specified when pinging not only was unsuccessfull, be threw an exception too.</param>
     ''' <returns><c>true</c> when ping was successfull, otherwise <c>false</c>.</returns>
-    Friend Function PingHandset(Optional ByRef exception = Nothing) As Boolean
+    Friend Function PingHandset(Optional ByRef exception As Exception = Nothing) As Boolean
         Dim result = False
         Try
             result = My.Computer.Network.Ping(MyStoredPhoneSettings.PhoneIP)

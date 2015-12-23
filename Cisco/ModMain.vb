@@ -7,7 +7,7 @@ Module ModMain
     Public MyStoredPhoneSettings As Settings 'structure of stored settings
     Public OutsideLinePrefix As String = "9"
     Public ReadOnly MyPhoneBook As New List(Of PhoneBookEntry) 'structure of the phone book
-    Public ReadOnly MySharedPhoneBook As New List(Of PhoneBookEntry) 'structure of the shared phone book
+    'Public ReadOnly MySharedPhoneBook As New List(Of PhoneBookEntry) 'structure of the shared phone book
     Public DataDir As String 'holds the file path to where the phonedata is held
     'Public SharedDataDir As String = "\\phoenix-s1\videos\" 'holds the file path to where the shared phonedata is held
     Public LoginPassword As String = ""
@@ -70,7 +70,7 @@ Module ModMain
         gp.Dispose()
     End Sub
 
-    Public Sub PaintGradient(ByVal sender As Object, ByVal e As PaintEventArgs, ByVal color1 As Color, ByVal color2 As Color)
+    Public Sub PaintGradient(ByVal sender As Control, ByVal e As PaintEventArgs, ByVal color1 As Color, ByVal color2 As Color)
 
         'paints a gradient onto the background  of the sender object
         Dim a As New LinearGradientBrush(New RectangleF(0, 0, sender.Width, sender.Height), color1, color2, LinearGradientMode.Vertical)
@@ -86,13 +86,13 @@ Module ModMain
             ' Reader to read from the file
 
             Try
-                Using sr As New System.IO.StreamReader(filename)
+                Using sr As New IO.StreamReader(filename)
                     Dim tmp() As String
                     ' Hold the amount of lines already read in a 'counter-variable'
                     
                     Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
 
-                        tmp = sr.ReadLine.Split(",")
+                        tmp = sr.ReadLine.Split(",".ToCharArray())
 
                         Dim entry = New PhoneBookEntry
                         With entry
@@ -144,7 +144,7 @@ Module ModMain
 
                     Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
 
-                        tmp = sr.ReadLine.Split(",")
+                        tmp = sr.ReadLine.Split(",".ToCharArray())
 
                         Dim entry = New PhoneBookEntry()
                         With entry
@@ -157,6 +157,8 @@ Module ModMain
                 End Using
 
                 FrmMain.SharedContactsDataSource.Clear()
+
+                
                 tempPhoneBook.ForEach(Function(x) (FrmMain.SharedContactsDataSource.Add(x)))
 
             End If
@@ -187,7 +189,7 @@ Module ModMain
 
         Try
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
-                For Each entry In MySharedPhoneBook
+                For Each entry As PhoneBookEntry In FrmMain.SharedContactsDataSource
                     If entry.FullName <> "" AndAlso entry.Number <> "" Then
                         outFile.WriteLine(entry.FirstName & "," & entry.Surname & "," & entry.Number)
                     End If
@@ -203,19 +205,19 @@ Module ModMain
         Dim storedPhoneSettings As Settings = Nothing
 
         Try
-            storedPhoneSettings.LocalIP = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalIP", "")
-            storedPhoneSettings.LocalPort = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalPort", 514)
-            storedPhoneSettings.CTI_Enable = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "CTI_Enable", "")
-            storedPhoneSettings.Debug_Server_Address = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "Debug_Server_Address", "")
-            storedPhoneSettings.DebugLevel = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "DebugLevel", "")
-            storedPhoneSettings.PhoneModel = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneModel", "")
-            storedPhoneSettings.PhoneSoftwareVersion = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneSoftwareVersion", "")
-            storedPhoneSettings.StationName = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "StationName", "")
-            storedPhoneSettings.PhoneIP = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneIP", "")
-            storedPhoneSettings.PhonePort = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhonePort", 5060)
+            storedPhoneSettings.LocalIP = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalIP", ""), String)
+            storedPhoneSettings.LocalPort = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalPort", 514), Integer)
+            storedPhoneSettings.CTI_Enable = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "CTI_Enable", ""), String)
+            storedPhoneSettings.Debug_Server_Address = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "Debug_Server_Address", ""), String)
+            storedPhoneSettings.DebugLevel = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "DebugLevel", ""), String)
+            storedPhoneSettings.PhoneModel = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneModel", ""), String)
+            storedPhoneSettings.PhoneSoftwareVersion = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneSoftwareVersion", ""), String)
+            storedPhoneSettings.StationName = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "StationName", ""), String)
+            storedPhoneSettings.PhoneIP = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneIP", ""), String)
+            storedPhoneSettings.PhonePort = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhonePort", 5060), Integer)
             storedPhoneSettings.username = "admin"
-            storedPhoneSettings.password = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "password", "")
-            storedPhoneSettings.sharedDataDir = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\SharedPhoneDir", "Path", "")
+            storedPhoneSettings.password = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "password", ""), String)
+            storedPhoneSettings.sharedDataDir = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\SharedPhoneDir", "Path", ""), String)
         Catch ex As Exception
 
         End Try

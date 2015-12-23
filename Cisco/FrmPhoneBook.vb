@@ -7,8 +7,8 @@ Public Class FrmPhoneBook
     Private Sub FrmPhoneBook_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
 
         On Error Resume Next
-        If sender.width = 0 Then Exit Sub
-        If sender.height = 0 Then Exit Sub
+        If me.width = 0 Then Exit Sub
+        If me.height = 0 Then Exit Sub
 
         Dim a As New LinearGradientBrush(New RectangleF(0, 0, Me.Width, Me.Height), Color.SlateGray, Color.Black, LinearGradientMode.Vertical)
         Dim gg As Graphics = e.Graphics
@@ -89,12 +89,12 @@ Public Class FrmPhoneBook
             End With
 
             If GridRowId = -1 Then
-                MySharedPhoneBook.Add(entry)
+                FrmMain.SharedContactsDataSource.Add(entry)
             Else
                 If NewGridName = "DGVSharedDir" Then
-                    MySharedPhoneBook(GridRowId) = entry
+                    FrmMain.SharedContactsDataSource(GridRowId) = entry
                 Else
-                    MySharedPhoneBook.Add(entry)
+                    FrmMain.SharedContactsDataSource.Add(entry)
                 End If
             End If
 

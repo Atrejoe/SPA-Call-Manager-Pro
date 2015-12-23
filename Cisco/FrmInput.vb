@@ -9,8 +9,8 @@ Public Class FrmInput
     Private Sub FrmInput_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
 
         On Error Resume Next
-        If sender.width = 0 Then Exit Sub
-        If sender.height = 0 Then Exit Sub
+        If me.width = 0 Then Exit Sub
+        If me.height = 0 Then Exit Sub
 
         Dim a As New LinearGradientBrush(New RectangleF(0, 0, Me.Width, Me.Height), Color.SlateGray, Color.Black, LinearGradientMode.Vertical)
         Dim gg As Graphics = e.Graphics
