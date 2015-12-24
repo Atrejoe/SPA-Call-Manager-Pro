@@ -43,7 +43,6 @@ Partial Class FrmMain
         Me.DataGridViewButtonColumn4 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.TbDirShared = New System.Windows.Forms.TabPage()
         Me.DGVSharedDir = New System.Windows.Forms.DataGridView()
-        Me.SharedContactsDataSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TbDirPersonal = New System.Windows.Forms.TabPage()
         Me.DGVPhoneDir = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -93,6 +92,7 @@ Partial Class FrmMain
         Me.lblInstructions = New System.Windows.Forms.Label()
         Me.SPAToolTips = New System.Windows.Forms.ToolTip(Me.components)
         Me.FSW = New System.IO.FileSystemWatcher()
+        Me.SharedContactsDataSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewButtonColumn6 = New System.Windows.Forms.DataGridViewButtonColumn()
@@ -101,7 +101,6 @@ Partial Class FrmMain
         CType(Me.DgvPersonal,System.ComponentModel.ISupportInitialize).BeginInit
         Me.TbDirShared.SuspendLayout
         CType(Me.DGVSharedDir,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.SharedContactsDataSource,System.ComponentModel.ISupportInitialize).BeginInit
         Me.TbDirPersonal.SuspendLayout
         CType(Me.DGVPhoneDir,System.ComponentModel.ISupportInitialize).BeginInit
         Me.TbDialledNumbers.SuspendLayout
@@ -112,6 +111,7 @@ Partial Class FrmMain
         CType(Me.DGWMissed,System.ComponentModel.ISupportInitialize).BeginInit
         Me.CntextMnu.SuspendLayout
         CType(Me.FSW,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.SharedContactsDataSource,System.ComponentModel.ISupportInitialize).BeginInit
         Me.SuspendLayout
         '
         'TmrFadeNotification
@@ -774,6 +774,10 @@ Partial Class FrmMain
         Me.FSW.Filter = "Phonebook.csv"
         Me.FSW.SynchronizingObject = Me
         '
+        'SharedContactsDataSource
+        '
+        Me.SharedContactsDataSource.DataSource = GetType(Pss.Cisco.Models.PhoneBookEntry)
+        '
         'DataGridViewTextBoxColumn13
         '
         Me.DataGridViewTextBoxColumn13.DataPropertyName = "FullName"
@@ -798,6 +802,7 @@ Partial Class FrmMain
         Me.DataGridViewButtonColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataGridViewButtonColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.DataGridViewButtonColumn6.Text = "Call"
+        Me.DataGridViewButtonColumn6.UseColumnTextForButtonValue = true
         '
         'FrmMain
         '
@@ -833,7 +838,6 @@ Partial Class FrmMain
         CType(Me.DgvPersonal,System.ComponentModel.ISupportInitialize).EndInit
         Me.TbDirShared.ResumeLayout(false)
         CType(Me.DGVSharedDir,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.SharedContactsDataSource,System.ComponentModel.ISupportInitialize).EndInit
         Me.TbDirPersonal.ResumeLayout(false)
         CType(Me.DGVPhoneDir,System.ComponentModel.ISupportInitialize).EndInit
         Me.TbDialledNumbers.ResumeLayout(false)
@@ -844,6 +848,7 @@ Partial Class FrmMain
         CType(Me.DGWMissed,System.ComponentModel.ISupportInitialize).EndInit
         Me.CntextMnu.ResumeLayout(false)
         CType(Me.FSW,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.SharedContactsDataSource,System.ComponentModel.ISupportInitialize).EndInit
         Me.ResumeLayout(false)
         Me.PerformLayout
 
