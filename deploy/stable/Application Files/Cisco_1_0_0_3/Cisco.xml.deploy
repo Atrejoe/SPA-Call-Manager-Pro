@@ -1,0 +1,43 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Cisco
+</name>
+</assembly>
+<members>
+<member name="T:Pss.Cisco.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="T:Pss.Cisco.Models.PhoneBookEntry">
+ <summary>
+ A basic phonebook entry
+ </summary>
+</member>
+<member name="T:Pss.Cisco.NetworkUtils">
+ <summary>
+ Simple network utilities
+ </summary>
+</member>
+<member name="M:Pss.Cisco.NetworkUtils.PingHandset(System.Exception@)">
+ <summary>
+ Pings the handset, as setup in <see cref="F:Pss.Cisco.Settings.PhoneIP"/>
+ </summary>
+ <param name="exception">Optional exception, will be specified when pinging not only was unsuccessfull, be threw an exception too.</param>
+ <returns><c>true</c> when ping was successfull, otherwise <c>false</c>.</returns>
+</member>
+</members>
+</doc>
