@@ -219,7 +219,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Dialup.ico" />
+    <EmbeddedResource Include="Dialup.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="phone.png" />
