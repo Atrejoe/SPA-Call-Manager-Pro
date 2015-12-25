@@ -2,7 +2,9 @@ Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Net
 Imports System.Runtime.Remoting.Messaging
+Imports Cisco.Utilities
 Imports Microsoft.VisualBasic
+Imports Pss.Cisco.Models
 
 Public Class FrmMain
 
@@ -17,6 +19,19 @@ Public Class FrmMain
     Public WithEvents MyPhone As New ClsPhone 'Phone class that handles communication with the phone
     Dim index As Integer = 0
 
+    Friend Readonly MySharedPhoneBook as New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        Me.DGVSharedDir.AutoGenerateColumns = False
+        Me.DGVSharedDir.DataSource = MySharedPhoneBook
+    End Sub
+
+    
     Private Sub FrmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         CheckForExistingInstance()
@@ -39,7 +54,7 @@ Public Class FrmMain
             FrmSetup.CmbLocalIP.Items.AddRange(MyPhone.GetLocalIp)
             FrmSetup.CmbLocalIP.SelectedIndex = 0
             FrmSetup.LblPhoneIp.Text = "Phone IP Address"
-            If FrmSetup.ShowDialog() = Windows.Forms.DialogResult.Cancel Then
+            If FrmSetup.ShowDialog() = DialogResult.Cancel Then
                 Me.Close()
             End If
 
@@ -794,7 +809,7 @@ UDPRXError:
 
         If Me.WindowState = FormWindowState.Minimized Then Me.Visible = False
 
-        Me.Width = 629
+        'Me.Width = 629
 
     End Sub
 
@@ -1131,7 +1146,7 @@ UDPRXError:
             Dim mycallControl As New CallControl
             LinePhoneStatus(result).Id = result
 
-            Dim entry = CType(SharedContactsDataSource(e.RowIndex), Models.PhoneBookEntry)
+            Dim entry = CType(MySharedPhoneBook(e.RowIndex), Models.PhoneBookEntry)
 
             LinePhoneStatus(result).CallerNumber = entry.Number
             LinePhoneStatus(result).CallerName = entry.FullName
@@ -1148,7 +1163,7 @@ UDPRXError:
 
         If DGVSharedDir.CurrentCell.ColumnIndex <> 3 Then
 
-            Dim entry = CType(SharedContactsDataSource(DGVSharedDir.CurrentCell.RowIndex), Models.PhoneBookEntry)
+            Dim entry = CType(MySharedPhoneBook(DGVSharedDir.CurrentCell.RowIndex), Models.PhoneBookEntry)
 
             Dim newFrmPhonebook As New FrmPhoneBook(entry, DGVSharedDir.CurrentCell.RowIndex, DGVSharedDir.Name)
             newFrmPhonebook.ShowDialog()
@@ -1160,10 +1175,12 @@ UDPRXError:
         Dim grid = DGVSharedDir
 
         If e.KeyData = Keys.Delete Then
-            Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & grid.Item(1, grid.CurrentCell.RowIndex).Value.ToString() & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
+            Dim entry = MySharedPhoneBook(grid.CurrentCell.RowIndex)
+
+            Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & entry.FullName & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
             If result = MsgBoxResult.Yes Then
                 'removes entry from the myphonebook array
-                SharedContactsDataSource.RemoveAt(grid.CurrentCell.RowIndex)
+                MySharedPhoneBook.Remove(entry)
 
                 SaveSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
                 LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")

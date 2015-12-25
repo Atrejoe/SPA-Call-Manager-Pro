@@ -141,9 +141,6 @@
   <metadata name="DataGridViewButtonColumn6.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="SharedContactsDataSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>864, 17</value>
-  </metadata>
   <metadata name="DataGridViewTextBoxColumn9.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -200,7 +197,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACI
-        CgAAAk1TRnQBSQFMAgEBAgEAAbABAQGwAQEBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        CgAAAk1TRnQBSQFMAgEBAgEAAbgBAQG4AQEBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABEAMAAQEBAAEYBgABDBUAA/4D3AF/AbUBfwF3AbABdQF3AbABdQF3AbACdwGwAXUBdwGwAncBsAF1
         AXcBsAJ3AbACdwGwAXcBgAGzAX8B3AHdAdwD/gMAA/4D3AFkAVoBzwFXAU4BzAFYAU4BzAFYAU4BzAFX
         AU4BzAFYAU4BzAFYAU4BzAFYAU4BzAFYAU4BzAFYAU4BzAFkAVsBzQLcAd0D/mMAA+oBYwG8AmMBvAJj
@@ -256,7 +253,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACq
-        xAAAAk1TRnQBSQFMAgEBBAEAAVgBAQFYAQEBMgEAATIBAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAHI
+        xAAAAk1TRnQBSQFMAgEBBAEAAWABAQFgAQEBMgEAATIBAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAHI
         AwABZAMAAQEBAAEYBQABYAHq/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A

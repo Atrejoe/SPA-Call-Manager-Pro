@@ -92,7 +92,6 @@ Partial Class FrmMain
         Me.lblInstructions = New System.Windows.Forms.Label()
         Me.SPAToolTips = New System.Windows.Forms.ToolTip(Me.components)
         Me.FSW = New System.IO.FileSystemWatcher()
-        Me.SharedContactsDataSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewButtonColumn6 = New System.Windows.Forms.DataGridViewButtonColumn()
@@ -111,7 +110,6 @@ Partial Class FrmMain
         CType(Me.DGWMissed,System.ComponentModel.ISupportInitialize).BeginInit
         Me.CntextMnu.SuspendLayout
         CType(Me.FSW,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.SharedContactsDataSource,System.ComponentModel.ISupportInitialize).BeginInit
         Me.SuspendLayout
         '
         'TmrFadeNotification
@@ -221,10 +219,8 @@ Partial Class FrmMain
         Me.DGVSharedDir.AllowUserToResizeRows = false
         DataGridViewCellStyle2.BackColor = System.Drawing.Color.LightGray
         Me.DGVSharedDir.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
-        Me.DGVSharedDir.AutoGenerateColumns = false
         Me.DGVSharedDir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGVSharedDir.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn13, Me.DataGridViewTextBoxColumn14, Me.DataGridViewButtonColumn6})
-        Me.DGVSharedDir.DataSource = Me.SharedContactsDataSource
         Me.DGVSharedDir.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGVSharedDir.Location = New System.Drawing.Point(3, 3)
         Me.DGVSharedDir.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -774,28 +770,26 @@ Partial Class FrmMain
         Me.FSW.Filter = "Phonebook.csv"
         Me.FSW.SynchronizingObject = Me
         '
-        'SharedContactsDataSource
-        '
-        Me.SharedContactsDataSource.DataSource = GetType(Pss.Cisco.Models.PhoneBookEntry)
-        '
         'DataGridViewTextBoxColumn13
         '
+        Me.DataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.DataGridViewTextBoxColumn13.DataPropertyName = "FullName"
         Me.DataGridViewTextBoxColumn13.HeaderText = "Name"
         Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
         Me.DataGridViewTextBoxColumn13.ReadOnly = true
-        Me.DataGridViewTextBoxColumn13.Width = 230
         '
         'DataGridViewTextBoxColumn14
         '
+        Me.DataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.DataGridViewTextBoxColumn14.DataPropertyName = "Number"
         Me.DataGridViewTextBoxColumn14.HeaderText = "Number"
         Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
         Me.DataGridViewTextBoxColumn14.ReadOnly = true
-        Me.DataGridViewTextBoxColumn14.Width = 200
+        Me.DataGridViewTextBoxColumn14.Width = 90
         '
         'DataGridViewButtonColumn6
         '
+        Me.DataGridViewButtonColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.DataGridViewButtonColumn6.HeaderText = "Call"
         Me.DataGridViewButtonColumn6.Name = "DataGridViewButtonColumn6"
         Me.DataGridViewButtonColumn6.ReadOnly = true
@@ -803,6 +797,7 @@ Partial Class FrmMain
         Me.DataGridViewButtonColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.DataGridViewButtonColumn6.Text = "Call"
         Me.DataGridViewButtonColumn6.UseColumnTextForButtonValue = true
+        Me.DataGridViewButtonColumn6.Width = 61
         '
         'FrmMain
         '
@@ -848,7 +843,6 @@ Partial Class FrmMain
         CType(Me.DGWMissed,System.ComponentModel.ISupportInitialize).EndInit
         Me.CntextMnu.ResumeLayout(false)
         CType(Me.FSW,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.SharedContactsDataSource,System.ComponentModel.ISupportInitialize).EndInit
         Me.ResumeLayout(false)
         Me.PerformLayout
 
@@ -917,7 +911,6 @@ End Sub
     Friend WithEvents TbDirShared As System.Windows.Forms.TabPage
     Friend WithEvents DGVSharedDir As System.Windows.Forms.DataGridView
     Friend WithEvents FSW As System.IO.FileSystemWatcher
-    Friend WithEvents SharedContactsDataSource As BindingSource
     Friend WithEvents DataGridViewTextBoxColumn13 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn14 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewButtonColumn6 As DataGridViewButtonColumn

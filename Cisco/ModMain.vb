@@ -7,7 +7,7 @@ Module ModMain
     Public MyStoredPhoneSettings As Settings 'structure of stored settings
     Public OutsideLinePrefix As String = "9"
     Public ReadOnly MyPhoneBook As New List(Of PhoneBookEntry) 'structure of the phone book
-    'Public ReadOnly MySharedPhoneBook As New List(Of PhoneBookEntry) 'structure of the shared phone book
+    'Public ReadOnly MySharedPhoneBook As New List(Of PhoneBookEntry) 'structure of the shared phone book'
     Public DataDir As String 'holds the file path to where the phonedata is held
     'Public SharedDataDir As String = "\\phoenix-s1\videos\" 'holds the file path to where the shared phonedata is held
     Public LoginPassword As String = ""
@@ -156,10 +156,13 @@ Module ModMain
                     Loop
                 End Using
 
-                FrmMain.SharedContactsDataSource.Clear()
-
+                FrmMain.MySharedPhoneBook.Clear()
                 
-                tempPhoneBook.ForEach(Function(x) (FrmMain.SharedContactsDataSource.Add(x)))
+                For Each entry in tempPhoneBook
+                    FrmMain.MySharedPhoneBook.Add(entry)
+                Next
+
+                'tempPhoneBook.ForEach(Function(x) (FrmMain.MySharedPhoneBook.Add(x)))
 
             End If
         Catch ex As Exception
@@ -189,7 +192,7 @@ Module ModMain
 
         Try
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
-                For Each entry As PhoneBookEntry In FrmMain.SharedContactsDataSource
+                For Each entry As PhoneBookEntry In FrmMain.MySharedPhoneBook
                     If entry.FullName <> "" AndAlso entry.Number <> "" Then
                         outFile.WriteLine(entry.FirstName & "," & entry.Surname & "," & entry.Number)
                     End If

@@ -89,12 +89,12 @@ Public Class FrmPhoneBook
             End With
 
             If GridRowId = -1 Then
-                FrmMain.SharedContactsDataSource.Add(entry)
+                FrmMain.MySharedPhoneBook.Add(entry)
             Else
                 If NewGridName = "DGVSharedDir" Then
-                    FrmMain.SharedContactsDataSource(GridRowId) = entry
+                    FrmMain.MySharedPhoneBook(GridRowId) = entry
                 Else
-                    FrmMain.SharedContactsDataSource.Add(entry)
+                    FrmMain.MySharedPhoneBook.Add(entry)
                 End If
             End If
 

@@ -46,7 +46,7 @@ Public Class FrmSetup
 
         OFDImport.Filter = "CSV files (*.csv)|*.csv"
         OFDImport.Title = "Select File to import phone list"
-        If (OFDImport.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+        If (OFDImport.ShowDialog() = DialogResult.OK) Then
             LoadCSVtoPhoneBook(OFDImport.FileName)
         End If
     End Sub
@@ -120,13 +120,13 @@ Public Class FrmSetup
 
         SFDExport.Filter = "CSV files (*.csv)|*.csv"
         SFDExport.Title = "Export phone list"
-        If (SFDExport.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+        If (SFDExport.ShowDialog() = DialogResult.OK) Then
             ExportPhoneBooktoCSV(SFDExport.FileName)
         End If
     End Sub
 
 
-    Private Sub FrmSetup_Paint(sender As Object, e As Windows.Forms.PaintEventArgs) Handles Me.Paint
+    Private Sub FrmSetup_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
 
         On Error Resume Next
         If me.width = 0 Then Exit Sub
@@ -219,7 +219,7 @@ Public Class FrmSetup
 
         Dim result As DialogResult = SharedFBD.ShowDialog()
 
-        If result = Windows.Forms.DialogResult.OK Then
+        If result = DialogResult.OK Then
             TxtSharedFolder.Text = SharedFBD.SelectedPath
             If Not TxtSharedFolder.Text.EndsWith("\") Then TxtSharedFolder.Text = TxtSharedFolder.Text & "\"
         End If

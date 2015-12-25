@@ -9,5 +9,6 @@
     <ErrorReportUrlHistory>https://github.com/Atrejoe/SPA-Call-Manager-Pro/issues</ErrorReportUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
 </Project>
