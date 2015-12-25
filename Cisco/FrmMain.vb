@@ -132,9 +132,9 @@ Public Class FrmMain
             LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
         End If
 
-        For x As Integer = 0 To DgvPersonal.Rows.Count - 1
-            CmbNumber.Items.Add(MyPhoneBook(x).FirstName & " " & MyPhoneBook(x).Surname)
-        Next x
+        For each entry in MyPhoneBook.Union(MySharedPhoneBook).Distinct().OrderBy(function(x)x.FullName)
+            CmbNumber.Items.Add(entry.FullName)
+        Next
     End Sub
 
     Private Sub FrmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -1194,5 +1194,4 @@ UDPRXError:
         LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
 
     End Sub
-
 End Class
