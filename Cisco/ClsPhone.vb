@@ -43,10 +43,9 @@ Public Class ClsPhone
         Get
             Return UdpRXPort
         End Get
-        Set(ByVal value As Integer)
+        Set
             UdpRXPort = value
         End Set
-
     End Property
 
     Public Property username() As String
@@ -65,10 +64,9 @@ Public Class ClsPhone
         Get
             Return _password
         End Get
-        Set(ByVal value As String)
+        Set
             _password = value
         End Set
-
     End Property
     Public Function DownloadPhoneSettings(ByVal IPAddress As String) As Settings
         ' A Function to download settings from the Phones XML configuration file.
@@ -111,7 +109,7 @@ Public Class ClsPhone
                                     .LinksysKeySystem = reader.Value
                                 Case "SIP_Port_1_"
                                     reader.Read()
-                                    .PhonePort = Cint(reader.Value)
+                                    .PhonePort = CInt(reader.Value)
                             End Select
                     End Select
                 Loop
@@ -273,11 +271,10 @@ Public Class ClsPhone
 
         'sends a message to the phone to make phoen do something!
         Try
-            Dim bytCommand As Byte() = New Byte() {}
 
+            Dim bytCommand = Encoding.ASCII.GetBytes(Message)
             udpClient.Connect(Ipaddress, Port)
-            bytCommand = Encoding.ASCII.GetBytes(Message)
-            Dim pRet As Integer = udpClient.Send(bytCommand, bytCommand.Length)
+            udpClient.Send(bytCommand, bytCommand.Length)
 
         Catch ex As Exception
             ex.Log()
@@ -287,14 +284,11 @@ Public Class ClsPhone
 
 #End Region
     Private Sub WriteLog(strdata As String)
-        'Dim bAns As Boolean = False
-        Dim objReader As StreamWriter
-
-        Dim FullPath As String = dataDir & "\CiscoPhone\Calldata.xml"
+        Dim fullPath As String = DataDir & "\CiscoPhone\Calldata.xml"
         Try
-            objReader = New StreamWriter(FullPath, True)
-            objReader.Write(strdata & vbCrLf & vbCrLf)
-            objReader.Close()
+            Using reader As New StreamWriter(fullPath, True)
+                reader.Write(strdata & vbCrLf & vbCrLf)
+            End Using
         Catch ex As Exception
             ex.Log()
         End Try

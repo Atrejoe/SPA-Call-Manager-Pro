@@ -73,17 +73,10 @@ Public Class FrmSetup
 
         Try
 
-            MyPhoneBook.AddRange(TempPhoneBook)
-
-            FrmMain.DgvPersonal.Rows.Clear()
-
-            For Each entry In MyPhoneBook.OrderBy(Function(x) x.FirstName)
-                Dim index = FrmMain.DgvPersonal.Rows.Add()
-                FrmMain.DgvPersonal.Rows(index).Cells(0).Value = index + 1
-                FrmMain.DgvPersonal.Rows(index).Cells(1).Value = entry.FullName
-                FrmMain.DgvPersonal.Rows(index).Cells(2).Value = entry.Number
-                FrmMain.DgvPersonal.Rows(index).Cells(3).Value = "Call"
+            For each entry in TempPhoneBook
+                MyPhoneBook.Add(entry)
             Next
+            
         Catch ex As Exception
             ex.Log()
         End Try

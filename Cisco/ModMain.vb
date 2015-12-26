@@ -7,8 +7,8 @@ Module ModMain
     Public MyPhoneSettings As Settings 'structure of phone settings
     Public MyStoredPhoneSettings As Settings 'structure of stored settings
     Public OutsideLinePrefix As String = "9"
-    Public ReadOnly MyPhoneBook As New List(Of PhoneBookEntry) 'structure of the phone book
-    Friend Readonly MySharedPhoneBook as New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
+    Public ReadOnly MyPhoneBook As New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
+    Friend ReadOnly MySharedPhoneBook As New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
     Public DataDir As String 'holds the file path to where the phonedata is held
     Public LoginPassword As String = ""
 
@@ -27,7 +27,7 @@ Module ModMain
         gp.AddLine(x, y + height - (radius * 2), x, y + radius)
         gp.AddArc(x, y, radius * 2, radius * 2, 180, 90)
         gp.CloseFigure()
-        Thisform.Region = New Region(gp)
+        thisform.Region = New Region(gp)
         gp.Dispose()
     End Sub
 
@@ -45,7 +45,7 @@ Module ModMain
         gp.AddLine(x, y + height - (radius * 2), x, y + radius)
         gp.AddArc(x, y, radius * 2, radius * 2, 180, 90)
         gp.CloseFigure()
-        ThisControl.Region = New Region(gp)
+        thisControl.Region = New Region(gp)
         gp.Dispose()
     End Sub
 
@@ -81,7 +81,7 @@ Module ModMain
                 Using sr As New IO.StreamReader(filename)
                     Dim tmp() As String
                     ' Hold the amount of lines already read in a 'counter-variable'
-                    
+
                     Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
 
                         tmp = sr.ReadLine.Split(",".ToCharArray())
@@ -94,7 +94,7 @@ Module ModMain
                         End With
 
                         tempPhoneBook.Add(entry)
-                        
+
                     Loop
                 End Using
 
@@ -102,25 +102,10 @@ Module ModMain
                 ex.Log()
             End Try
 
-
-            Try
-                MyPhoneBook.Clear()
-                MyPhoneBook.AddRange(tempPhoneBook.OrderBy(Function(sPhoneBook) sPhoneBook.Surname))
-
-                FrmMain.DgvPersonal.Rows.Clear()
-
-                For Each entry In MyPhoneBook
-
-                    Dim x = FrmMain.DgvPersonal.Rows.Add()
-                    FrmMain.DgvPersonal.Rows(x).Cells(0).Value = x + 1
-                    FrmMain.DgvPersonal.Rows(x).Cells(1).Value = entry.FullName
-                    FrmMain.DgvPersonal.Rows(x).Cells(2).Value = entry.Number
-                    FrmMain.DgvPersonal.Rows(x).Cells(3).Value = "Call"
-
-                Next
-            Catch ex As Exception
-                ex.Log()
-            End Try
+            MyPhoneBook.Clear()
+            For Each entry In tempPhoneBook.OrderBy(Function(sPhoneBook) sPhoneBook.Surname)
+                MyPhoneBook.Add(entry)
+            Next
 
         End If
     End Sub
@@ -142,7 +127,7 @@ Module ModMain
                         Dim entry = New PhoneBookEntry()
                         With entry
                             .FirstName = tmp(0).Trim
-                            .Surname =tmp(1).Trim
+                            .Surname = tmp(1).Trim
                             .Number = tmp(2).Trim
                         End With
                         tempPhoneBook.Add(entry)
@@ -150,8 +135,8 @@ Module ModMain
                 End Using
 
                 MySharedPhoneBook.Clear()
-                
-                For Each entry in tempPhoneBook
+
+                For Each entry In tempPhoneBook
                     MySharedPhoneBook.Add(entry)
                 Next
 
@@ -226,16 +211,16 @@ Module ModMain
 
         'saves the stored settings to the reghistry
 
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalIP", StoredPhoneSettings.LocalIP)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalPort", StoredPhoneSettings.LocalPort)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "CTI_Enable", StoredPhoneSettings.CTI_Enable)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "Debug_Server_Address", StoredPhoneSettings.Debug_Server_Address)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "DebugLevel", StoredPhoneSettings.DebugLevel)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneModel", StoredPhoneSettings.PhoneModel)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneSoftwareVersion", StoredPhoneSettings.PhoneSoftwareVersion)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "StationName", StoredPhoneSettings.StationName)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneIP", StoredPhoneSettings.PhoneIP)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhonePort", StoredPhoneSettings.PhonePort)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalIP", storedPhoneSettings.LocalIP)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalPort", storedPhoneSettings.LocalPort)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "CTI_Enable", storedPhoneSettings.CTI_Enable)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "Debug_Server_Address", storedPhoneSettings.Debug_Server_Address)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "DebugLevel", storedPhoneSettings.DebugLevel)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneModel", storedPhoneSettings.PhoneModel)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneSoftwareVersion", storedPhoneSettings.PhoneSoftwareVersion)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "StationName", storedPhoneSettings.StationName)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneIP", storedPhoneSettings.PhoneIP)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhonePort", storedPhoneSettings.PhonePort)
         My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\SharedPhoneDir", "Path", FrmSetup.TxtSharedFolder.Text)
 
         Return True

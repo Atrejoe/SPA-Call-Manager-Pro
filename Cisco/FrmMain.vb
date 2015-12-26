@@ -22,6 +22,9 @@ Public Class FrmMain
 
         ' Add any initialization after the InitializeComponent() call.
 
+        Me.DgvPersonal.AutoGenerateColumns = False
+        Me.DgvPersonal.DataSource = MyPhonebook
+
         Me.DGVSharedDir.AutoGenerateColumns = False
         Me.DGVSharedDir.DataSource = MySharedPhoneBook
     End Sub
@@ -148,10 +151,11 @@ Public Class FrmMain
         'opens form to add new phonebook entry
         Dim NewFrmPhonebook As New FrmPhoneBook(Nothing, -1, "DgvPersonal")
         NewFrmPhonebook.ShowDialog()
+
         CmbNumber.Items.Clear()
-        For x As Integer = 0 To DgvPersonal.Rows.Count - 1
-            CmbNumber.Items.Add(MyPhoneBook(x).FirstName & " " & MyPhoneBook(x).Surname)
-        Next x
+        For Each entry In MyPhoneBook.Union(MySharedPhoneBook).Distinct().OrderBy(Function(x) x.FullName)
+            CmbNumber.Items.Add(entry.FullName)
+        Next
 
     End Sub
 
@@ -736,7 +740,6 @@ Public Class FrmMain
             CmbNumber.Text = LinePhoneStatus(result).CallerName
             Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
             MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
-            MycallControl = Nothing
         End If
 
 
@@ -782,7 +785,8 @@ Public Class FrmMain
         ' Deletes the entry in the selected row by hitting the delete key
 
         If e.KeyData = Keys.Delete Then
-            Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & CStr(DgvPersonal.Item(1, DgvPersonal.CurrentCell.RowIndex).Value) & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
+            Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
+            Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & entry.FullName & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
             If result = MsgBoxResult.Yes Then
                 'removes entry from the myphonebook array
                 MyPhoneBook.RemoveAt(DgvPersonal.CurrentCell.RowIndex)
@@ -990,11 +994,11 @@ Public Class FrmMain
     End Sub
 
     Private Sub DialFromSpeedDialBox()
-        Dim NumberToCall As String = CmbNumber.Text
-        NumberToCall = NumberToCall.Replace(" ", "")
-        NumberToCall = NumberToCall.Replace("(", "")
-        NumberToCall = NumberToCall.Replace(")", "")
-        NumberToCall = NumberToCall.Replace("-", "")
+        Dim NumberToCall As String = CmbNumber.Text _
+                                              .Replace(" ", "") _
+                                              .Replace("(", "") _
+                                              .Replace(")", "") _
+                                              .Replace("-", "")
 
         Dim MycallControl As New CallControl
         Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
@@ -1005,17 +1009,17 @@ Public Class FrmMain
             Else
                 If CmbNumber.SelectedIndex > -1 Then
                     If TbDirectories.SelectedIndex = 0 Then
-                        MyPhoneBook(CmbNumber.SelectedIndex).Number = MyPhoneBook(CmbNumber.SelectedIndex).Number.Replace(" ", "")
-                        MyPhoneBook(CmbNumber.SelectedIndex).Number = MyPhoneBook(CmbNumber.SelectedIndex).Number.Replace("(", "")
-                        MyPhoneBook(CmbNumber.SelectedIndex).Number = MyPhoneBook(CmbNumber.SelectedIndex).Number.Replace(")", "")
-                        MyPhoneBook(CmbNumber.SelectedIndex).Number = MyPhoneBook(CmbNumber.SelectedIndex).Number.Replace("-", "")
+                        MyPhoneBook(CmbNumber.SelectedIndex).Number = MyPhoneBook(CmbNumber.SelectedIndex).Number.Replace(" ", "") _
+                                                                                                                 .Replace("(", "") _
+                                                                                                                 .Replace(")", "") _
+                                                                                                                 .Replace("-", "")
                         LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = MyPhoneBook(CmbNumber.SelectedIndex).Number
                     Else
                         Dim TmpNumber = CStr(DGVPhoneDir.Rows(CmbNumber.SelectedIndex).Cells(2).Value)
-                        TmpNumber = TmpNumber.Replace(" ", "")
-                        TmpNumber = TmpNumber.Replace("(", "")
-                        TmpNumber = TmpNumber.Replace(")", "")
-                        TmpNumber = TmpNumber.Replace("-", "")
+                        TmpNumber = TmpNumber.Replace(" ", "") _
+                                             .Replace("(", "") _ 
+                                             .Replace(")", "") _
+                                             .Replace("-", "")
                         LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = TmpNumber
                     End If
                 Else
@@ -1085,15 +1089,9 @@ Public Class FrmMain
 
         Select Case TbDirectories.SelectedIndex
             Case 0
-                CmbNumber.Items.Clear()
-                For x As Integer = 0 To DgvPersonal.Rows.Count - 1
-                    CmbNumber.Items.Add(MyPhoneBook(x).FirstName & " " & MyPhoneBook(x).Surname)
-                Next x
+                'Do nothing (data is bound)
             Case 1
-                CmbNumber.Items.Clear()
-                For x As Integer = 0 To DGVSharedDir.Rows.Count - 1
-                    CmbNumber.Items.Add(DGVSharedDir.Rows(x).Cells(1).Value)
-                Next x
+                'Do nothing (data is bound)
             Case 2
                 If PingHandset() Then
                     GetPhoneDir("http://" & MyStoredPhoneSettings.PhoneIP & "/pdir.htm")

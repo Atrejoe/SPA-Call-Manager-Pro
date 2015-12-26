@@ -42,9 +42,6 @@ Public Class FrmCall
         Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Answer, FrmCallPhoneStatus, MyPhoneSettings)
 
         FrmMain.MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
-        MycallControl = Nothing
-
-
     End Sub
 
     Private Sub BtnAnswer_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnAnswer.MouseEnter
@@ -78,8 +75,6 @@ Public Class FrmCall
         Dim CallString As String = MycallControl.PhoneAction(CallControl.eAction.Reject, FrmCallPhoneStatus, MyPhoneSettings)
 
         FrmMain.MyPhone.SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
-        MycallControl = Nothing
-
     End Sub
 
     Private Sub BtnReject_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReject.MouseEnter
@@ -112,10 +107,6 @@ Public Class FrmCall
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-
-        FrmCallPhoneStatus = MyPhoneStatus
-
-       
-
+        FrmCallPhoneStatus = MyPhoneStatus     
     End Sub
 End Class

@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms
 Public Class ClipBoardMonitor
-    Inherits System.Windows.Forms.Form
+    Inherits Form
 
 #Region " Definitions "
     'Constants for API Calls...
@@ -11,9 +11,9 @@ Public Class ClipBoardMonitor
     Private mNextClipBoardViewerHWnd As IntPtr
 
     'API declarations...
-    Declare Auto Function SetClipboardViewer Lib "user32" (ByVal HWnd As IntPtr) As IntPtr
-    Declare Auto Function ChangeClipboardChain Lib "user32" (ByVal HWnd As IntPtr, ByVal HWndNext As IntPtr) As Boolean
-    Declare Auto Function SendMessage Lib "User32" (ByVal HWnd As IntPtr, ByVal Msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As Long
+    Friend Declare Auto Function SetClipboardViewer Lib "user32" (ByVal HWnd As IntPtr) As IntPtr
+    Friend Declare Auto Function ChangeClipboardChain Lib "user32" (ByVal HWnd As IntPtr, ByVal HWndNext As IntPtr) As Boolean
+    Friend Declare Auto Function SendMessage Lib "User32" (ByVal HWnd As IntPtr, ByVal Msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As Long
     Public Event ClipBoardItemAdded(ByVal data As String)
 
 #End Region
