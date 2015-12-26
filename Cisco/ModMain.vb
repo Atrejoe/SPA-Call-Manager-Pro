@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing.Drawing2D
+Imports Cisco.Utilities
 Imports Pss.Cisco.Models
 
 Module ModMain
@@ -7,9 +8,8 @@ Module ModMain
     Public MyStoredPhoneSettings As Settings 'structure of stored settings
     Public OutsideLinePrefix As String = "9"
     Public ReadOnly MyPhoneBook As New List(Of PhoneBookEntry) 'structure of the phone book
-    'Public ReadOnly MySharedPhoneBook As New List(Of PhoneBookEntry) 'structure of the shared phone book'
+    Friend Readonly MySharedPhoneBook as New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
     Public DataDir As String 'holds the file path to where the phonedata is held
-    'Public SharedDataDir As String = "\\phoenix-s1\videos\" 'holds the file path to where the shared phonedata is held
     Public LoginPassword As String = ""
 
 
@@ -149,10 +149,10 @@ Module ModMain
                     Loop
                 End Using
 
-                FrmMain.MySharedPhoneBook.Clear()
+                MySharedPhoneBook.Clear()
                 
                 For Each entry in tempPhoneBook
-                    FrmMain.MySharedPhoneBook.Add(entry)
+                    MySharedPhoneBook.Add(entry)
                 Next
 
                 'tempPhoneBook.ForEach(Function(x) (FrmMain.MySharedPhoneBook.Add(x)))

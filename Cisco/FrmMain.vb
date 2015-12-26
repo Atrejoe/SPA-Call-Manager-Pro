@@ -1,10 +1,6 @@
-Imports System.Drawing.Drawing2D
+
 Imports System.IO
 Imports System.Net
-Imports System.Runtime.Remoting.Messaging
-Imports Cisco.Utilities
-Imports Microsoft.VisualBasic
-Imports Pss.Cisco.Models
 
 Public Class FrmMain
 
@@ -18,8 +14,6 @@ Public Class FrmMain
     Public WithEvents clpbrd As New ClipBoardMonitor ' monitors the clipboard for telephone numbers
     Public WithEvents MyPhone As New ClsPhone 'Phone class that handles communication with the phone
     Dim index As Integer = 0
-
-    Friend Readonly MySharedPhoneBook as New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
 
     Public Sub New()
 

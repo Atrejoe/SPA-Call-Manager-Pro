@@ -23,15 +23,15 @@ Partial Class FrmMain
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmMain))
         Me.TmrFadeNotification = New System.Windows.Forms.Timer(Me.components)
         Me.TbDirectories = New System.Windows.Forms.TabControl()
@@ -43,6 +43,9 @@ Partial Class FrmMain
         Me.DataGridViewButtonColumn4 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.TbDirShared = New System.Windows.Forms.TabPage()
         Me.DGVSharedDir = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewButtonColumn6 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.TbDirPersonal = New System.Windows.Forms.TabPage()
         Me.DGVPhoneDir = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -92,9 +95,6 @@ Partial Class FrmMain
         Me.lblInstructions = New System.Windows.Forms.Label()
         Me.SPAToolTips = New System.Windows.Forms.ToolTip(Me.components)
         Me.FSW = New System.IO.FileSystemWatcher()
-        Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewButtonColumn6 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.TbDirectories.SuspendLayout
         Me.TabPersonaladdress.SuspendLayout
         CType(Me.DgvPersonal,System.ComponentModel.ISupportInitialize).BeginInit
@@ -133,7 +133,7 @@ Partial Class FrmMain
         Me.TbDirectories.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TbDirectories.Name = "TbDirectories"
         Me.TbDirectories.SelectedIndex = 0
-        Me.TbDirectories.Size = New System.Drawing.Size(607, 365)
+        Me.TbDirectories.Size = New System.Drawing.Size(607, 379)
         Me.TbDirectories.TabIndex = 0
         '
         'TabPersonaladdress
@@ -144,7 +144,7 @@ Partial Class FrmMain
         Me.TabPersonaladdress.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabPersonaladdress.Name = "TabPersonaladdress"
         Me.TabPersonaladdress.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPersonaladdress.Size = New System.Drawing.Size(599, 330)
+        Me.TabPersonaladdress.Size = New System.Drawing.Size(599, 344)
         Me.TabPersonaladdress.TabIndex = 4
         Me.TabPersonaladdress.Text = "Personal "
         Me.TabPersonaladdress.UseVisualStyleBackColor = true
@@ -155,8 +155,8 @@ Partial Class FrmMain
         Me.DgvPersonal.AllowUserToDeleteRows = false
         Me.DgvPersonal.AllowUserToResizeColumns = false
         Me.DgvPersonal.AllowUserToResizeRows = false
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGray
-        Me.DgvPersonal.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle19.BackColor = System.Drawing.Color.LightGray
+        Me.DgvPersonal.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle19
         Me.DgvPersonal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvPersonal.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn7, Me.col1, Me.DataGridViewTextBoxColumn8, Me.DataGridViewButtonColumn4})
         Me.DgvPersonal.Dock = System.Windows.Forms.DockStyle.Fill
@@ -167,7 +167,7 @@ Partial Class FrmMain
         Me.DgvPersonal.RowHeadersVisible = false
         Me.DgvPersonal.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.DgvPersonal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvPersonal.Size = New System.Drawing.Size(593, 322)
+        Me.DgvPersonal.Size = New System.Drawing.Size(593, 336)
         Me.DgvPersonal.TabIndex = 1
         '
         'DataGridViewTextBoxColumn7
@@ -217,8 +217,8 @@ Partial Class FrmMain
         Me.DGVSharedDir.AllowUserToDeleteRows = false
         Me.DGVSharedDir.AllowUserToResizeColumns = false
         Me.DGVSharedDir.AllowUserToResizeRows = false
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.LightGray
-        Me.DGVSharedDir.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle20.BackColor = System.Drawing.Color.LightGray
+        Me.DGVSharedDir.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle20
         Me.DGVSharedDir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGVSharedDir.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn13, Me.DataGridViewTextBoxColumn14, Me.DataGridViewButtonColumn6})
         Me.DGVSharedDir.Dock = System.Windows.Forms.DockStyle.Fill
@@ -231,6 +231,35 @@ Partial Class FrmMain
         Me.DGVSharedDir.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DGVSharedDir.Size = New System.Drawing.Size(593, 324)
         Me.DGVSharedDir.TabIndex = 3
+        '
+        'DataGridViewTextBoxColumn13
+        '
+        Me.DataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DataGridViewTextBoxColumn13.DataPropertyName = "FullName"
+        Me.DataGridViewTextBoxColumn13.HeaderText = "Name"
+        Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
+        Me.DataGridViewTextBoxColumn13.ReadOnly = true
+        '
+        'DataGridViewTextBoxColumn14
+        '
+        Me.DataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.DataGridViewTextBoxColumn14.DataPropertyName = "Number"
+        Me.DataGridViewTextBoxColumn14.HeaderText = "Number"
+        Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
+        Me.DataGridViewTextBoxColumn14.ReadOnly = true
+        Me.DataGridViewTextBoxColumn14.Width = 90
+        '
+        'DataGridViewButtonColumn6
+        '
+        Me.DataGridViewButtonColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.DataGridViewButtonColumn6.HeaderText = "Call"
+        Me.DataGridViewButtonColumn6.Name = "DataGridViewButtonColumn6"
+        Me.DataGridViewButtonColumn6.ReadOnly = true
+        Me.DataGridViewButtonColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewButtonColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.DataGridViewButtonColumn6.Text = "Call"
+        Me.DataGridViewButtonColumn6.UseColumnTextForButtonValue = true
+        Me.DataGridViewButtonColumn6.Width = 61
         '
         'TbDirPersonal
         '
@@ -251,8 +280,8 @@ Partial Class FrmMain
         Me.DGVPhoneDir.AllowUserToDeleteRows = false
         Me.DGVPhoneDir.AllowUserToResizeColumns = false
         Me.DGVPhoneDir.AllowUserToResizeRows = false
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.LightGray
-        Me.DGVPhoneDir.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle21.BackColor = System.Drawing.Color.LightGray
+        Me.DGVPhoneDir.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle21
         Me.DGVPhoneDir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGVPhoneDir.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10, Me.DataGridViewTextBoxColumn11, Me.DataGridViewButtonColumn5})
         Me.DGVPhoneDir.Dock = System.Windows.Forms.DockStyle.Fill
@@ -314,8 +343,8 @@ Partial Class FrmMain
         Me.DGWdialled.AllowUserToDeleteRows = false
         Me.DGWdialled.AllowUserToResizeColumns = false
         Me.DGWdialled.AllowUserToResizeRows = false
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.LightGray
-        Me.DGWdialled.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle22.BackColor = System.Drawing.Color.LightGray
+        Me.DGWdialled.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle22
         Me.DGWdialled.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGWdialled.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.dName, Me.DataGridViewTextBoxColumn2, Me.DataGridViewButtonColumn1})
         Me.DGWdialled.Dock = System.Windows.Forms.DockStyle.Fill
@@ -352,9 +381,9 @@ Partial Class FrmMain
         '
         'DataGridViewButtonColumn1
         '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.Silver
-        Me.DataGridViewButtonColumn1.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle23.BackColor = System.Drawing.Color.Silver
+        Me.DataGridViewButtonColumn1.DefaultCellStyle = DataGridViewCellStyle23
         Me.DataGridViewButtonColumn1.HeaderText = "Call"
         Me.DataGridViewButtonColumn1.Name = "DataGridViewButtonColumn1"
         Me.DataGridViewButtonColumn1.ReadOnly = true
@@ -381,8 +410,8 @@ Partial Class FrmMain
         Me.DGWAnswered.AllowUserToDeleteRows = false
         Me.DGWAnswered.AllowUserToResizeColumns = false
         Me.DGWAnswered.AllowUserToResizeRows = false
-        DataGridViewCellStyle6.BackColor = System.Drawing.Color.LightGray
-        Me.DGWAnswered.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle24.BackColor = System.Drawing.Color.LightGray
+        Me.DGWAnswered.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle24
         Me.DGWAnswered.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGWAnswered.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.tName, Me.DataGridViewTextBoxColumn4, Me.DataGridViewButtonColumn2})
         Me.DGWAnswered.Dock = System.Windows.Forms.DockStyle.Fill
@@ -420,9 +449,9 @@ Partial Class FrmMain
         '
         'DataGridViewButtonColumn2
         '
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.Silver
-        Me.DataGridViewButtonColumn2.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle25.BackColor = System.Drawing.Color.Silver
+        Me.DataGridViewButtonColumn2.DefaultCellStyle = DataGridViewCellStyle25
         Me.DataGridViewButtonColumn2.HeaderText = "Call"
         Me.DataGridViewButtonColumn2.Name = "DataGridViewButtonColumn2"
         Me.DataGridViewButtonColumn2.ReadOnly = true
@@ -449,8 +478,8 @@ Partial Class FrmMain
         Me.DGWMissed.AllowUserToDeleteRows = false
         Me.DGWMissed.AllowUserToResizeColumns = false
         Me.DGWMissed.AllowUserToResizeRows = false
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.LightGray
-        Me.DGWMissed.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle26.BackColor = System.Drawing.Color.LightGray
+        Me.DGWMissed.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle26
         Me.DGWMissed.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DGWMissed.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGWMissed.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn5, Me.mname, Me.DataGridViewTextBoxColumn6, Me.DataGridViewButtonColumn3})
@@ -488,9 +517,9 @@ Partial Class FrmMain
         '
         'DataGridViewButtonColumn3
         '
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.Color.Silver
-        Me.DataGridViewButtonColumn3.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle27.BackColor = System.Drawing.Color.Silver
+        Me.DataGridViewButtonColumn3.DefaultCellStyle = DataGridViewCellStyle27
         Me.DataGridViewButtonColumn3.HeaderText = "Call"
         Me.DataGridViewButtonColumn3.Name = "DataGridViewButtonColumn3"
         Me.DataGridViewButtonColumn3.ReadOnly = true
@@ -770,40 +799,11 @@ Partial Class FrmMain
         Me.FSW.Filter = "Phonebook.csv"
         Me.FSW.SynchronizingObject = Me
         '
-        'DataGridViewTextBoxColumn13
-        '
-        Me.DataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.DataGridViewTextBoxColumn13.DataPropertyName = "FullName"
-        Me.DataGridViewTextBoxColumn13.HeaderText = "Name"
-        Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
-        Me.DataGridViewTextBoxColumn13.ReadOnly = true
-        '
-        'DataGridViewTextBoxColumn14
-        '
-        Me.DataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.DataGridViewTextBoxColumn14.DataPropertyName = "Number"
-        Me.DataGridViewTextBoxColumn14.HeaderText = "Number"
-        Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
-        Me.DataGridViewTextBoxColumn14.ReadOnly = true
-        Me.DataGridViewTextBoxColumn14.Width = 90
-        '
-        'DataGridViewButtonColumn6
-        '
-        Me.DataGridViewButtonColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.DataGridViewButtonColumn6.HeaderText = "Call"
-        Me.DataGridViewButtonColumn6.Name = "DataGridViewButtonColumn6"
-        Me.DataGridViewButtonColumn6.ReadOnly = true
-        Me.DataGridViewButtonColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewButtonColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.DataGridViewButtonColumn6.Text = "Call"
-        Me.DataGridViewButtonColumn6.UseColumnTextForButtonValue = true
-        Me.DataGridViewButtonColumn6.Width = 61
-        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 16!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(613, 573)
+        Me.ClientSize = New System.Drawing.Size(613, 597)
         Me.Controls.Add(Me.lblInstructions)
         Me.Controls.Add(Me.LblLine4)
         Me.Controls.Add(Me.LblLine3)
@@ -827,6 +827,7 @@ Partial Class FrmMain
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MaximizeBox = false
         Me.Name = "FrmMain"
+        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
         Me.Text = "SPA Call Manager"
         Me.TbDirectories.ResumeLayout(false)
         Me.TabPersonaladdress.ResumeLayout(false)

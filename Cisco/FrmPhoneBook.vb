@@ -28,8 +28,8 @@ Public Class FrmPhoneBook
                 End If
             End If
 
-            SavePhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
-            LoadPhoneBook(dataDir & "\CiscoPhone\Phonebook.csv")
+            SavePhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
+            LoadPhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
             Me.Close()
 
         Catch ex As Exception
@@ -79,12 +79,12 @@ Public Class FrmPhoneBook
             End With
 
             If GridRowId = -1 Then
-                FrmMain.MySharedPhoneBook.Add(entry)
+                MySharedPhoneBook.Add(entry)
             Else
                 If NewGridName = "DGVSharedDir" Then
-                    FrmMain.MySharedPhoneBook(GridRowId) = entry
+                    MySharedPhoneBook(GridRowId) = entry
                 Else
-                    FrmMain.MySharedPhoneBook.Add(entry)
+                    MySharedPhoneBook.Add(entry)
                 End If
             End If
 
