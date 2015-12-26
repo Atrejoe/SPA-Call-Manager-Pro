@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace Cisco.Utilities
 {
+
+#pragma warning disable 1591 //Todo: Add documentation 
+
     public class PropertyComparer<T> : IComparer<T>
     {
         private readonly IComparer comparer;

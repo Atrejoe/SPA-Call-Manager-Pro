@@ -15,6 +15,8 @@ namespace Cisco.Utilities
         private ListSortDirection listSortDirection;
         private PropertyDescriptor propertyDescriptor;
 
+#pragma warning disable 1591 //Todo: Add documentation 
+
         public SortableBindingList()
             : base(new List<T>())
         {
