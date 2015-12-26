@@ -145,17 +145,7 @@ Public Class FrmMain
 
     Private Sub FrmMain_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
         'paints form with slight gradient
-        On Error Resume Next
-        If Me.Width = 0 Then Exit Sub
-        If Me.Height = 0 Then Exit Sub
-
-        Dim a As New LinearGradientBrush(New RectangleF(0, 0, Me.Width, Me.Height), Color.SlateGray, Color.Black, LinearGradientMode.Vertical)
-        Dim gg As Graphics = e.Graphics
-        gg.FillRectangle(a, New RectangleF(0, 0, Me.Width, Me.Height))
-        a = Nothing
-        gg = Nothing
-
-
+        Me.PaintGradient(e.Graphics)
     End Sub
 
     Private Sub BtnAddPhoneEntry_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnAddPhoneEntry.Click

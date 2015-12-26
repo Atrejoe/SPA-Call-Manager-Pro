@@ -186,6 +186,7 @@
     <Compile Include="ClsPhone.vb" />
     <Compile Include="NetworkUtils.vb" />
     <Compile Include="Settings.vb" />
+    <Compile Include="UiUtils.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmCall.resx">

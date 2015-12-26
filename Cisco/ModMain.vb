@@ -70,14 +70,6 @@ Module ModMain
         gp.Dispose()
     End Sub
 
-    Public Sub PaintGradient(ByVal sender As Control, ByVal e As PaintEventArgs, ByVal color1 As Color, ByVal color2 As Color)
-
-        'paints a gradient onto the background  of the sender object
-        Dim a As New LinearGradientBrush(New RectangleF(0, 0, sender.Width, sender.Height), color1, color2, LinearGradientMode.Vertical)
-        Dim gg As Graphics = e.Graphics
-        gg.FillRectangle(a, New RectangleF(0, 0, sender.Width, sender.Height))
-    End Sub
-
     Public Sub LoadPhoneBook(ByVal filename As String)
 
         If IO.File.Exists(filename) Then

@@ -66,7 +66,7 @@ Public Class FrmCall
         Dim CallImageNew As Graphics = Graphics.FromImage(CallImage)
 
         DrawRoundRectControl(BtnAnswer, 0, 0, me.width, me.height, 5)
-        PaintGradient(BtnAnswer, e, Color.Green, Color.DarkGreen)
+        BtnAnswer.PaintGradient(e.Graphics, Color.Green, Color.DarkGreen)
         g.DrawImage(CallImage, 15, 0)
 
 
@@ -101,7 +101,7 @@ Public Class FrmCall
         Dim CallImageNew As Graphics = Graphics.FromImage(CallImage)
 
         DrawRoundRectControl(BtnReject, 0, 0, me.width, me.height, 5)
-        PaintGradient(BtnReject, e, Color.Red, Color.DarkRed)
+        BtnReject.PaintGradient(e.Graphics, Color.Red, Color.DarkRed)
         g.DrawImage(CallImage, 15, 0)
 
     End Sub

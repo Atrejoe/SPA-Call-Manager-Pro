@@ -1,5 +1,4 @@
-﻿Imports System.Drawing.Drawing2D
-Imports System.IO
+﻿Imports System.IO
 Imports Pss.Cisco.Models
 
 Public Class FrmSetup
@@ -128,14 +127,8 @@ Public Class FrmSetup
 
     Private Sub FrmSetup_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
 
-        On Error Resume Next
-        If me.width = 0 Then Exit Sub
-        If me.height = 0 Then Exit Sub
+        Me.PaintGradient(e.Graphics)
 
-        Dim a As New LinearGradientBrush(New RectangleF(0, 0, Me.Width, Me.Height), Color.SlateGray, Color.Black, LinearGradientMode.Vertical)
-        Dim gg As Graphics = e.Graphics
-        gg.FillRectangle(a, New RectangleF(0, 0, Me.Width, Me.Height))
-        
     End Sub
 
     Private Sub btnRecheck_Click(sender As System.Object, e As EventArgs) Handles btnRecheck.Click
