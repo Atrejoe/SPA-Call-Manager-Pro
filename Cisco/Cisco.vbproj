@@ -14,7 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>....\deploy\stable\</PublishUrl>
     <Install>true</Install>
@@ -100,16 +101,26 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Cisco_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <HintPath>..\packages\Common.Logging.1.2.0\lib\1.0\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpBrake, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpBrake.2.2.1\lib\SharpBrake.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -135,6 +146,7 @@
     <Compile Include="ClipBoardMonitor.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ErrorLogging.vb" />
     <Compile Include="FrmCall.Designer.vb">
       <DependentUpon>FrmCall.vb</DependentUpon>
     </Compile>
@@ -212,6 +224,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Cisco_TemporaryKey.pfx" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
@@ -229,6 +242,7 @@
     <EmbeddedResource Include="Dialup.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="phone.png" />
   </ItemGroup>
   <ItemGroup>

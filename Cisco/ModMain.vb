@@ -99,6 +99,7 @@ Module ModMain
                 End Using
 
             Catch ex As Exception
+                ex.Log()
             End Try
 
 
@@ -118,7 +119,7 @@ Module ModMain
 
                 Next
             Catch ex As Exception
-
+                ex.Log()
             End Try
 
         End If
@@ -158,7 +159,7 @@ Module ModMain
 
             End If
         Catch ex As Exception
-
+            ex.Log()
         End Try
     End Sub
 
@@ -175,7 +176,7 @@ Module ModMain
             End Using
 
         Catch ex As Exception
-
+            ex.Log()
         End Try
     End Sub
 
@@ -184,13 +185,14 @@ Module ModMain
 
         Try
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
-                For Each entry As PhoneBookEntry In FrmMain.MySharedPhoneBook
+                For Each entry As PhoneBookEntry In MySharedPhoneBook
                     If entry.FullName <> "" AndAlso entry.Number <> "" Then
                         outFile.WriteLine(entry.FirstName & "," & entry.Surname & "," & entry.Number)
                     End If
                 Next
             End Using
         Catch ex As Exception
+            ex.Log()
         End Try
     End Sub
 
@@ -214,7 +216,7 @@ Module ModMain
             storedPhoneSettings.password = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "password", ""), String)
             storedPhoneSettings.sharedDataDir = CType(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\PssLinksys\SharedPhoneDir", "Path", ""), String)
         Catch ex As Exception
-
+            ex.Log()
         End Try
 
         Return storedPhoneSettings

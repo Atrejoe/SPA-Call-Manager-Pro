@@ -33,7 +33,7 @@ Public Class FrmPhoneBook
             Me.Close()
 
         Catch ex As Exception
-
+            ex.Log()
         End Try
 
     End Sub
