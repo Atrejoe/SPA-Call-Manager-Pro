@@ -1,4 +1,4 @@
-﻿Public Class CallControl
+﻿Public Module CallControl
 
     Public Enum eAction
         Hold = 1
@@ -55,9 +55,10 @@
 
     End Function
 
-    Private Function GetRandom(ByVal Min As Integer, ByVal Max As Integer) As Integer
+    Private ReadOnly Generator as New Random()
 
-        Static Generator As System.Random = New System.Random()
+    Private Function GetRandom(ByVal Min As Integer, ByVal Max As Integer) As Integer
+        
         Return Generator.Next(Min, Max)
 
     End Function
@@ -77,6 +78,6 @@
         Return newNumber
 
     End Function
-End Class
+End Module
 
 

@@ -94,7 +94,7 @@ Public Class FrmSetup
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
 
                 For Each entry In MyPhoneBook
-                    If entry.FullName <> "" AndAlso entry.Number <> "" Then
+                    If entry.DisplayName <> "" AndAlso entry.Number <> "" Then
                         outFile.WriteLine(entry.FirstName & "," & entry.Surname & "," & entry.Number)
                     End If
                 Next

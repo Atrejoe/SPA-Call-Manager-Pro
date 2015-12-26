@@ -1,5 +1,4 @@
-﻿Imports System.Drawing.Drawing2D
-Imports Cisco.Utilities
+﻿Imports Cisco.Utilities
 Imports Pss.Cisco.Models
 
 Module ModMain
@@ -7,68 +6,13 @@ Module ModMain
     Public MyPhoneSettings As Settings 'structure of phone settings
     Public MyStoredPhoneSettings As Settings 'structure of stored settings
     Public OutsideLinePrefix As String = "9"
-    Public ReadOnly MyPhoneBook As New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
-    Friend ReadOnly MySharedPhoneBook As New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
+
+    Friend ReadOnly MyPhoneBook, MySharedPhoneBook, PhoneDir, Dialled, Missed, Answered As New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
+    Friend ReadOnly CombinedPhoneBook As New List(Of Phonebookentry)
+
     Public DataDir As String 'holds the file path to where the phonedata is held
     Public LoginPassword As String = ""
-
-
-    Public Sub DrawRoundRectForm(ByVal thisform As Form, ByVal x As Single, ByVal y As Single, ByVal width As Single, ByVal height As Single, ByVal radius As Single)
-
-        'draws a borderless form with curved edges
-        Dim gp As GraphicsPath = New GraphicsPath()
-
-        gp.AddLine(x + radius, y, x + width - (radius * 2), y)
-        gp.AddArc(x + width - (radius * 2), y, radius * 2, radius * 2, 270, 90)
-        gp.AddLine(x + width, y + radius, x + width, y + height - (radius * 2))
-        gp.AddArc(x + width - (radius * 2), y + height - (radius * 2), radius * 2, radius * 2, 0, 90)
-        gp.AddLine(x + width - (radius * 2), y + height, x + radius, y + height)
-        gp.AddArc(x, y + height - (radius * 2), radius * 2, radius * 2, 90, 90)
-        gp.AddLine(x, y + height - (radius * 2), x, y + radius)
-        gp.AddArc(x, y, radius * 2, radius * 2, 180, 90)
-        gp.CloseFigure()
-        thisform.Region = New Region(gp)
-        gp.Dispose()
-    End Sub
-
-    Public Sub DrawRoundRectControl(ByVal thisControl As Control, ByVal x As Single, ByVal y As Single, ByVal width As Single, ByVal height As Single, ByVal radius As Single)
-
-        'draws a control with curved edges
-        Dim gp As GraphicsPath = New GraphicsPath()
-
-        gp.AddLine(x + radius, y, x + width - (radius * 2), y)
-        gp.AddArc(x + width - (radius * 2), y, radius * 2, radius * 2, 270, 90)
-        gp.AddLine(x + width, y + radius, x + width, y + height - (radius * 2))
-        gp.AddArc(x + width - (radius * 2), y + height - (radius * 2), radius * 2, radius * 2, 0, 90)
-        gp.AddLine(x + width - (radius * 2), y + height, x + radius, y + height)
-        gp.AddArc(x, y + height - (radius * 2), radius * 2, radius * 2, 90, 90)
-        gp.AddLine(x, y + height - (radius * 2), x, y + radius)
-        gp.AddArc(x, y, radius * 2, radius * 2, 180, 90)
-        gp.CloseFigure()
-        thisControl.Region = New Region(gp)
-        gp.Dispose()
-    End Sub
-
-    Public Sub DrawRoundRectFill(ByVal g As Graphics, ByVal b As Brush, ByVal x As Integer, ByVal y As Integer, ByVal width As Integer, ByVal height As Integer, ByVal radius As Single)
-
-        ' fills object with color
-
-        Dim gp As GraphicsPath = New GraphicsPath
-
-        gp.AddLine(x + radius, y, x + width - (radius * 2), y)
-        gp.AddArc(x + width - (radius * 2), y, radius * 2, radius * 2, 270, 90)
-        gp.AddLine(x + width, y + radius, x + width, y + height - (radius * 2))
-        gp.AddArc(x + width - (radius * 2), y + height - (radius * 2), radius * 2, radius * 2, 0, 90)
-        gp.AddLine(x + width - (radius * 2), y + height, x + radius, y + height)
-        gp.AddArc(x, y + height - (radius * 2), radius * 2, radius * 2, 90, 90)
-        gp.AddLine(x, y + height - (radius * 2), x, y + radius)
-        gp.AddArc(x, y, radius * 2, radius * 2, 180, 90)
-        gp.CloseFigure()
-
-        gp.CloseFigure()
-        g.FillPath(b, gp)
-        gp.Dispose()
-    End Sub
+    
 
     Public Sub LoadPhoneBook(ByVal filename As String)
 
@@ -171,7 +115,7 @@ Module ModMain
         Try
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
                 For Each entry As PhoneBookEntry In MySharedPhoneBook
-                    If entry.FullName <> "" AndAlso entry.Number <> "" Then
+                    If entry.DisplayName <> "" AndAlso entry.Number <> "" Then
                         outFile.WriteLine(entry.FirstName & "," & entry.Surname & "," & entry.Number)
                     End If
                 Next
