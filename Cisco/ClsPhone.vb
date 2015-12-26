@@ -172,12 +172,12 @@ Public Class ClsPhone
 #Region "UDP"
 
     Public Sub Startlistening()
-        'starts the listening process for messages from the phine
+        'starts the listening process for messages from the phone
         Try
             receivingUdpClient = New System.Net.Sockets.UdpClient(UdpRXPort)
             BgwUDP.RunWorkerAsync()
         Catch ex As Exception
-
+            ex.Log()
         End Try
 
     End Sub
@@ -191,6 +191,7 @@ Public Class ClsPhone
             strReturnData = System.Text.Encoding.ASCII.GetString(receiveBytes)
         Catch ex As Exception
             ' MsgBox(ex.Message)
+            ex.Log()
         End Try
 
     End Sub
@@ -206,7 +207,7 @@ Public Class ClsPhone
             End If
             BgwUDP.RunWorkerAsync()
         Catch ex As Exception
-
+            ex.Log()
         End Try
 
     End Sub
@@ -279,7 +280,7 @@ Public Class ClsPhone
             Dim pRet As Integer = udpClient.Send(bytCommand, bytCommand.Length)
 
         Catch ex As Exception
-
+            ex.Log()
         End Try
 
     End Sub
@@ -294,7 +295,8 @@ Public Class ClsPhone
             objReader = New StreamWriter(FullPath, True)
             objReader.Write(strdata & vbCrLf & vbCrLf)
             objReader.Close()
-        Catch Ex As Exception
+        Catch ex As Exception
+            ex.Log()
         End Try
     End Sub
 End Class

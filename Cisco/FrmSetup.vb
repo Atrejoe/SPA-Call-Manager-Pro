@@ -85,7 +85,7 @@ Public Class FrmSetup
                 FrmMain.DgvPersonal.Rows(index).Cells(3).Value = "Call"
             Next
         Catch ex As Exception
-
+            ex.Log()
         End Try
 
         SavePhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
@@ -108,7 +108,7 @@ Public Class FrmSetup
             End Using
 
         Catch ex As Exception
-
+            ex.Log()
         End Try
 
         Close()
