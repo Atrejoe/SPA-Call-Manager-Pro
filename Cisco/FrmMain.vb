@@ -11,7 +11,7 @@ Public Class FrmMain
 
     Private ReadOnly FrmFade(4) As Boolean ''Sets if fade is enabled when form closes
     Private ReadOnly HoldFlash(4) As Boolean ''Sets if fade is enabled when form closes
-    Private ReadOnly LinePhoneStatus(4) As SPhoneStatus ' status of each line object
+    Private Shared ReadOnly LinePhoneStatus(4) As SPhoneStatus ' status of each line object
     Public WithEvents clpbrd As New ClipBoardMonitor ' monitors the clipboard for telephone numbers
 
     Public Sub New()
@@ -379,6 +379,9 @@ Public Class FrmMain
                             HoldFlash(4) = False
                     End Select
                     FrmFade(phoneStatusdata.Id) = True
+                Case Else
+                    Dim argumentEx As New ArgumentOutOfRangeException("phoneStatusdata.Status", phoneStatusdata.Status, String.Format("Phione status '{0}' was not handled.", phoneStatusdata.Status))
+                    argumentEx.Log()
             End Select
 
             Exit Sub
@@ -593,6 +596,23 @@ Public Class FrmMain
     Public Sub GetPhoneMissed(URL As String)
         GetPhoneEntries(URL, "Missed", "Missed Calls", Missed)
     End Sub
+    Private Sub CallPhoneBookEntry(entry As PhoneBookEntry)
+
+        Dim result = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
+        If result = 0 Then
+            MsgBox(String.Format("Could not obtain a free line. The status of your lines is : {0}", String.Join(", ", LinePhoneStatus.Select(Function(x) x.Status))))
+            Return
+        End If
+
+        LinePhoneStatus(result).Id = result
+        LinePhoneStatus(result).CallerNumber = entry.Number
+        LinePhoneStatus(result).CallerName = entry.DisplayName
+
+        Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
+        SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
+
+        CmbNumber.SelectedItem = entry
+    End Sub
 
     Private Sub DGWAnswered_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWAnswered.CellContentClick
         If e.RowIndex < 0 Then Return
@@ -600,39 +620,21 @@ Public Class FrmMain
         'calls the number in the grid row, when the call button is clicked 
 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
-            If result = 0 Then Exit Sub
-
             Dim entry = Answered(e.RowIndex)
-            LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = entry.Number
-            LinePhoneStatus(result).CallerName = entry.DisplayName
-
-            CmbNumber.SelectedItem = entry
-
-            Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
-            SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
+            CallPhoneBookEntry(entry)
         End If
 
     End Sub
+
+
 
     Private Sub DGWdialled_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWdialled.CellContentClick
         If DGWdialled.CurrentCell Is Nothing Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
-            If result = 0 Then Exit Sub
-
             Dim entry = Dialled(DGWdialled.CurrentCell.RowIndex)
-
-            LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = entry.Number
-
-            CmbNumber.SelectedItem = entry
-
-            Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
-            SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
+            CallPhoneBookEntry(entry)
         End If
 
     End Sub
@@ -642,19 +644,8 @@ Public Class FrmMain
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
-            If result = 0 Then Exit Sub
-
             Dim entry = Missed(DGWMissed.CurrentCell.RowIndex)
-
-            LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = entry.Number
-
-            CmbNumber.SelectedItem = entry
-
-            Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
-            SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
-
+            CallPhoneBookEntry(entry)
         End If
 
     End Sub
@@ -664,21 +655,9 @@ Public Class FrmMain
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
-            If result = 0 Then Exit Sub
-
             Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
-
-            LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = entry.Number
-            LinePhoneStatus(result).CallerName = entry.DisplayName
-
-            CmbNumber.SelectedItem = entry
-
-            Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
-            SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
+            CallPhoneBookEntry(entry)
         End If
-
 
     End Sub
 
@@ -686,21 +665,9 @@ Public Class FrmMain
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
-            If result = 0 Then Exit Sub
-
             Dim entry = PhoneDir(DgvPersonal.CurrentCell.RowIndex)
-
-            LinePhoneStatus(result).Id = result
-            LinePhoneStatus(result).CallerNumber = entry.Number
-            LinePhoneStatus(result).CallerName = entry.DisplayName
-
-            CmbNumber.SelectedItem = entry
-
-            Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
-            SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
+            CallPhoneBookEntry(entry)
         End If
-
 
     End Sub
 
@@ -744,13 +711,12 @@ Public Class FrmMain
     Private Sub clpbrd_ClipBoardItemAdded(data As String) Handles clpbrd.ClipBoardItemAdded
 
         'called when a new clipboard item is saved ie in the copy command....and checks if its a number before adding to the dial number box
-        data = data.Replace(" ", "")
-        data = data.Replace("(", "")
-        data = data.Replace(")", "")
-        data = data.Replace("-", "")
+        data = data.Replace(" ", "") _
+                   .Replace("(", "") _
+                   .Replace(")", "") _
+                   .Replace("-", "")
 
-        Dim IsNum As Boolean = IsNumeric(data)
-        If IsNum = True Then CmbNumber.Text = data
+        If IsNumeric(data) Then CmbNumber.Text = data
 
     End Sub
 
@@ -762,9 +728,9 @@ Public Class FrmMain
             result = CType(CmbNumber.SelectedItem, PhoneBookEntry).Number
         Else
             result = CmbNumber.Text.Replace(" ", "") _
-                                         .Replace("(", "") _
-                                         .Replace(")", "") _
-                                         .Replace("-", "")
+                                   .Replace("(", "") _
+                                   .Replace(")", "") _
+                                   .Replace("-", "")
         End If
 
         Return result
@@ -866,13 +832,12 @@ Public Class FrmMain
 
     End Sub
 
-    Public Function FindFreeLine() As Integer
+    Public Shared Function FindFreeLine() As Integer
 
         ' checks through the linestatus objects for the fisrt free line....if all are in use returns 0 and no action is taken
         For x = 1 To 4
             If LinePhoneStatus(x).Status = EPhoneStatus.Idle Then
                 Return x
-                Exit Function
             End If
         Next
 

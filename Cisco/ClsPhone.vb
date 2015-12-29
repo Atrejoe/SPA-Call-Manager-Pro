@@ -20,7 +20,7 @@ Public Module ClsPhone
     End Enum
     'structure defining current status of phone
     Public Structure SPhoneStatus
-        Dim Status As ePhoneStatus 'enum status
+        Dim Status As EPhoneStatus 'enum status
         Dim LineNumber As Integer ' extn line 
         Dim CallerNumber As String  'caller or called number
         Dim CallerName As String 'caller or called name
@@ -28,7 +28,7 @@ Public Module ClsPhone
         Dim Ref As Integer
     End Structure
 
-    Public Event UdpRxdata(phoneStatusdata As sPhoneStatus) 'event raised when phone sends data to pc
+    Public Event UdpRxdata(phoneStatusdata As SPhoneStatus) 'event raised when phone sends data to pc
     Private ReadOnly RemoteIpEndPoint As New IPEndPoint(Net.IPAddress.Any, 0) 'receiving ip address
     Private _strReturnData As String 'data received from phone
     Private ReadOnly ReceivingUdpClient As New UdpClient 'UDP socket
@@ -60,10 +60,10 @@ Public Module ClsPhone
     Public Property Username() As String
         'sets the ip port that the app will listen for phone data
         Get
-            Return _UserName
+            Return _userName
         End Get
         Set(value As String)
-            _UserName = value
+            _userName = value
         End Set
 
     End Property
@@ -80,7 +80,7 @@ Public Module ClsPhone
 
     Public Function DownloadPhoneSettings(ipAddress As String) As Settings
         ' A Function to download settings from the Phones XML configuration file.
-        Dim strUrl As String = "http://" & IPAddress & "/admin/spacfg.xml"
+        Dim strUrl As String = "http://" & ipAddress & "/admin/spacfg.xml"
         Dim reader As XmlTextReader = New XmlTextReader(strUrl)
 
         If _password <> "" Then
@@ -157,16 +157,16 @@ Public Module ClsPhone
                                       .Select(
                                         Function(x) x.ToString()
                                       )
-            return result.ToArray()
+            Return result.ToArray()
 
         Catch ex As Exception
 
             ex.Log()
 
-            return new String(){"127.0.0.1"}
+            Return New String() {"127.0.0.1"}
 
         End Try
-        
+
     End Function
 
 #Region "UDP"
@@ -187,7 +187,7 @@ Public Module ClsPhone
         ' background thread to recive UDP messages
 
         Try
-            Dim receiveBytes As [Byte]() = receivingUdpClient.Receive(RemoteIpEndPoint)
+            Dim receiveBytes As [Byte]() = ReceivingUdpClient.Receive(RemoteIpEndPoint)
             _strReturnData = System.Text.Encoding.ASCII.GetString(receiveBytes)
         Catch ex As Exception
             ' MsgBox(ex.Message)
@@ -203,7 +203,7 @@ Public Module ClsPhone
         Try
             If _strReturnData = "" Then Exit Sub
             If _strReturnData.Contains("<spa-status>") Then
-                RaiseEvent UDPRxdata(ProcessInboundPhoneMessage(_strReturnData))
+                RaiseEvent UdpRxdata(ProcessInboundPhoneMessage(_strReturnData))
             End If
             BgwUDP.RunWorkerAsync()
         Catch ex As Exception
@@ -212,60 +212,60 @@ Public Module ClsPhone
 
     End Sub
 
-    Private Function ProcessInboundPhoneMessage(message As String) As sPhoneStatus
+    Private Function ProcessInboundPhoneMessage(message As String) As SPhoneStatus
 
         'Function to handle the various different inbound messages from the phone.  
         On Error Resume Next
 
-        Dim phoneStatus As sPhoneStatus = Nothing
+        Dim phoneStatus As SPhoneStatus = Nothing
         Dim messageContent As String = ""
         Dim splLn() As String
 
 
-        MessageContent = message.Substring(message.IndexOf("<spa-status>"))
+        messageContent = message.Substring(message.IndexOf("<spa-status>"))
 
-        Dim spl() As String = MessageContent.Split(" ".ToCharArray())
+        Dim spl() As String = messageContent.Split(" ".ToCharArray())
         If spl IsNot Nothing Then
             For x As Integer = 0 To spl.GetUpperBound(0)
-                SplLn = Split(spl(x), "=")
-                Select Case SplLn(0).Replace(Chr(34), "")
+                splLn = Split(spl(x), "=")
+                Select Case splLn(0).Replace(Chr(34), "")
                     Case "id"
-                        PhoneStatus.Id = CInt(SplLn(1).Replace(Chr(34), ""))
+                        phoneStatus.Id = CInt(splLn(1).Replace(Chr(34), ""))
                     Case "ref"
-                        PhoneStatus.ref = CInt(SplLn(1).Replace(Chr(34), ""))
+                        phoneStatus.Ref = CInt(splLn(1).Replace(Chr(34), ""))
                     Case "ext"
-                        PhoneStatus.LineNumber = CInt(SplLn(1).Replace(Chr(34), ""))
+                        phoneStatus.LineNumber = CInt(splLn(1).Replace(Chr(34), ""))
                     Case "state"
-                        Select Case SplLn(1).Substring(0, SplLn(1).IndexOf(Chr(34), 1)).Replace(Chr(34), "")
+                        Select Case splLn(1).Substring(0, splLn(1).IndexOf(Chr(34), 1)).Replace(Chr(34), "")
                             Case "dialing"
-                                PhoneStatus.Status = ePhoneStatus.Dialing
+                                phoneStatus.Status = EPhoneStatus.Dialing
                             Case "connected"
-                                PhoneStatus.Status = ePhoneStatus.Connected
+                                phoneStatus.Status = EPhoneStatus.Connected
                             Case "idle"
-                                PhoneStatus.Status = ePhoneStatus.Idle
+                                phoneStatus.Status = EPhoneStatus.Idle
                             Case "ringing"
-                                PhoneStatus.Status = ePhoneStatus.Ringing
+                                phoneStatus.Status = EPhoneStatus.Ringing
                             Case "answering"
-                                PhoneStatus.Status = ePhoneStatus.Answering
+                                phoneStatus.Status = EPhoneStatus.Answering
                             Case "calling"
-                                PhoneStatus.Status = ePhoneStatus.Calling
+                                phoneStatus.Status = EPhoneStatus.Calling
                             Case "holding"
-                                PhoneStatus.Status = ePhoneStatus.Holding
+                                phoneStatus.Status = EPhoneStatus.Holding
                             Case "hold"
-                                PhoneStatus.Status = ePhoneStatus.Holding
+                                phoneStatus.Status = EPhoneStatus.Holding
                             Case Else
-                                PhoneStatus.Status = ePhoneStatus.Unknown
+                                phoneStatus.Status = EPhoneStatus.Unknown
                         End Select
                     Case "name"
-                        If SplLn(1).Replace(Chr(34), "") <> "" Then PhoneStatus.CallerNumber = SplLn(1).Replace(Chr(34), "")
+                        If splLn(1).Replace(Chr(34), "") <> "" Then phoneStatus.CallerNumber = splLn(1).Replace(Chr(34), "")
                     Case "uri"
-                        If SplLn(1).Replace(Chr(34), "") <> "" Then PhoneStatus.CallerNumber = SplLn(1).Replace(Chr(34), "").Substring(0, SplLn(1).IndexOf("@") - 1)
+                        If splLn(1).Replace(Chr(34), "") <> "" Then phoneStatus.CallerNumber = splLn(1).Replace(Chr(34), "").Substring(0, splLn(1).IndexOf("@") - 1)
                 End Select
             Next
         End If
 
 
-        Return PhoneStatus
+        Return phoneStatus
 
     End Function
 
@@ -274,12 +274,13 @@ Public Module ClsPhone
         'sends a message to the phone to make phoen do something!
         Try
 
-            Dim bytCommand = Encoding.ASCII.GetBytes(Message)
-            udpClient.Connect(Ipaddress, Port)
-            udpClient.Send(bytCommand, bytCommand.Length)
+            Dim bytCommand = Encoding.ASCII.GetBytes(message)
+            UdpClient.Connect(ipaddress, port)
+            UdpClient.Send(bytCommand, bytCommand.Length)
 
         Catch ex As Exception
-            ex.Log()
+            Dim wrappedException As New UdpMessageException("Error while sending UDP message, see inner exeception for details", message, ex)
+            wrappedException.Log()
         End Try
 
     End Sub

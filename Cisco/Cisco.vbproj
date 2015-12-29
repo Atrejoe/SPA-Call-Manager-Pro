@@ -201,6 +201,7 @@
     </Compile>
     <Compile Include="NetworkUtils.vb" />
     <Compile Include="Settings.vb" />
+    <Compile Include="UdpMessageException.vb" />
     <Compile Include="UiUtils.vb" />
   </ItemGroup>
   <ItemGroup>
