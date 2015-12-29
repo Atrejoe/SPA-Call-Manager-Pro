@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Cisco.exe" size="875928">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Cisco.exe" size="869272">
       <assemblyIdentity name="Cisco" version="0.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+q4bHd7CK1sAnZMQ1jQ1F0E63vDUPi27MMmxCvR/0Is=</dsig:DigestValue>
+        <dsig:DigestValue>ZuCPk9tbukEnQXIk2Mh9FCyl+cd+LOFYZ5QtxoLm0TU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -74,7 +74,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>PhEXDf0wbg+xeZmLsljCitxFbPeVOyRYyumTds6fODk=</dsig:DigestValue>
+        <dsig:DigestValue>33/WimEGHejTH9wQVDNowa4EusO4PXd1C72tNuYohP0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -111,22 +111,22 @@
       <dsig:DigestValue>NIz26R0NSCaEqxbMyOI9aJPhJUI1YljdFtwCGqczLmA=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Cisco.pdb" size="136704">
+  <file name="Cisco.pdb" size="128512">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>JRAlNpgnb4Nrzyr7d64fDzN5IpbM4daxpUFN879ZsGw=</dsig:DigestValue>
+      <dsig:DigestValue>rmW/Np/dIOioPmJNhKpPu22BaVu6f+EQsGfAauVKAwU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Cisco.xml" size="3184">
+  <file name="Cisco.xml" size="3206">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>EI/zgAGCnWnMnqFpeD3PleoMKk6B4W4KLoutzZPXkrg=</dsig:DigestValue>
+      <dsig:DigestValue>9IGSeC0XmSQjdwYgOVs5gzzrvLw57QS06DgBSNg/diU=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Dialup.ico" size="97434">
@@ -155,4 +155,4 @@
       <!--<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />-->
     </application>
   </compatibility>
-<publisherIdentity name="CN=HQ\robert" issuerKeyHash="1a3ff1fc00114962c9cf52835f99793a2a60118e" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>/nOcytrVza9jWpNCL83X3v32QPz/PoSo4mkAeGzWNAw=</DigestValue></Reference></SignedInfo><SignatureValue>qycePOtXRc1dyqWWXiuXyHFG65UVXlbDT2T6Gm+P8PRRUkEVm1TK9uFOQzHIPWuHS6NnbWJFSaBhkHXJwcOV4G5KMUqdydR3iAwqAg+UlWh65LXhaN5bQyrMW3boN36SXVCsd+LxHF+sPv735HyfYtzXIBxLcYK9FS/8X4JkeDo=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>02xd3IilY2BKDgKIfjcu/KFqN+xlyo0xSR+SA9RVw+mVrFvuyAXL0QN1MNxxl+FpMKhM7Q5ke+stTKa9Ez8ueAw5e6J2eOGRJgMUUUd8vHizuS1JLODrID+/E0nQXc7PHzxYDgIQ97FHntMh1ucH1WBeJuKNFhUHK3gORGn8sJ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="0c34d66c780069e2a8843efffc40f6fdded7cd2f42935a63afcdd5daca9c73fe" Description="" Url=""><as:assemblyIdentity name="Cisco.exe" version="1.0.0.6" publicKeyToken="d80b4e645d6e9fae" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=HQ\robert</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>pu3PUdNvtseWfDLgqVZ1wQV3B0Up5LDSCB5tzjIkKGc=</DigestValue></Reference></SignedInfo><SignatureValue>BUwil4ITRamaRi+c/YWUN1/HmshJM7R/tb+LRnQN8tgp1l0DXjkji+ztm5u3YNpgKO5bSQCtb2e9VJGglpnwivqyjOg/UjpQi4+J/dkjK84n8i0N/jIDtd9B2KuBQbiDmw8E9bbNpTs7TSYj8qeuwZJuv23jt55Et2JtiMr4Ub4=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>02xd3IilY2BKDgKIfjcu/KFqN+xlyo0xSR+SA9RVw+mVrFvuyAXL0QN1MNxxl+FpMKhM7Q5ke+stTKa9Ez8ueAw5e6J2eOGRJgMUUUd8vHizuS1JLODrID+/E0nQXc7PHzxYDgIQ97FHntMh1ucH1WBeJuKNFhUHK3gORGn8sJ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBvTCCASagAwIBAgIQGf4g21FtopdPXSknciqxjzANBgkqhkiG9w0BAQsFADAdMRswGQYDVQQDHhIASABRAFwAcgBvAGIAZQByAHQwHhcNMTUxMjI5MDg1NzQ1WhcNMTYxMjI4MTQ1NzQ1WjAdMRswGQYDVQQDHhIASABRAFwAcgBvAGIAZQByAHQwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANNsXdyIpWNgSg4CiH43LvyhajfsZcqNMUkfkgPUVcPplaxb7sgFy9EDdTDccZfhaTCoTO0OZHvrLUymvRM/LngMOXuidnjhkSYDFFFHfLx4s7ktSSzg6yA/vxNJ0F3Ozx88WA4CEPexR57TIdbnB9VgXibijRYVByt4DkRp/LCdAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAfcOtLzoaNA3URrvudGna9iD9NRK+lYVwmxJRELas9CNlWYUv69KHovnSxYfT4TdTek7nHIzsfDr3VA3TTfPUt98MUTxKHd6OBlj0W67Q+8ww00sn3fTnv/xiiIVivSg0XxT0x4VzRi5+ULUts3YiDI7WgLW19KHZwR98WZtIkD8=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+<publisherIdentity name="CN=HQ\robert" issuerKeyHash="1a3ff1fc00114962c9cf52835f99793a2a60118e" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>4F4dKkfYA9y859/jG6ADYxiJmAVkNFvA1N30Y/dD1mQ=</DigestValue></Reference></SignedInfo><SignatureValue>OJRO7xMwj5RBZ8Ye5Oc5/m2SIXMiKvL3L539rzy05wY+EQUz/cZPOYjxmx1vMgDByWnQ0lBhbr9GEy6L7Ii4iGY+7Iy25oelLJGuQwWx/Vjue7dBSasvZFIIgYWNHH3BdUT7q1JyEOXKSOByC/Mx2ReRLLIKX9Vo5DeeCFJFIE8=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>02xd3IilY2BKDgKIfjcu/KFqN+xlyo0xSR+SA9RVw+mVrFvuyAXL0QN1MNxxl+FpMKhM7Q5ke+stTKa9Ez8ueAw5e6J2eOGRJgMUUUd8vHizuS1JLODrID+/E0nQXc7PHzxYDgIQ97FHntMh1ucH1WBeJuKNFhUHK3gORGn8sJ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="64d643f763f4ddd4c05b3464059889186303a01be3dfe7bcdc03d8472a1d5ee0" Description="" Url=""><as:assemblyIdentity name="Cisco.exe" version="1.0.0.6" publicKeyToken="d80b4e645d6e9fae" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=HQ\robert</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>bTuTvDZBFp7mUo6J5xTjkaQK2NCokvNjOamV/3nYxE8=</DigestValue></Reference></SignedInfo><SignatureValue>tVyQ3Sc8nFYV1o6DLeR06azz+0o4dGzo1Ppix1hpg5WPNhdotNIDO9JnUdxESWaYGY/kpIYSK9UFcSAjUWS+n6GnqyZzvKeAMYer3jCPLA671UCDoTJqo6G9IY0Q5QHN6hBfUyrkoqovwZbP+Wng9WDVWaaLKUhGfYrtmsktHsg=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>02xd3IilY2BKDgKIfjcu/KFqN+xlyo0xSR+SA9RVw+mVrFvuyAXL0QN1MNxxl+FpMKhM7Q5ke+stTKa9Ez8ueAw5e6J2eOGRJgMUUUd8vHizuS1JLODrID+/E0nQXc7PHzxYDgIQ97FHntMh1ucH1WBeJuKNFhUHK3gORGn8sJ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBvTCCASagAwIBAgIQGf4g21FtopdPXSknciqxjzANBgkqhkiG9w0BAQsFADAdMRswGQYDVQQDHhIASABRAFwAcgBvAGIAZQByAHQwHhcNMTUxMjI5MDg1NzQ1WhcNMTYxMjI4MTQ1NzQ1WjAdMRswGQYDVQQDHhIASABRAFwAcgBvAGIAZQByAHQwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANNsXdyIpWNgSg4CiH43LvyhajfsZcqNMUkfkgPUVcPplaxb7sgFy9EDdTDccZfhaTCoTO0OZHvrLUymvRM/LngMOXuidnjhkSYDFFFHfLx4s7ktSSzg6yA/vxNJ0F3Ozx88WA4CEPexR57TIdbnB9VgXibijRYVByt4DkRp/LCdAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAfcOtLzoaNA3URrvudGna9iD9NRK+lYVwmxJRELas9CNlWYUv69KHovnSxYfT4TdTek7nHIzsfDr3VA3TTfPUt98MUTxKHd6OBlj0W67Q+8ww00sn3fTnv/xiiIVivSg0XxT0x4VzRi5+ULUts3YiDI7WgLW19KHZwR98WZtIkD8=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

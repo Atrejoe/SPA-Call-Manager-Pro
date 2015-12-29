@@ -450,11 +450,13 @@ Public Class FrmMain
 
             PhoneDir.Clear()
 
-            Do
+
+            Dim findElement = 0
+
+            Do While PhoneDir.Count < 100
 
                 Dim bookName = ""
                 Dim bookNumber = ""
-                Dim findElement = 0
 
                 findElement = strdata.IndexOf("<input class=""input", findElement + 1, StringComparison.InvariantCultureIgnoreCase)
                 If findElement = -1 Then Exit Do
