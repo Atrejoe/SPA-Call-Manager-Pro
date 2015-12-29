@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="Cisco.exe" version="1.0.0.6" publicKeyToken="d80b4e645d6e9fae" language="neutral" processorArchitecture="x86" type="win32" />
+  <description asmv2:iconFile="Dialup.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Cisco" version="0.0.0.0" language="neutral" processorArchitecture="x86" />
+    <commandLine file="Cisco.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- UAC Manifest Options
+             If you want to change the Windows User Account Control level replace the 
+             requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+            Specifying requestedExecutionLevel element will disable file and registry virtualization. 
+            Remove this element if your application requires this virtualization for backwards
+            compatibility.
+        -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Airbraker.dll" size="17920">
+      <assemblyIdentity name="Airbraker" version="2.3.0.6" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>DJSHTLe+BtFHsn6SOcFtvxmVqzheMFGDFhqhgbPdcso=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Cisco.exe" size="869272">
+      <assemblyIdentity name="Cisco" version="0.0.0.0" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>ZuCPk9tbukEnQXIk2Mh9FCyl+cd+LOFYZ5QtxoLm0TU=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Cisco.Utilities.dll" size="6656">
+      <assemblyIdentity name="Cisco.Utilities" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>33/WimEGHejTH9wQVDNowa4EusO4PXd1C72tNuYohP0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Mindscape.Raygun4Net.dll" size="56320">
+      <assemblyIdentity name="Mindscape.Raygun4Net" version="5.2.0.0" publicKeyToken="20DDDFB3684A7AA5" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>miM/qo7epcm0pyYROabqH262FGu2MUnzlT20kBeXWfo=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Mindscape.Raygun4Net4.dll" size="28672">
+      <assemblyIdentity name="Mindscape.Raygun4Net4" version="5.2.0.0" publicKeyToken="002E1B57394FA9B9" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>OCaBKO8+1mp/G/JfuOSzDkSRWfHzJ9E365XHV/KGOSE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Cisco.exe.config" size="514">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>NIz26R0NSCaEqxbMyOI9aJPhJUI1YljdFtwCGqczLmA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Cisco.pdb" size="128512">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>rmW/Np/dIOioPmJNhKpPu22BaVu6f+EQsGfAauVKAwU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Cisco.xml" size="3206">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>9IGSeC0XmSQjdwYgOVs5gzzrvLw57QS06DgBSNg/diU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Dialup.ico" size="97434">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>J600BXi4NL49t1cPyy7IYs9B+IgvSxelhOScO64/fbQ=</dsig:DigestValue>
+    </hash>
+  </file>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- A list of the Windows versions that this application has been tested on and is
+           is designed to work with. Uncomment the appropriate elements and Windows will 
+           automatically selected the most compatible environment. -->
+      <!-- Windows Vista -->
+      <!--<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}" />-->
+      <!-- Windows 7 -->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />-->
+      <!-- Windows 8 -->
+      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}" />-->
+      <!-- Windows 8.1 -->
+      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />-->
+      <!-- Windows 10 -->
+      <!--<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />-->
+    </application>
+  </compatibility>
+<publisherIdentity name="CN=HQ\robert" issuerKeyHash="1a3ff1fc00114962c9cf52835f99793a2a60118e" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>4F4dKkfYA9y859/jG6ADYxiJmAVkNFvA1N30Y/dD1mQ=</DigestValue></Reference></SignedInfo><SignatureValue>OJRO7xMwj5RBZ8Ye5Oc5/m2SIXMiKvL3L539rzy05wY+EQUz/cZPOYjxmx1vMgDByWnQ0lBhbr9GEy6L7Ii4iGY+7Iy25oelLJGuQwWx/Vjue7dBSasvZFIIgYWNHH3BdUT7q1JyEOXKSOByC/Mx2ReRLLIKX9Vo5DeeCFJFIE8=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>02xd3IilY2BKDgKIfjcu/KFqN+xlyo0xSR+SA9RVw+mVrFvuyAXL0QN1MNxxl+FpMKhM7Q5ke+stTKa9Ez8ueAw5e6J2eOGRJgMUUUd8vHizuS1JLODrID+/E0nQXc7PHzxYDgIQ97FHntMh1ucH1WBeJuKNFhUHK3gORGn8sJ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="64d643f763f4ddd4c05b3464059889186303a01be3dfe7bcdc03d8472a1d5ee0" Description="" Url=""><as:assemblyIdentity name="Cisco.exe" version="1.0.0.6" publicKeyToken="d80b4e645d6e9fae" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=HQ\robert</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>bTuTvDZBFp7mUo6J5xTjkaQK2NCokvNjOamV/3nYxE8=</DigestValue></Reference></SignedInfo><SignatureValue>tVyQ3Sc8nFYV1o6DLeR06azz+0o4dGzo1Ppix1hpg5WPNhdotNIDO9JnUdxESWaYGY/kpIYSK9UFcSAjUWS+n6GnqyZzvKeAMYer3jCPLA671UCDoTJqo6G9IY0Q5QHN6hBfUyrkoqovwZbP+Wng9WDVWaaLKUhGfYrtmsktHsg=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>02xd3IilY2BKDgKIfjcu/KFqN+xlyo0xSR+SA9RVw+mVrFvuyAXL0QN1MNxxl+FpMKhM7Q5ke+stTKa9Ez8ueAw5e6J2eOGRJgMUUUd8vHizuS1JLODrID+/E0nQXc7PHzxYDgIQ97FHntMh1ucH1WBeJuKNFhUHK3gORGn8sJ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBvTCCASagAwIBAgIQGf4g21FtopdPXSknciqxjzANBgkqhkiG9w0BAQsFADAdMRswGQYDVQQDHhIASABRAFwAcgBvAGIAZQByAHQwHhcNMTUxMjI5MDg1NzQ1WhcNMTYxMjI4MTQ1NzQ1WjAdMRswGQYDVQQDHhIASABRAFwAcgBvAGIAZQByAHQwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANNsXdyIpWNgSg4CiH43LvyhajfsZcqNMUkfkgPUVcPplaxb7sgFy9EDdTDccZfhaTCoTO0OZHvrLUymvRM/LngMOXuidnjhkSYDFFFHfLx4s7ktSSzg6yA/vxNJ0F3Ozx88WA4CEPexR57TIdbnB9VgXibijRYVByt4DkRp/LCdAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAfcOtLzoaNA3URrvudGna9iD9NRK+lYVwmxJRELas9CNlWYUv69KHovnSxYfT4TdTek7nHIzsfDr3VA3TTfPUt98MUTxKHd6OBlj0W67Q+8ww00sn3fTnv/xiiIVivSg0XxT0x4VzRi5+ULUts3YiDI7WgLW19KHZwR98WZtIkD8=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

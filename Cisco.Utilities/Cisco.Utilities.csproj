@@ -36,7 +36,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Cisco_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -53,7 +54,9 @@
     <Compile Include="PropertyComparer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Cisco_TemporaryKey.pfx" />
+    <None Include="..\Cisco\Cisco_TemporaryKey.pfx">
+      <Link>Cisco_TemporaryKey.pfx</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
