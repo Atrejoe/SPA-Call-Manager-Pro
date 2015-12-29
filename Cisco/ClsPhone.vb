@@ -1,11 +1,13 @@
-﻿Imports System.Xml
+﻿Imports System.ComponentModel
+Imports System.Xml
 Imports System.Text
 Imports System.IO
 Imports System.Net
+Imports System.Net.Sockets
 
-Public Class ClsPhone
+Public Module ClsPhone
     'enum of possible phone status
-    Public Enum ePhoneStatus
+    Public Enum EPhoneStatus
         Idle = 0
         Ringing = 1
         Connected = 2
@@ -17,58 +19,66 @@ Public Class ClsPhone
         Unknown = 8
     End Enum
     'structure defining current status of phone
-    Public Structure sPhoneStatus
+    Public Structure SPhoneStatus
         Dim Status As ePhoneStatus 'enum status
         Dim LineNumber As Integer ' extn line 
         Dim CallerNumber As String  'caller or called number
         Dim CallerName As String 'caller or called name
         Dim Id As Integer
-        Dim ref As Integer
+        Dim Ref As Integer
     End Structure
 
-    Public Event UDPRxdata(ByVal PhoneStatusdata As sPhoneStatus) 'event raised when phone sends data to pc
-    Public RemoteIpEndPoint As New System.Net.IPEndPoint(System.Net.IPAddress.Any, 0) 'receiving ip address
-    Public strReturnData As String 'data received from phone
-    Public receivingUdpClient As New Net.Sockets.UdpClient 'UDP socket
-    Public udpClient As New Net.Sockets.UdpClient
-    Public Ipaddress() As String
-    Dim PhoneSettings As Settings 'durrent phone settings
-    Dim UdpRXPort As Integer = 0
-    Dim _UserName As String
+    Public Event UdpRxdata(phoneStatusdata As sPhoneStatus) 'event raised when phone sends data to pc
+    Private ReadOnly RemoteIpEndPoint As New IPEndPoint(Net.IPAddress.Any, 0) 'receiving ip address
+    Private _strReturnData As String 'data received from phone
+    Private ReadOnly ReceivingUdpClient As New UdpClient 'UDP socket
+    Private ReadOnly UdpClient As New UdpClient
+
+    'Private ReadOnly Property _Ipaddress As New List(Of String)
+    'Public ReadOnly Property Ipaddress As List(Of String)
+    '    Get
+    '        Return _Ipaddress
+    '    End Get
+    'End Property
+
+    Dim _phoneSettings As Settings 'current phone settings
+    Dim _udpRxPort As Integer = 0
+    Dim _userName As String
     Dim _password As String
-    Dim WithEvents BgwUDP As New System.ComponentModel.BackgroundWorker 'background thread to recive UDP
+    Private WithEvents BgwUDP As New BackgroundWorker 'background thread to receive UDP
 
     Public Property IpPort() As Integer
         'sets the ip port that the app will listen for phone data
         Get
-            Return UdpRXPort
+            Return _udpRxPort
         End Get
         Set
-            UdpRXPort = value
+            _udpRxPort = Value
         End Set
     End Property
 
-    Public Property username() As String
+    Public Property Username() As String
         'sets the ip port that the app will listen for phone data
         Get
             Return _UserName
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _UserName = value
         End Set
 
     End Property
 
-    Public Property password() As String
+    Public Property Password() As String
         'sets the ip port that the app will listen for phone data
         Get
             Return _password
         End Get
         Set
-            _password = value
+            _password = Value
         End Set
     End Property
-    Public Function DownloadPhoneSettings(ByVal IPAddress As String) As Settings
+
+    Public Function DownloadPhoneSettings(ipAddress As String) As Settings
         ' A Function to download settings from the Phones XML configuration file.
         Dim strUrl As String = "http://" & IPAddress & "/admin/spacfg.xml"
         Dim reader As XmlTextReader = New XmlTextReader(strUrl)
@@ -81,7 +91,7 @@ Public Class ClsPhone
         End If
 
         Try
-            With PhoneSettings
+            With _phoneSettings
                 Do While (reader.Read())
                     Select Case reader.NodeType
                         Case XmlNodeType.Element
@@ -120,59 +130,51 @@ Public Class ClsPhone
             '  inputfrm.ShowDialog()
         Catch ex As Exception
             MsgBox("Unable to read configuration from " & strUrl & vbCrLf & "Error: " & ex.Message, MsgBoxStyle.Critical, "SPA Call Manager Pro")
-            PhoneSettings.PhoneModel = "invalid"
-            PhoneSettings.PhoneSoftwareVersion = "invalid"
-            PhoneSettings.CTI_Enable = "invalid"
-            PhoneSettings.Debug_Server_Address = "invalid"
-            PhoneSettings.DebugLevel = "invalid"
-            PhoneSettings.StationName = "invalid"
-            PhoneSettings.LinksysKeySystem = "invalid"
+            _phoneSettings.PhoneModel = "invalid"
+            _phoneSettings.PhoneSoftwareVersion = "invalid"
+            _phoneSettings.CTI_Enable = "invalid"
+            _phoneSettings.Debug_Server_Address = "invalid"
+            _phoneSettings.DebugLevel = "invalid"
+            _phoneSettings.StationName = "invalid"
+            _phoneSettings.LinksysKeySystem = "invalid"
             ' PhoneSettings.PhonePort = "invalid"
-            PhoneSettings.PhonePort = 0
+            _phoneSettings.PhonePort = 0
         End Try
 
-        PhoneSettings.LocalIP = MyStoredPhoneSettings.LocalIP
+        _phoneSettings.LocalIP = MyStoredPhoneSettings.LocalIP
 
-        Return PhoneSettings
+        Return _phoneSettings
 
     End Function
 
     Public Function GetLocalIp() As String()
 
-        'function top retrieve local Ip address
-        Dim Ipcounter As Integer = 0
+        'function to retrieve local Ip addresses
         Try
-            Dim h As System.Net.IPHostEntry = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName)
-            ReDim Ipaddress(h.AddressList.GetUpperBound(0))
-            For x As Integer = 0 To h.AddressList.GetUpperBound(0)
-                If h.AddressList(x).AddressFamily <> Net.Sockets.AddressFamily.InterNetworkV6 Then
-                    ReDim Preserve Ipaddress(Ipcounter)
-                    Ipaddress(Ipcounter) = h.AddressList.GetValue(x).ToString
-                    Ipcounter += 1
-                End If
-            Next
-            Return Ipaddress
+            Dim h = Dns.GetHostEntry(Dns.GetHostName)
+            Dim result = h.AddressList.Where(
+                                        Function(x) x.AddressFamily = AddressFamily.InterNetwork) _
+                                      .Select(
+                                        Function(x) x.ToString()
+                                      )
+            return result.ToArray()
+
         Catch ex As Exception
-            ReDim Ipaddress(0)
-            Ipaddress(0) = "127.0.0.1"
-            Return Ipaddress
+
+            ex.Log()
+
+            return new String(){"127.0.0.1"}
+
         End Try
-
-
+        
     End Function
-
-    Public Sub New()
-
-        'inistialises class and passes the UDP socket port to listen on
-
-    End Sub
 
 #Region "UDP"
 
     Public Sub Startlistening()
         'starts the listening process for messages from the phone
         Try
-            receivingUdpClient = New System.Net.Sockets.UdpClient(UdpRXPort)
+            'receivingUdpClient = New System.Net.Sockets.UdpClient(UdpRXPort)
             BgwUDP.RunWorkerAsync()
         Catch ex As Exception
             ex.Log()
@@ -180,13 +182,13 @@ Public Class ClsPhone
 
     End Sub
 
-    Private Sub BgwUDP_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BgwUDP.DoWork
+    Private Sub BgwUDP_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BgwUDP.DoWork
 
         ' background thread to recive UDP messages
 
         Try
             Dim receiveBytes As [Byte]() = receivingUdpClient.Receive(RemoteIpEndPoint)
-            strReturnData = System.Text.Encoding.ASCII.GetString(receiveBytes)
+            _strReturnData = System.Text.Encoding.ASCII.GetString(receiveBytes)
         Catch ex As Exception
             ' MsgBox(ex.Message)
             ex.Log()
@@ -194,14 +196,14 @@ Public Class ClsPhone
 
     End Sub
 
-    Private Sub BgwUDP_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BgwUDP.RunWorkerCompleted
+    Private Sub BgwUDP_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BgwUDP.RunWorkerCompleted
 
         'when UDP is received, this function parses the data and raises an event to the client
 
         Try
-            If strReturnData = "" Then Exit Sub
-            If strReturnData.Contains("<spa-status>") Then
-                RaiseEvent UDPRxdata(ProcessInboundPhoneMessage(strReturnData))
+            If _strReturnData = "" Then Exit Sub
+            If _strReturnData.Contains("<spa-status>") Then
+                RaiseEvent UDPRxdata(ProcessInboundPhoneMessage(_strReturnData))
             End If
             BgwUDP.RunWorkerAsync()
         Catch ex As Exception
@@ -210,14 +212,14 @@ Public Class ClsPhone
 
     End Sub
 
-    Private Function ProcessInboundPhoneMessage(ByVal message As String) As sPhoneStatus
+    Private Function ProcessInboundPhoneMessage(message As String) As sPhoneStatus
 
         'Function to handle the various different inbound messages from the phone.  
         On Error Resume Next
 
-        Dim PhoneStatus As sPhoneStatus = Nothing
-        Dim MessageContent As String = ""
-        Dim SplLn() As String
+        Dim phoneStatus As sPhoneStatus = Nothing
+        Dim messageContent As String = ""
+        Dim splLn() As String
 
 
         MessageContent = message.Substring(message.IndexOf("<spa-status>"))
@@ -267,7 +269,7 @@ Public Class ClsPhone
 
     End Function
 
-    Public Sub SendUdp(ByVal Message As String, ByVal Ipaddress As String, ByVal Port As Integer)
+    Public Sub SendUdp(message As String, ipaddress As String, port As Integer)
 
         'sends a message to the phone to make phoen do something!
         Try
@@ -293,4 +295,4 @@ Public Class ClsPhone
             ex.Log()
         End Try
     End Sub
-End Class
+End Module

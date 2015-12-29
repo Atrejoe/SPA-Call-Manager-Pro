@@ -140,10 +140,10 @@ Public Class FrmSetup
                         lblStationNameSet.Text = "Station Name Set"
                         imgLinksysKeySystemEnabled.Image = My.Resources.Cross
 
-                        Dim MyPhone As New ClsPhone
-                        MyPhone.password = LoginPassword
-                        MyPhoneSettings = MyPhone.DownloadPhoneSettings(TxtphoneIP.Text)
-                        MyPhoneSettings = MyPhone.DownloadPhoneSettings(TxtphoneIP.Text)
+                        
+                        ClsPhone.password = LoginPassword
+                        MyPhoneSettings = DownloadPhoneSettings(TxtphoneIP.Text)
+                        MyPhoneSettings = DownloadPhoneSettings(TxtphoneIP.Text)
                         MyPhoneSettings.LocalPort = 514
                         MyPhoneSettings.PhoneIP = TxtphoneIP.Text
                         If MyPhoneSettings.CTI_Enable = "Yes" Then imgCTIEnabled.Image = My.Resources.Resources.greentick Else ValidConfig = False
