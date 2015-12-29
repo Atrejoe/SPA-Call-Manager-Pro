@@ -11,7 +11,7 @@ Public Class FrmMain
 
     Private ReadOnly FrmFade(4) As Boolean ''Sets if fade is enabled when form closes
     Private ReadOnly HoldFlash(4) As Boolean ''Sets if fade is enabled when form closes
-    Private ReadOnly LinePhoneStatus(4) As sPhoneStatus ' status of each line object
+    Private ReadOnly LinePhoneStatus(4) As SPhoneStatus ' status of each line object
     Public WithEvents clpbrd As New ClipBoardMonitor ' monitors the clipboard for telephone numbers
 
     Public Sub New()
@@ -39,7 +39,7 @@ Public Class FrmMain
         DGWAnswered.AutoGenerateColumns = False
         DGWAnswered.DataSource = Answered
 
-        AddHandler UDPRxdata, AddressOf MyPhone_UDPRxdata
+        AddHandler UdpRxdata, AddressOf MyPhone_UDPRxdata
 
     End Sub
 
@@ -91,7 +91,7 @@ Public Class FrmMain
             If pingSuccess Then
                 'download phone settings
                 MyPhoneSettings.password = MyStoredPhoneSettings.password
-                password = MyPhoneSettings.password
+                Password = MyPhoneSettings.password
                 LoginPassword = MyPhoneSettings.password
                 MyPhoneSettings = DownloadPhoneSettings(MyStoredPhoneSettings.PhoneIP)
 
@@ -184,7 +184,7 @@ Public Class FrmMain
 
     End Sub
 
-    Private Sub MyPhone_UDPRxdata(phoneStatusdata As sPhoneStatus)
+    Private Sub MyPhone_UDPRxdata(phoneStatusdata As SPhoneStatus)
         'data passed from myphone object....data from phone activity
 
         Try
@@ -194,7 +194,7 @@ Public Class FrmMain
 
             LinePhoneStatus(phoneStatusdata.Id) = phoneStatusdata
             If LinePhoneStatus(phoneStatusdata.Id).CallerNumber = "" Then LinePhoneStatus(phoneStatusdata.Id).CallerNumber = tempNumber
-            If LinePhoneStatus(phoneStatusdata.Id).Status = ePhoneStatus.Dialing Then LinePhoneStatus(phoneStatusdata.Id).CallerNumber = ""
+            If LinePhoneStatus(phoneStatusdata.Id).Status = EPhoneStatus.Dialing Then LinePhoneStatus(phoneStatusdata.Id).CallerNumber = ""
 
 
             For Each entry In MyPhoneBook
@@ -212,7 +212,7 @@ Public Class FrmMain
             Next
 
             Select Case phoneStatusdata.Status
-                Case ePhoneStatus.Ringing
+                Case EPhoneStatus.Ringing
                     MyPhoneStatus = phoneStatusdata
                     Select Case MyPhoneStatus.Id
                         Case 1
@@ -268,7 +268,7 @@ Public Class FrmMain
                             If newFrmCallLine1 Is Nothing And newFrmCallLine2 Is Nothing And newFrmCallLine3 Is Nothing Then newFrmCallLine4.Top = SystemInformation.WorkingArea.Height - (newFrmCallLine2.Height)
                             BtnHang4.Enabled = True
                     End Select
-                Case ePhoneStatus.Connected
+                Case EPhoneStatus.Connected
                     Select Case phoneStatusdata.Id
                         Case 1
                             LblLine1.Text = "Connected " & LinePhoneStatus(phoneStatusdata.Id).CallerName
@@ -292,7 +292,7 @@ Public Class FrmMain
                             HoldFlash(4) = False
                     End Select
                     FrmFade(phoneStatusdata.Id) = True
-                Case ePhoneStatus.Dialing
+                Case EPhoneStatus.Dialing
                     Select Case phoneStatusdata.Id
                         Case 1
                             LblLine1.Text = "Off hook " & LinePhoneStatus(phoneStatusdata.Id).CallerName
@@ -311,7 +311,7 @@ Public Class FrmMain
                             BtnDial4.Image = IlButtons.Images(0)
                             BtnHang4.Enabled = True
                     End Select
-                Case ePhoneStatus.Calling
+                Case EPhoneStatus.Calling
                     Select Case phoneStatusdata.Id
                         Case 1
                             LblLine1.Text = "Calling " & LinePhoneStatus(phoneStatusdata.Id).CallerName
@@ -330,7 +330,7 @@ Public Class FrmMain
                             BtnDial4.Image = IlButtons.Images(0)
                             BtnHang4.Enabled = True
                     End Select
-                Case ePhoneStatus.Holding, ePhoneStatus.Hold
+                Case EPhoneStatus.Holding, EPhoneStatus.Hold
                     Select Case phoneStatusdata.Id
                         Case 1
                             LblLine1.Text = "Holding " & LinePhoneStatus(phoneStatusdata.Id).CallerName
@@ -355,7 +355,7 @@ Public Class FrmMain
                     End Select
 
 
-                Case ePhoneStatus.Idle
+                Case EPhoneStatus.Idle
                     Select Case phoneStatusdata.Id
                         Case 1
                             LblLine1.Text = "Line 1"
@@ -397,28 +397,36 @@ Public Class FrmMain
                 If FrmFade(x) = True Then
                     Select Case x
                         Case 1
-                            newFrmCallLine1.Opacity = newFrmCallLine1.Opacity - 0.05
+                            If newFrmCallLine1 Is Nothing Then Continue For
+
+                            newFrmCallLine1.Opacity -= 0.05
                             If newFrmCallLine1.Opacity <= 0 Then
                                 newFrmCallLine1.Visible = False
                                 newFrmCallLine1 = Nothing
                                 FrmFade(x) = False
                             End If
                         Case 2
-                            newFrmCallLine2.Opacity = newFrmCallLine2.Opacity - 0.05
+                            If newFrmCallLine2 Is Nothing Then Continue For
+
+                            newFrmCallLine2.Opacity -= 0.05
                             If newFrmCallLine2.Opacity <= 0 Then
                                 newFrmCallLine2.Visible = False
                                 newFrmCallLine2 = Nothing
                                 FrmFade(x) = False
                             End If
                         Case 3
-                            newFrmCallLine3.Opacity = newFrmCallLine3.Opacity - 0.05
+                            If newFrmCallLine3 Is Nothing Then Continue For
+
+                            newFrmCallLine3.Opacity -= 0.05
                             If newFrmCallLine3.Opacity <= 0 Then
                                 newFrmCallLine3.Visible = False
                                 newFrmCallLine3 = Nothing
                                 FrmFade(x) = False
                             End If
                         Case 4
-                            newFrmCallLine4.Opacity = newFrmCallLine4.Opacity - 0.05
+                            If newFrmCallLine4 Is Nothing Then Continue For
+
+                            newFrmCallLine4.Opacity -= 0.05
                             If newFrmCallLine4.Opacity <= 0 Then
                                 newFrmCallLine4.Visible = False
                                 newFrmCallLine4 = Nothing
@@ -780,23 +788,23 @@ Public Class FrmMain
         End Select
 
         Select Case LinePhoneStatus(MyPhoneStatus.Id).Status
-            Case ePhoneStatus.Answering
+            Case EPhoneStatus.Answering
 
-            Case ePhoneStatus.Calling
+            Case EPhoneStatus.Calling
 
-            Case ePhoneStatus.Connected
+            Case EPhoneStatus.Connected
                 ' If the line is connected then put on hold
                 Dim callString As String = PhoneAction(eAction.Hold, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                 SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
 
 
-            Case ePhoneStatus.Dialing
-            Case ePhoneStatus.Holding
+            Case EPhoneStatus.Dialing
+            Case EPhoneStatus.Holding
                 ' If the line is on hold  then take off hold
                 Dim callString As String = PhoneAction(eAction.Resume, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                 SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
 
-            Case ePhoneStatus.Idle
+            Case EPhoneStatus.Idle
                 ' If the line is idle then dial number in number box
                 If numberToCall <> "" Then
                     If IsNumeric(numberToCall) = True Then
@@ -810,7 +818,7 @@ Public Class FrmMain
                     Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                     SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
                 End If
-            Case ePhoneStatus.Ringing
+            Case EPhoneStatus.Ringing
                 ' If the line is ringing then answer
                 Dim callString As String = PhoneAction(eAction.Answer, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                 SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
@@ -853,7 +861,7 @@ Public Class FrmMain
         FrmSetup.CmbLocalIP.Text = MyPhoneSettings.LocalIP
         FrmSetup.LblPhoneIp.Text = "Phone IP Address"
         FrmSetup.TxtphoneIP.Text = MyPhoneSettings.PhoneIP
-        FrmSetup.txtpassword.Text = password
+        FrmSetup.txtpassword.Text = Password
         FrmSetup.ShowDialog()
 
     End Sub
@@ -862,7 +870,7 @@ Public Class FrmMain
 
         ' checks through the linestatus objects for the fisrt free line....if all are in use returns 0 and no action is taken
         For x = 1 To 4
-            If LinePhoneStatus(x).Status = ePhoneStatus.Idle Then
+            If LinePhoneStatus(x).Status = EPhoneStatus.Idle Then
                 Return x
                 Exit Function
             End If
