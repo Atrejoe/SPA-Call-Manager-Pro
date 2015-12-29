@@ -5,9 +5,13 @@ Imports Mindscape.Raygun4Net
 ''' <summary>
 ''' Simple exception logging, testing multiple exception logging frameworks just for kicks
 ''' </summary>
-Public Module ErrorLogging
+Public Module Er
 
-    Private ReadOnly RayGunClient As New RaygunClient("xhok2LdPYDOhsf8VieW1BA==")
+    Private ReadOnly RayGunClient As New Lazy(Of RaygunClient)(AddressOf GetRayGunClient)
+
+    Private Function GetRayGunClient() As RaygunClient
+        Return New RaygunClient("xhok2LdPYDOhsf8VieW1BA==") With {.ApplicationVersion = ApplicationVersion.Value}
+    End Function
 
     Private ReadOnly AirBrakeClient As New Lazy(Of AirbrakeClient)(AddressOf GetAirbrakeClient)
 
@@ -16,12 +20,19 @@ Public Module ErrorLogging
         With config
             .ApiKey = "75d5016c879ec50262d884effb5fa368"
             .Environment = "development"
-            .AppVersion = "1.0.0.5"
+            .AppVersion = ApplicationVersion.Value
             .ProjectName = "SPA Call Manager Pro"
         End With
 
         Return New AirbrakeClient(config)
     End Function
+
+    Private ReadOnly ApplicationVersion As New Lazy(Of String)(Function()
+                                                                   Dim assembly = System.Reflection.Assembly.GetExecutingAssembly()
+                                                                   Dim fvi = FileVersionInfo.GetVersionInfo(assembly.Location)
+                                                                   Return fvi.FileVersion
+                                                               End Function)
+
 
     <Extension>
     Public Sub Log(exception As Exception,
@@ -43,7 +54,7 @@ Public Module ErrorLogging
 
         Try
             'Send to Raygun
-            RayGunClient.SendInBackground(exception)
+            RayGunClient.Value.SendInBackground(exception)
 
             anySuccess = True
         Catch ex As Exception
