@@ -615,8 +615,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DGWAnswered_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWAnswered.CellContentClick
-        If e.RowIndex < 0 Then Return
-
+        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
         'calls the number in the grid row, when the call button is clicked 
 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -629,7 +628,7 @@ Public Class FrmMain
 
 
     Private Sub DGWdialled_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWdialled.CellContentClick
-        If DGWdialled.CurrentCell Is Nothing Then Return
+        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -640,7 +639,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DGWMissed_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWMissed.CellContentClick
-        If DGWMissed.CurrentCell Is Nothing Then Return
+        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -651,7 +650,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DgvPersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvPersonal.CellContentClick
-        If DgvPersonal.CurrentCell Is Nothing Then Return
+        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -662,6 +661,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DGVPhoneDir_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGVPhoneDir.CellContentClick
+        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -672,7 +672,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DgvPersonal_DoubleClick(sender As Object, e As EventArgs) Handles DgvPersonal.DoubleClick
-        If DgvPersonal.CurrentCell Is Nothing Then Return
+        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
 
         If Not TypeOf (CType(sender, DataGridView).CurrentCell.OwningColumn) Is DataGridViewButtonColumn Then
             Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
@@ -684,6 +684,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DgvPersonal_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvPersonal.KeyDown
+        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
 
         ' Deletes the entry in the selected row by hitting the delete key
 
