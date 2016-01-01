@@ -279,7 +279,7 @@ Public Module ClsPhone
             UdpClient.Send(bytCommand, bytCommand.Length)
 
         Catch ex As Exception
-            Dim wrappedException As New UdpMessageException("Error while sending UDP message, see inner exeception for details", message, ex)
+            Dim wrappedException As New UdpMessageException("Error while sending UDP message, see inner exception for details", message, ex)
             wrappedException.Log()
         End Try
 
