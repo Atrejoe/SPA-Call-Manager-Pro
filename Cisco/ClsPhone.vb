@@ -4,6 +4,7 @@ Imports System.Text
 Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
+Imports Cisco.Utilities
 
 Public Module ClsPhone
     'enum of possible phone status
@@ -29,7 +30,7 @@ Public Module ClsPhone
     End Structure
 
     Public Event UdpRxdata(phoneStatusdata As SPhoneStatus) 'event raised when phone sends data to pc
-    Private ReadOnly RemoteIpEndPoint As New IPEndPoint(Net.IPAddress.Any, 0) 'receiving ip address
+    Private ReadOnly RemoteIpEndPoint As New IPEndPoint(IPAddress.Any, 0) 'receiving ip address
     Private _strReturnData As String 'data received from phone
     Private ReadOnly ReceivingUdpClient As New UdpClient 'UDP socket
     Private ReadOnly UdpClient As New UdpClient
@@ -42,104 +43,81 @@ Public Module ClsPhone
     'End Property
 
     Dim _phoneSettings As Settings 'current phone settings
-    Dim _udpRxPort As Integer = 0
-    Dim _userName As String
-    Dim _password As String
     Private WithEvents BgwUDP As New BackgroundWorker 'background thread to receive UDP
 
-    Public Property IpPort() As Integer
-        'sets the ip port that the app will listen for phone data
-        Get
-            Return _udpRxPort
-        End Get
-        Set
-            _udpRxPort = Value
-        End Set
-    End Property
+    Public Property IpPort As Integer = 0
 
-    Public Property Username() As String
-        'sets the ip port that the app will listen for phone data
-        Get
-            Return _userName
-        End Get
-        Set(value As String)
-            _userName = value
-        End Set
+    Public Property Username As String
 
-    End Property
-
-    Public Property Password() As String
-        'sets the ip port that the app will listen for phone data
-        Get
-            Return _password
-        End Get
-        Set
-            _password = Value
-        End Set
-    End Property
+    Public Property Password As String
 
     Public Function DownloadPhoneSettings(ipAddress As String) As Settings
         ' A Function to download settings from the Phones XML configuration file.
         Dim strUrl As String = "http://" & ipAddress & "/admin/spacfg.xml"
-        Dim reader As XmlTextReader = New XmlTextReader(strUrl)
 
-        If _password <> "" Then
-            Dim cred As New NetworkCredential("admin", _password)
-            Dim resolver As XmlUrlResolver = New XmlUrlResolver()
-            resolver.Credentials = cred
-            reader.XmlResolver = resolver
-        End If
+        Using reader = New XmlTextReader(strUrl)
 
-        Try
-            With _phoneSettings
-                Do While (reader.Read())
-                    Select Case reader.NodeType
-                        Case XmlNodeType.Element
-                            Select Case reader.Name
-                                Case "Product_Name"
-                                    reader.Read()
-                                    .PhoneModel = reader.Value
-                                Case "Software_Version"
-                                    reader.Read()
-                                    .PhoneSoftwareVersion = reader.Value
-                                Case "CTI_Enable"
-                                    reader.Read()
-                                    .CTI_Enable = reader.Value
-                                Case "Debug_Server"
-                                    reader.Read()
-                                    .Debug_Server_Address = reader.Value
-                                Case "SIP_Debug_Option_1_"
-                                    reader.Read()
-                                    .DebugLevel = reader.Value
-                                Case "Station_Name"
-                                    reader.Read()
-                                    .StationName = reader.Value
-                                Case "Linksys_Key_System"
-                                    reader.Read()
-                                    .LinksysKeySystem = reader.Value
-                                Case "SIP_Port_1_"
-                                    reader.Read()
-                                    .PhonePort = CInt(reader.Value)
-                            End Select
-                    End Select
-                Loop
-            End With
-            ' Catch ex As System.Net.WebException
-            '  MsgBox("Loggin onto this phone requires an admin password.", MsgBoxStyle.Critical, "SPA Call Manager Pro")
-            '  Dim inputfrm As New FrmInput
-            '  inputfrm.ShowDialog()
-        Catch ex As Exception
-            MsgBox("Unable to read configuration from " & strUrl & vbCrLf & "Error: " & ex.Message, MsgBoxStyle.Critical, "SPA Call Manager Pro")
-            _phoneSettings.PhoneModel = "invalid"
-            _phoneSettings.PhoneSoftwareVersion = "invalid"
-            _phoneSettings.CTI_Enable = "invalid"
-            _phoneSettings.Debug_Server_Address = "invalid"
-            _phoneSettings.DebugLevel = "invalid"
-            _phoneSettings.StationName = "invalid"
-            _phoneSettings.LinksysKeySystem = "invalid"
-            ' PhoneSettings.PhonePort = "invalid"
-            _phoneSettings.PhonePort = 0
-        End Try
+            If Password <> "" Then
+                Dim cred As New NetworkCredential("admin", Password)
+                Dim resolver = New XmlUrlResolver()
+                resolver.Credentials = cred
+                reader.XmlResolver = resolver
+            End If
+
+            Try
+                With _phoneSettings
+                    Do While (reader.Read())
+                        Select Case reader.NodeType
+                            Case XmlNodeType.Element
+                                Select Case reader.Name
+                                    Case "Product_Name"
+                                        reader.Read()
+                                        .PhoneModel = reader.Value
+                                    Case "Software_Version"
+                                        reader.Read()
+                                        .PhoneSoftwareVersion = reader.Value
+                                    Case "CTI_Enable"
+                                        reader.Read()
+                                        .CTI_Enable = reader.Value
+                                    Case "Debug_Server"
+                                        reader.Read()
+                                        .Debug_Server_Address = reader.Value
+                                    Case "SIP_Debug_Option_1_"
+                                        reader.Read()
+                                        .DebugLevel = reader.Value
+                                    Case "Station_Name"
+                                        reader.Read()
+                                        .StationName = reader.Value
+                                    Case "Linksys_Key_System"
+                                        reader.Read()
+                                        .LinksysKeySystem = reader.Value
+                                    Case "SIP_Port_1_"
+                                        reader.Read()
+                                        .PhonePort = CInt(reader.Value)
+                                End Select
+                        End Select
+                    Loop
+                End With
+
+
+                ' Catch ex As System.Net.WebException
+                '  MsgBox("Loggin onto this phone requires an admin password.", MsgBoxStyle.Critical, "SPA Call Manager Pro")
+                '  Dim inputfrm As New FrmInput
+                '  inputfrm.ShowDialog()
+            Catch ex As Exception
+                MsgBox("Unable to read configuration from " & strUrl & vbCrLf & "Error: " & ex.Message, MsgBoxStyle.Critical, "SPA Call Manager Pro")
+                _phoneSettings.PhoneModel = "invalid"
+                _phoneSettings.PhoneSoftwareVersion = "invalid"
+                _phoneSettings.CTI_Enable = "invalid"
+                _phoneSettings.Debug_Server_Address = "invalid"
+                _phoneSettings.DebugLevel = "invalid"
+                _phoneSettings.StationName = "invalid"
+                _phoneSettings.LinksysKeySystem = "invalid"
+                ' PhoneSettings.PhonePort = "invalid"
+                _phoneSettings.PhonePort = 0
+            End Try
+
+        End Using
 
         _phoneSettings.LocalIP = MyStoredPhoneSettings.LocalIP
 
@@ -151,13 +129,7 @@ Public Module ClsPhone
 
         'function to retrieve local Ip addresses
         Try
-            Dim h = Dns.GetHostEntry(Dns.GetHostName)
-            Dim result = h.AddressList.Where(
-                                        Function(x) x.AddressFamily = AddressFamily.InterNetwork) _
-                                      .Select(
-                                        Function(x) x.ToString()
-                                      )
-            Return result.ToArray()
+            return NetUtils.GetLocalIPV4Addresses()
 
         Catch ex As Exception
 
@@ -182,13 +154,13 @@ Public Module ClsPhone
 
     End Sub
 
-    Private Sub BgwUDP_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BgwUDP.DoWork
+    Private Sub BgwUDP_DoWork(sender As Object, e As DoWorkEventArgs) Handles BgwUDP.DoWork
 
         ' background thread to recive UDP messages
 
         Try
-            Dim receiveBytes As [Byte]() = ReceivingUdpClient.Receive(RemoteIpEndPoint)
-            _strReturnData = System.Text.Encoding.ASCII.GetString(receiveBytes)
+            Dim receiveBytes = ReceivingUdpClient.Receive(RemoteIpEndPoint)
+            _strReturnData = Encoding.ASCII.GetString(receiveBytes)
         Catch ex As Exception
             ' MsgBox(ex.Message)
             ex.Log()
@@ -196,7 +168,7 @@ Public Module ClsPhone
 
     End Sub
 
-    Private Sub BgwUDP_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BgwUDP.RunWorkerCompleted
+    Private Sub BgwUDP_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BgwUDP.RunWorkerCompleted
 
         'when UDP is received, this function parses the data and raises an event to the client
 
