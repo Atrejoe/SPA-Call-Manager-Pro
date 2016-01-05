@@ -27,11 +27,11 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 '<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.8")> 
+<Assembly: AssemblyFileVersion("1.0.0.9")> 
 
 <Assembly: AssemblyTitleAttribute("SPA Call Manager Pro")> 
 <Assembly: AssemblyDescriptionAttribute("SPA Call Manager Pro")> 
 <Assembly: AssemblyCompany("www.spacallmanager.com")> 
 <Assembly: AssemblyProductAttribute("SPA Call Manager Pro")> 
 <Assembly: AssemblyCopyright("www.spacallmanager.com")>
-<Assembly: AssemblyVersion("1.0.0.8")>
+<Assembly: AssemblyVersion("1.0.0.9")>

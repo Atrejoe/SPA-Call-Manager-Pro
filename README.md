@@ -5,7 +5,7 @@ This is the free (as in beer) open-sourced version from [spacallmanager.com](htt
 
 #Installation instructions
 Download installer from:
-[/deploy/stable/setup.exe](https://raw.githubusercontent.com/Atrejoe/SPA-Call-Manager-Pro/master/deploy/stable/setup.exe "GitHub").
+[atrejoe.github.io/SPA-Call-Manager-Pro](http://atrejoe.github.io/SPA-Call-Manager-Pro/Cisco.application "GitHub").
 This a self-updating ClickOnce installer.
 
 #Configuration
