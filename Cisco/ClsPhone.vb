@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Xml
 Imports System.Text
-Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
 Imports Cisco.Utilities
@@ -129,7 +128,7 @@ Public Module ClsPhone
 
         'function to retrieve local Ip addresses
         Try
-            return NetUtils.GetLocalIPV4Addresses()
+            Return NetUtils.GetLocalIpv4Addresses()
 
         Catch ex As Exception
 
@@ -187,58 +186,70 @@ Public Module ClsPhone
     Private Function ProcessInboundPhoneMessage(message As String) As SPhoneStatus
 
         'Function to handle the various different inbound messages from the phone.  
-        On Error Resume Next
 
         Dim phoneStatus As SPhoneStatus = Nothing
-        Dim messageContent As String = ""
-        Dim splLn() As String
 
+        Try
 
-        messageContent = message.Substring(message.IndexOf("<spa-status>"))
+            Dim messageContent = message.Substring(message.IndexOf("<spa-status>", StringComparison.InvariantCultureIgnoreCase))
 
-        Dim spl() As String = messageContent.Split(" ".ToCharArray())
-        If spl IsNot Nothing Then
-            For x As Integer = 0 To spl.GetUpperBound(0)
-                splLn = Split(spl(x), "=")
-                Select Case splLn(0).Replace(Chr(34), "")
-                    Case "id"
-                        phoneStatus.Id = CInt(splLn(1).Replace(Chr(34), ""))
-                    Case "ref"
-                        phoneStatus.Ref = CInt(splLn(1).Replace(Chr(34), ""))
-                    Case "ext"
-                        phoneStatus.LineNumber = CInt(splLn(1).Replace(Chr(34), ""))
-                    Case "state"
-                        Select Case splLn(1).Substring(0, splLn(1).IndexOf(Chr(34), 1)).Replace(Chr(34), "")
-                            Case "dialing"
-                                phoneStatus.Status = EPhoneStatus.Dialing
-                            Case "connected"
-                                phoneStatus.Status = EPhoneStatus.Connected
-                            Case "idle"
-                                phoneStatus.Status = EPhoneStatus.Idle
-                            Case "ringing"
-                                phoneStatus.Status = EPhoneStatus.Ringing
-                            Case "answering"
-                                phoneStatus.Status = EPhoneStatus.Answering
-                            Case "calling"
-                                phoneStatus.Status = EPhoneStatus.Calling
-                            Case "holding"
-                                phoneStatus.Status = EPhoneStatus.Holding
-                            Case "hold"
-                                phoneStatus.Status = EPhoneStatus.Holding
-                            Case Else
-                                phoneStatus.Status = EPhoneStatus.Unknown
+            Dim spl() As String = messageContent.Split(" ".ToCharArray())
+            If spl IsNot Nothing Then
+                For x = 0 To spl.Length
+
+                    Dim splLn = Split(spl(x), "=")
+
+                    Try
+                        Dim value As String = splLn(1).Trim(" """.ToCharArray())
+                        Dim name As String = splLn(0)
+                        Select Case name.Replace(Chr(34), "")
+                            Case "id"
+                                phoneStatus.Id = CInt(value)
+                            Case "ref"
+                                phoneStatus.Ref = CInt(value)
+                            Case "ext"
+                                phoneStatus.LineNumber = CInt(value)
+                            Case "state"
+
+                                Select Case value
+                                    Case "dialing"
+                                        phoneStatus.Status = EPhoneStatus.Dialing
+                                    Case "connected"
+                                        phoneStatus.Status = EPhoneStatus.Connected
+                                    Case "idle"
+                                        phoneStatus.Status = EPhoneStatus.Idle
+                                    Case "ringing"
+                                        phoneStatus.Status = EPhoneStatus.Ringing
+                                    Case "answering"
+                                        phoneStatus.Status = EPhoneStatus.Answering
+                                    Case "calling"
+                                        phoneStatus.Status = EPhoneStatus.Calling
+                                    Case "holding"
+                                        phoneStatus.Status = EPhoneStatus.Holding
+                                    Case "hold"
+                                        phoneStatus.Status = EPhoneStatus.Holding
+                                    Case Else
+                                        phoneStatus.Status = EPhoneStatus.Unknown
+                                End Select
+                            Case "name"
+                                If Not String.IsNullOrWhiteSpace(value) Then phoneStatus.CallerNumber = value
+                            Case "uri"
+                                If Not String.IsNullOrWhiteSpace(value) Then phoneStatus.CallerNumber = value.Substring(0, value.IndexOf("@") - 1)
                         End Select
-                    Case "name"
-                        If splLn(1).Replace(Chr(34), "") <> "" Then phoneStatus.CallerNumber = splLn(1).Replace(Chr(34), "")
-                    Case "uri"
-                        If splLn(1).Replace(Chr(34), "") <> "" Then phoneStatus.CallerNumber = splLn(1).Replace(Chr(34), "").Substring(0, splLn(1).IndexOf("@") - 1)
-                End Select
-            Next
-        End If
+                    Catch ex As Exception
+                        With (New Exception(String.Format("Exception while parsing '{0}'", splLn)))
+                            .Log()
+                        End With
+                        'Log and resume next
+                    End Try
+                Next
+            End If
 
+        Catch ex As Exception
+            ex.Log()
+        End Try
 
         Return phoneStatus
-
     End Function
 
     Public Sub SendUdp(message As String, ipaddress As String, port As Integer)
@@ -251,21 +262,12 @@ Public Module ClsPhone
             UdpClient.Send(bytCommand, bytCommand.Length)
 
         Catch ex As Exception
-            Dim wrappedException As New UdpMessageException("Error while sending UDP message, see inner exception for details", message, ex)
+            Dim wrappedException As New UdpMessageException(String.Format("Error while sending UDP message, see inner exception for details. UDP Message was : {0}", message), message, ex)
             wrappedException.Log()
         End Try
 
     End Sub
 
 #End Region
-    Private Sub WriteLog(strdata As String)
-        Dim fullPath As String = DataDir & "\CiscoPhone\Calldata.xml"
-        Try
-            Using reader As New StreamWriter(fullPath, True)
-                reader.Write(strdata & vbCrLf & vbCrLf)
-            End Using
-        Catch ex As Exception
-            ex.Log()
-        End Try
-    End Sub
+
 End Module
