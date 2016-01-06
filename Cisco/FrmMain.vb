@@ -383,9 +383,7 @@ Public Class FrmMain
                     Dim argumentEx As New ArgumentOutOfRangeException("phoneStatusdata.Status", phoneStatusdata.Status, String.Format("Phione status '{0}' was not handled.", phoneStatusdata.Status))
                     argumentEx.Log()
             End Select
-
-            Exit Sub
-
+            
         Catch ex As Exception
             ex.Log()
         End Try
@@ -902,12 +900,16 @@ Public Class FrmMain
 
 
         Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
-        If result = 0 Then Exit Sub
+        If result = 0 Then 
+            MsgBox("No line available")
+            Exit Sub
+        End If
+
         If NumberToCall <> "" Then
             If IsNumeric(NumberToCall) = True Then
                 LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = NumberToCall
             Else
-                'TODO Display warning about invalid number?
+                MsgBox(String.Format("'{0}' is not a valid number for calling.k",NumberToCall))
                 Exit Sub
             End If
             LinePhoneStatus(MyPhoneStatus.Id).Id = MyPhoneStatus.Id
@@ -1009,7 +1011,10 @@ Public Class FrmMain
 
         If TypeOf (CType(sender, DataGridView).CurrentCell.OwningColumn) Is DataGridViewButtonColumn Then
             Dim result = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
-            If result = 0 Then Exit Sub
+            If result = 0 Then
+                MsgBox("No line available")
+                Exit Sub
+            End If
 
             LinePhoneStatus(result).Id = result
 
