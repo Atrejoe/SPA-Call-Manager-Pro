@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms
-Public Class ClipBoardMonitor
+﻿Public Class ClipBoardMonitor
     Inherits Form
 
 #Region " Definitions "

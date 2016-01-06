@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Reflection
+﻿Imports System.Reflection
 Imports System.Runtime.InteropServices
 
 ' General Information about an assembly is controlled through the following 
@@ -13,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("829c0279-9aea-4b6a-b7b0-ecba5bb0a390")> 
+<Assembly: Guid("829c0279-9aea-4b6a-b7b0-ecba5bb0a390")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -27,11 +26,11 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 '<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.9")> 
+<Assembly: AssemblyFileVersion("1.0.0.9")>
 
-<Assembly: AssemblyTitleAttribute("SPA Call Manager Pro")> 
-<Assembly: AssemblyDescriptionAttribute("SPA Call Manager Pro")> 
-<Assembly: AssemblyCompany("www.spacallmanager.com")> 
-<Assembly: AssemblyProductAttribute("SPA Call Manager Pro")> 
+<Assembly: AssemblyTitleAttribute("SPA Call Manager Pro")>
+<Assembly: AssemblyDescriptionAttribute("SPA Call Manager Pro")>
+<Assembly: AssemblyCompany("www.spacallmanager.com")>
+<Assembly: AssemblyProductAttribute("SPA Call Manager Pro")>
 <Assembly: AssemblyCopyright("www.spacallmanager.com")>
 <Assembly: AssemblyVersion("1.0.0.9")>

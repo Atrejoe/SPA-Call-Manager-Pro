@@ -1,5 +1,4 @@
-﻿Imports System.Drawing.Drawing2D
-Imports System.IO
+﻿Imports System.IO
 Imports Pss.Cisco.Models
 
 Public Class FrmPhoneBook
@@ -90,8 +89,8 @@ Public Class FrmPhoneBook
                 End If
             End If
 
-            SaveSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir , "Phonebook.csv"))
-            LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir ,"Phonebook.csv"))
+            SaveSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"))
+            LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"))
             Me.Close()
 
         Catch ex As Exception

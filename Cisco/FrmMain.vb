@@ -383,7 +383,7 @@ Public Class FrmMain
                     Dim argumentEx As New ArgumentOutOfRangeException("phoneStatusdata.Status", phoneStatusdata.Status, String.Format("Phione status '{0}' was not handled.", phoneStatusdata.Status))
                     argumentEx.Log()
             End Select
-            
+
         Catch ex As Exception
             ex.Log()
         End Try
@@ -530,9 +530,8 @@ Public Class FrmMain
 
             Using client = New WebClient()
                 Using dirdata = client.OpenRead(url)
-                    Using reader = New StreamReader(dirdata)
-                        strdata = reader.ReadToEnd
-                    End Using
+                    Dim reader = New StreamReader(dirdata)
+                    strdata = reader.ReadToEnd
                 End Using
             End Using
 
@@ -591,7 +590,7 @@ Public Class FrmMain
         End Try
     End Sub
 
-    Public Sub GetPhoneMissed(URL As String)
+    Public Sub GetPhoneMissed(url As String)
         GetPhoneEntries(URL, "Missed", "Missed Calls", Missed)
     End Sub
     Private Sub CallPhoneBookEntry(entry As PhoneBookEntry)
@@ -606,7 +605,7 @@ Public Class FrmMain
         LinePhoneStatus(result).CallerNumber = entry.Number
         LinePhoneStatus(result).CallerName = entry.DisplayName
 
-        Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
+        Dim callString As String = PhoneAction(EAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
         SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
 
         CmbNumber.SelectedItem = entry
@@ -759,14 +758,14 @@ Public Class FrmMain
 
             Case EPhoneStatus.Connected
                 ' If the line is connected then put on hold
-                Dim callString As String = PhoneAction(eAction.Hold, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
+                Dim callString As String = PhoneAction(EAction.Hold, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                 SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
 
 
             Case EPhoneStatus.Dialing
             Case EPhoneStatus.Holding
                 ' If the line is on hold  then take off hold
-                Dim callString As String = PhoneAction(eAction.Resume, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
+                Dim callString As String = PhoneAction(EAction.Resume, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                 SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
 
             Case EPhoneStatus.Idle
@@ -780,12 +779,12 @@ Public Class FrmMain
                         End If
                     End If
                     LinePhoneStatus(MyPhoneStatus.Id).Id = MyPhoneStatus.Id
-                    Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
+                    Dim callString As String = PhoneAction(EAction.Dial, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                     SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
                 End If
             Case EPhoneStatus.Ringing
                 ' If the line is ringing then answer
-                Dim callString As String = PhoneAction(eAction.Answer, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
+                Dim callString As String = PhoneAction(EAction.Answer, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                 SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
 
         End Select
@@ -809,7 +808,7 @@ Public Class FrmMain
         End Select
 
         'hangs up the call
-        Dim callString As String = PhoneAction(eAction.End, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
+        Dim callString As String = PhoneAction(EAction.End, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
         SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
 
 
@@ -900,7 +899,7 @@ Public Class FrmMain
 
 
         Dim result As Integer = FindFreeLine() ' finds a free line...ie so if line i is in use it will chosse lone 2 to call out on.
-        If result = 0 Then 
+        If result = 0 Then
             MsgBox("No line available")
             Exit Sub
         End If
@@ -909,11 +908,11 @@ Public Class FrmMain
             If IsNumeric(NumberToCall) = True Then
                 LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = NumberToCall
             Else
-                MsgBox(String.Format("'{0}' is not a valid number for calling.k",NumberToCall))
+                MsgBox(String.Format("'{0}' is not a valid number for calling.k", NumberToCall))
                 Exit Sub
             End If
             LinePhoneStatus(MyPhoneStatus.Id).Id = MyPhoneStatus.Id
-            Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
+            Dim callString As String = PhoneAction(EAction.Dial, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
             SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
 
         End If
@@ -1024,7 +1023,7 @@ Public Class FrmMain
             LinePhoneStatus(result).CallerName = entry.DisplayName
             CmbNumber.Text = LinePhoneStatus(result).CallerName
 
-            Dim callString As String = PhoneAction(eAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
+            Dim callString As String = PhoneAction(EAction.Dial, LinePhoneStatus(result), MyPhoneSettings)
             SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort) ' sends data to phone to initiate call
         End If
 
