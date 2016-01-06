@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing.Drawing2D
+Imports System.IO
 
 Public Class FrmPhoneBook
     Dim GridRowId As Integer = 0
@@ -88,8 +89,8 @@ Public Class FrmPhoneBook
                 End If
             End If
 
-            SaveSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
-            LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
+            SaveSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir , "Phonebook.csv"))
+            LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir ,"Phonebook.csv"))
             Me.Close()
 
         Catch ex As Exception

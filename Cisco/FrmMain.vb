@@ -138,12 +138,12 @@ Public Class FrmMain
     End Sub
 
     Private Sub InitializePhonebooks()
-        LoadPhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
+        LoadPhoneBook(Path.Combine(DataDir, "\CiscoPhone\Phonebook.csv"))
 
         If MyStoredPhoneSettings.sharedDataDir <> "" Then
             FSW.Path = MyStoredPhoneSettings.sharedDataDir
             FrmSetup.TxtSharedFolder.Text = MyStoredPhoneSettings.sharedDataDir
-            LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
+            LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"))
         End If
 
         RefillCombinedPhonebook()
@@ -615,7 +615,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DGWAnswered_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWAnswered.CellContentClick
-        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
+        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
         'calls the number in the grid row, when the call button is clicked 
 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -628,7 +628,7 @@ Public Class FrmMain
 
 
     Private Sub DGWdialled_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWdialled.CellContentClick
-        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
+        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -639,7 +639,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DGWMissed_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWMissed.CellContentClick
-        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
+        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -650,7 +650,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DgvPersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvPersonal.CellContentClick
-        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
+        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -661,7 +661,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DGVPhoneDir_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGVPhoneDir.CellContentClick
-        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
+        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
         If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
@@ -672,7 +672,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DgvPersonal_DoubleClick(sender As Object, e As EventArgs) Handles DgvPersonal.DoubleClick
-        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
+        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
 
         If Not TypeOf (CType(sender, DataGridView).CurrentCell.OwningColumn) Is DataGridViewButtonColumn Then
             Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
@@ -684,7 +684,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub DgvPersonal_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvPersonal.KeyDown
-        if(Ctype(sender,DataGridView).CurrentCell Is Nothing) Then Return
+        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
 
         ' Deletes the entry in the selected row by hitting the delete key
 
@@ -1049,8 +1049,8 @@ Public Class FrmMain
                 'removes entry from the myphonebook array
                 MySharedPhoneBook.Remove(entry)
 
-                SaveSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
-                LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
+                SaveSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir ,"Phonebook.csv"))
+                LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir ,"Phonebook.csv"))
             End If
         End If
 
@@ -1058,7 +1058,7 @@ Public Class FrmMain
 
     Private Sub FSW_Changed(sender As Object, e As FileSystemEventArgs) Handles FSW.Changed
 
-        LoadSharedPhoneBook(MyStoredPhoneSettings.sharedDataDir & "Phonebook.csv")
+        LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir , "Phonebook.csv"))
 
     End Sub
 
