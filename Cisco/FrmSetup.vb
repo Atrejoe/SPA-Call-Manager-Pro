@@ -81,22 +81,25 @@ Public Class FrmSetup
             ex.Log()
         End Try
 
-        SavePhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
-        LoadPhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
+        SavePhoneBook(Path.Combine(DataDir & "CiscoPhone\Phonebook.csv"))
+        LoadPhoneBook(Path.Combine(DataDir & "CiscoPhone\Phonebook.csv"))
         Me.Close()
 
     End Sub
 
     Public Sub ExportPhoneBooktoCSV(filename As String)
-
-
+        
         Try
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
 
                 For Each entry In MyPhoneBook
-                    If entry.DisplayName <> "" AndAlso entry.Number <> "" Then
-                        outFile.WriteLine(entry.FirstName & "," & entry.Surname & "," & entry.Number)
-                    End If
+                    With entry
+                        If String.IsNullOrWhiteSpace(.DisplayName) _
+                            OrElse String.IsNullOrWhiteSpace(.Number) Then Continue For
+                        
+                        outFile.WriteLine(.FirstName & "," & .Surname & "," & .Number)
+
+                    End With
                 Next
             End Using
 

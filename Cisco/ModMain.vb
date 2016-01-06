@@ -1,9 +1,10 @@
 ﻿Imports System.Configuration
+Imports System.Runtime.CompilerServices
 Imports Cisco.Utilities
 Imports Pss.Cisco.Models
 
 Module ModMain
-    Public MyPhoneStatus As ClsPhone.SPhoneStatus 'status of a call
+    Public MyPhoneStatus As SPhoneStatus 'status of a call
     Public MyPhoneSettings As Settings 'structure of phone settings
     Public MyStoredPhoneSettings As Settings 'structure of stored settings
     Public OutsideLinePrefix As String = "9"
@@ -14,120 +15,95 @@ Module ModMain
     Public DataDir As String 'holds the file path to where the phonedata is held
     Public LoginPassword As String = ""
 
-
     Public Sub LoadPhoneBook(filename As String)
-
-        If IO.File.Exists(filename) Then
-            'loads the phone book from 'filenname'
-            Dim tempPhoneBook As New List(Of PhoneBookEntry)
-            ' Reader to read from the file
-
-            Try
-                Using sr As New IO.StreamReader(filename)
-                    Dim tmp() As String
-                    ' Hold the amount of lines already read in a 'counter-variable'
-
-                    Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
-
-                        tmp = sr.ReadLine.Split(",".ToCharArray())
-
-                        Dim entry = New PhoneBookEntry
-                        With entry
-                            .FirstName = tmp(0).Trim()
-                            .Surname = tmp(1).Trim()
-                            .Number = tmp(2).Trim()
-                        End With
-
-                        tempPhoneBook.Add(entry)
-
-                    Loop
-                End Using
-
-            Catch ex As Exception
-                ex.Log()
-            End Try
-
-            MyPhoneBook.Clear()
-            For Each entry In tempPhoneBook.OrderBy(Function(sPhoneBook) sPhoneBook.Surname)
-                MyPhoneBook.Add(entry)
-            Next
-        Else
-            With New ConfigurationErrorsException(String.Format("Phonebook could not be found at '{0}'", filename))
-                .Log()
-            End With
-        End If
+        MyPhoneBook.Load(filename)
     End Sub
 
     Public Sub LoadSharedPhoneBook(filename As String)
+        MySharedPhoneBook.Load(filename)
+    End Sub
 
+    <Extension>
+    Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry),filename As String)
         Try
             If IO.File.Exists(filename) Then
-                'loads the phone book fron 'filenname'
-                Dim tempPhoneBook = New List(Of PhoneBookEntry)
+                'loads the phone book from 'filenname'
+                Dim tempPhoneBook As New List(Of PhoneBookEntry)
                 ' Reader to read from the file
-                Using sr As New IO.StreamReader(filename)
-                    Dim tmp() As String
 
-                    Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
+                Try
+                    Using sr As New IO.StreamReader(filename)
+                        Dim tmp() As String
+                        ' Hold the amount of lines already read in a 'counter-variable'
 
-                        tmp = sr.ReadLine.Split(",".ToCharArray())
+                        Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
 
-                        Dim entry = New PhoneBookEntry()
-                        With entry
-                            .FirstName = tmp(0).Trim
-                            .Surname = tmp(1).Trim
-                            .Number = tmp(2).Trim
-                        End With
-                        tempPhoneBook.Add(entry)
-                    Loop
-                End Using
+                            tmp = sr.ReadLine.Split(",".ToCharArray())
 
-                MySharedPhoneBook.Clear()
+                            Dim entry = New PhoneBookEntry
+                            With entry
+                                .FirstName = tmp(0).Trim()
+                                .Surname = tmp(1).Trim()
+                                .Number = tmp(2).Trim()
+                            End With
 
-                For Each entry In tempPhoneBook
-                    MySharedPhoneBook.Add(entry)
+                            tempPhoneBook.Add(entry)
+
+                        Loop
+                    End Using
+
+                Catch ex As Exception
+                    ex.Log()
+                End Try
+
+                phoneBook.Clear()
+                For Each entry In tempPhoneBook.OrderBy(Function(sPhoneBook) sPhoneBook.Surname)
+                    phoneBook.Add(entry)
                 Next
-
-                'tempPhoneBook.ForEach(Function(x) (FrmMain.MySharedPhoneBook.Add(x)))
-
+            Else
+                With New ConfigurationErrorsException(String.Format("Phonebook could not be found at '{0}'", filename))
+                    .Log()
+                End With
             End If
         Catch ex As Exception
             ex.Log()
         End Try
     End Sub
 
+
     Public Sub SavePhoneBook(filename As String)
         'saves the phone book to 'filename'
-
-        Try
-            Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
-                For Each entry In MyPhoneBook
-                    If entry.FirstName <> "" And entry.Number <> "" Then
-                        outFile.WriteLine(entry.FirstName & "," & entry.Surname & "," & entry.Number)
-                    End If
-                Next
-            End Using
-
-        Catch ex As Exception
-            ex.Log()
-        End Try
+        MyPhoneBook.Save(filename)
+    End Sub
+    Public Sub SaveSharedPhoneBook(filename As String)
+        'saves the phone book to 'filename'
+        MySharedPhoneBook.Save(filename)
     End Sub
 
-    Public Sub SaveSharedPhoneBook(filename As String)
+    <Extension>
+    Private Sub Save(phonebook As IEnumerable(Of PhoneBookEntry), filename As String)
         'saves the phone book to 'filename'
 
         Try
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
-                For Each entry As PhoneBookEntry In MySharedPhoneBook
-                    If entry.DisplayName <> "" AndAlso entry.Number <> "" Then
+                For Each entry In phonebook
+                    With entry
+
+                        If String.IsNullOrWhiteSpace(.FirstName) _
+                                AndAlso String.IsNullOrWhiteSpace(.Surname) _
+                                AndAlso String.IsNullOrWhiteSpace(.Number) Then Continue For
+
                         outFile.WriteLine(entry.FirstName & "," & entry.Surname & "," & entry.Number)
-                    End If
+
+                    End With
                 Next
             End Using
+
         Catch ex As Exception
             ex.Log()
         End Try
     End Sub
+
 
     Public Function GetStoredSettings() As Settings 'retreives the settings frm the registry
 

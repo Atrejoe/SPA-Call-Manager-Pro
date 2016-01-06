@@ -138,7 +138,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub InitializePhonebooks()
-        LoadPhoneBook(Path.Combine(DataDir, "\CiscoPhone\Phonebook.csv"))
+        LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
 
         If MyStoredPhoneSettings.sharedDataDir <> "" Then
             FSW.Path = MyStoredPhoneSettings.sharedDataDir
@@ -694,8 +694,8 @@ Public Class FrmMain
             If result = MsgBoxResult.Yes Then
                 'removes entry from the myphonebook array
                 MyPhoneBook.RemoveAt(DgvPersonal.CurrentCell.RowIndex)
-                SavePhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
-                LoadPhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
+                SavePhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
+                LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
             End If
         End If
 
@@ -1049,8 +1049,8 @@ Public Class FrmMain
                 'removes entry from the myphonebook array
                 MySharedPhoneBook.Remove(entry)
 
-                SaveSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir ,"Phonebook.csv"))
-                LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir ,"Phonebook.csv"))
+                SaveSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"))
+                LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"))
             End If
         End If
 
@@ -1058,7 +1058,7 @@ Public Class FrmMain
 
     Private Sub FSW_Changed(sender As Object, e As FileSystemEventArgs) Handles FSW.Changed
 
-        LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir , "Phonebook.csv"))
+        LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"))
 
     End Sub
 

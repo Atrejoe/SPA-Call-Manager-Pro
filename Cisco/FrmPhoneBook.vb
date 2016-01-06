@@ -29,8 +29,8 @@ Public Class FrmPhoneBook
                 End If
             End If
 
-            SavePhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
-            LoadPhoneBook(DataDir & "\CiscoPhone\Phonebook.csv")
+            SavePhoneBook(Path.Combine(DataDir & "CiscoPhone\Phonebook.csv"))
+            LoadPhoneBook(Path.Combine(DataDir & "CiscoPhone\Phonebook.csv"))
             Me.Close()
 
         Catch ex As Exception
