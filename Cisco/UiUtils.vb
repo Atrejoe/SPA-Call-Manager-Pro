@@ -21,7 +21,7 @@ Module UiUtils
     Public Sub DrawRoundRectForm(thisform As Form, x As Single, y As Single, width As Single, height As Single, radius As Single)
 
         'draws a borderless form with curved edges
-        Dim gp As GraphicsPath = New GraphicsPath()
+        Dim gp = New GraphicsPath()
 
         gp.AddLine(x + radius, y, x + width - (radius * 2), y)
         gp.AddArc(x + width - (radius * 2), y, radius * 2, radius * 2, 270, 90)
@@ -40,7 +40,7 @@ Module UiUtils
     Public Sub DrawRoundRectControl(thisControl As Control, x As Single, y As Single, width As Single, height As Single, radius As Single)
 
         'draws a control with curved edges
-        Dim gp As GraphicsPath = New GraphicsPath()
+        Dim gp = New GraphicsPath()
 
         gp.AddLine(x + radius, y, x + width - (radius * 2), y)
         gp.AddArc(x + width - (radius * 2), y, radius * 2, radius * 2, 270, 90)
@@ -60,7 +60,7 @@ Module UiUtils
 
         ' fills object with color
 
-        Dim gp As GraphicsPath = New GraphicsPath
+        Dim gp = New GraphicsPath
 
         gp.AddLine(x + radius, y, x + width - (radius * 2), y)
         gp.AddArc(x + width - (radius * 2), y, radius * 2, radius * 2, 270, 90)

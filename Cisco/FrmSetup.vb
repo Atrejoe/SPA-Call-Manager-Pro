@@ -132,7 +132,7 @@ Public Class FrmSetup
     End Sub
 
     Function CheckConfig(checkIPaddress As Boolean) As Boolean
-        Dim ValidConfig As Boolean = True
+        Dim ValidConfig = True
         If TxtphoneIP.Text <> "" Then
             If CmbLocalIP.Text <> "" Then
                 Try
