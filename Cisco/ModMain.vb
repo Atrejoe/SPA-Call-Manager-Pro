@@ -51,7 +51,10 @@ Module ModMain
             For Each entry In tempPhoneBook.OrderBy(Function(sPhoneBook) sPhoneBook.Surname)
                 MyPhoneBook.Add(entry)
             Next
-
+        Else
+            With New ConfigurationErrorsException(String.Format("Phonebook could not be found at '{0}'", filename))
+                .Log()
+            End With
         End If
     End Sub
 
