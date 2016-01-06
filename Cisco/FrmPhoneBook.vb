@@ -4,11 +4,11 @@ Public Class FrmPhoneBook
     Dim GridRowId As Integer = 0
     Dim NewGridName As String = ""
 
-    Private Sub FrmPhoneBook_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+    Private Sub FrmPhoneBook_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
         Me.PaintGradient(e.Graphics)
     End Sub
 
-    Private Sub btnSavePersonal_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnSavePersonal.Click
+    Private Sub btnSavePersonal_Click(sender As Object, e As System.EventArgs) Handles btnSavePersonal.Click
 
         Try
             Dim entry = New Models.PhoneBookEntry
@@ -38,7 +38,7 @@ Public Class FrmPhoneBook
 
     End Sub
 
-    Public Sub New(entry As Models.PhoneBookEntry, ByVal GridID As Integer, GridName As String)
+    Public Sub New(entry As Models.PhoneBookEntry, GridID As Integer, GridName As String)
         ' This call is required by the designer.
         InitializeComponent()
 
@@ -53,7 +53,7 @@ Public Class FrmPhoneBook
         NewGridName = GridName
     End Sub
 
-    Public Sub New(ByVal FirstName As String, ByVal Surname As String, ByVal Number As String, ByVal GridID As Integer, GridName As String)
+    Public Sub New(FirstName As String, Surname As String, Number As String, GridID As Integer, GridName As String)
 
         ' This call is required by the designer.
         InitializeComponent()

@@ -6,7 +6,7 @@ Public Class FrmCall
     Dim CallBorderColor As Color = Color.Black
     Dim FrmCallPhoneStatus As ClsPhone.sPhoneStatus
 
-    Private Sub FrmCall_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub FrmCall_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Dim g As Graphics = Me.CreateGraphics
         g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
@@ -15,7 +15,7 @@ Public Class FrmCall
 
     End Sub
 
-    Private Sub FrmCall_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+    Private Sub FrmCall_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
 
         Dim g As Graphics = e.Graphics
         
@@ -36,26 +36,26 @@ Public Class FrmCall
 
     End Sub
 
-    Private Sub BtnAnswer_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnAnswer.Click
+    Private Sub BtnAnswer_Click(sender As Object, e As System.EventArgs) Handles BtnAnswer.Click
         
         Dim CallString As String = CallControl.PhoneAction(CallControl.eAction.Answer, FrmCallPhoneStatus, MyPhoneSettings)
 
         SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
     End Sub
 
-    Private Sub BtnAnswer_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnAnswer.MouseEnter
+    Private Sub BtnAnswer_MouseEnter(sender As Object, e As System.EventArgs) Handles BtnAnswer.MouseEnter
 
         Me.Cursor = Cursors.Hand
 
     End Sub
 
-    Private Sub BtnAnswer_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnAnswer.MouseLeave
+    Private Sub BtnAnswer_MouseLeave(sender As Object, e As System.EventArgs) Handles BtnAnswer.MouseLeave
 
         Me.Cursor = Cursors.Default
 
     End Sub
 
-    Private Sub BtnAnswer_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles BtnAnswer.Paint
+    Private Sub BtnAnswer_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles BtnAnswer.Paint
 
         Dim g As Graphics = e.Graphics
         Dim CallImage As New Bitmap(My.Resources.Phone1, 60, 60)
@@ -67,26 +67,26 @@ Public Class FrmCall
 
     End Sub
 
-    Private Sub BtnReject_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReject.Click
+    Private Sub BtnReject_Click(sender As Object, e As System.EventArgs) Handles BtnReject.Click
 
         Dim callString As String = PhoneAction(CallControl.eAction.Reject, FrmCallPhoneStatus, MyPhoneSettings)
 
         SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
     End Sub
 
-    Private Sub BtnReject_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReject.MouseEnter
+    Private Sub BtnReject_MouseEnter(sender As Object, e As System.EventArgs) Handles BtnReject.MouseEnter
 
         Me.Cursor = Cursors.Hand
 
     End Sub
 
-    Private Sub BtnReject_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReject.MouseLeave
+    Private Sub BtnReject_MouseLeave(sender As Object, e As System.EventArgs) Handles BtnReject.MouseLeave
 
         Me.Cursor = Cursors.Default
 
     End Sub
 
-    Private Sub BtnReject_Paint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles BtnReject.Paint
+    Private Sub BtnReject_Paint(sender As Object, e As PaintEventArgs) Handles BtnReject.Paint
 
         Dim g As Graphics = e.Graphics
         Dim CallImage As New Bitmap(My.Resources.Phone2, 60, 60)
@@ -97,7 +97,7 @@ Public Class FrmCall
 
     End Sub
 
-    Public Sub New(ByVal MyPhoneStatus As ClsPhone.sPhoneStatus)
+    Public Sub New(MyPhoneStatus As ClsPhone.sPhoneStatus)
 
         ' This call is required by the designer.
         InitializeComponent()

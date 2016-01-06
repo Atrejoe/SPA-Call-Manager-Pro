@@ -11,10 +11,10 @@ Public Class ClipBoardMonitor
     Private mNextClipBoardViewerHWnd As IntPtr
 
     'API declarations...
-    Friend Declare Auto Function SetClipboardViewer Lib "user32" (ByVal HWnd As IntPtr) As IntPtr
-    Friend Declare Auto Function ChangeClipboardChain Lib "user32" (ByVal HWnd As IntPtr, ByVal HWndNext As IntPtr) As Boolean
-    Friend Declare Auto Function SendMessage Lib "User32" (ByVal HWnd As IntPtr, ByVal Msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As Long
-    Public Event ClipBoardItemAdded(ByVal data As String)
+    Friend Declare Auto Function SetClipboardViewer Lib "user32" (HWnd As IntPtr) As IntPtr
+    Friend Declare Auto Function ChangeClipboardChain Lib "user32" (HWnd As IntPtr, HWndNext As IntPtr) As Boolean
+    Friend Declare Auto Function SendMessage Lib "User32" (HWnd As IntPtr, Msg As Integer, wParam As IntPtr, lParam As IntPtr) As Long
+    Public Event ClipBoardItemAdded(data As String)
 
 #End Region
 
@@ -50,7 +50,7 @@ Public Class ClipBoardMonitor
 
 #Region " Dispose "
     'Form overrides dispose to clean up...
-    Protected Overloads Overrides Sub Dispose(ByVal disposing As Boolean)
+    Protected Overloads Overrides Sub Dispose(disposing As Boolean)
         If disposing Then
             'Set the next clipboard viewer back to the original... 
             ChangeClipboardChain(Me.Handle, mNextClipBoardViewerHWnd)

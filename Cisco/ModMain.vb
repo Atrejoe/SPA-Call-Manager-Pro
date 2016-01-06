@@ -1,23 +1,24 @@
-﻿Imports Cisco.Utilities
+﻿Imports System.Configuration
+Imports Cisco.Utilities
 Imports Pss.Cisco.Models
 
 Module ModMain
-    Public MyPhoneStatus As ClsPhone.sPhoneStatus 'status of a call
+    Public MyPhoneStatus As ClsPhone.SPhoneStatus 'status of a call
     Public MyPhoneSettings As Settings 'structure of phone settings
     Public MyStoredPhoneSettings As Settings 'structure of stored settings
     Public OutsideLinePrefix As String = "9"
 
     Friend ReadOnly MyPhoneBook, MySharedPhoneBook, PhoneDir, Dialled, Missed, Answered As New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
-    Friend ReadOnly CombinedPhoneBook As New List(Of Phonebookentry)
+    Friend ReadOnly CombinedPhoneBook As New List(Of PhoneBookEntry)
 
     Public DataDir As String 'holds the file path to where the phonedata is held
     Public LoginPassword As String = ""
-    
 
-    Public Sub LoadPhoneBook(ByVal filename As String)
+
+    Public Sub LoadPhoneBook(filename As String)
 
         If IO.File.Exists(filename) Then
-            'loads the phone book fron 'filenname'
+            'loads the phone book from 'filenname'
             Dim tempPhoneBook As New List(Of PhoneBookEntry)
             ' Reader to read from the file
 
@@ -54,7 +55,7 @@ Module ModMain
         End If
     End Sub
 
-    Public Sub LoadSharedPhoneBook(ByVal filename As String)
+    Public Sub LoadSharedPhoneBook(filename As String)
 
         Try
             If IO.File.Exists(filename) Then
@@ -92,8 +93,8 @@ Module ModMain
         End Try
     End Sub
 
-    Public Sub SavePhoneBook(ByVal filename As String)
-        'saves the phone book to 'filenname'
+    Public Sub SavePhoneBook(filename As String)
+        'saves the phone book to 'filename'
 
         Try
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
@@ -109,8 +110,8 @@ Module ModMain
         End Try
     End Sub
 
-    Public Sub SaveSharedPhoneBook(ByVal filename As String)
-        'saves the phone book to 'filenname'
+    Public Sub SaveSharedPhoneBook(filename As String)
+        'saves the phone book to 'filename'
 
         Try
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
@@ -151,7 +152,7 @@ Module ModMain
         Return storedPhoneSettings
     End Function
 
-    Public Function SetStoredSettings(ByVal storedPhoneSettings As Settings) As Boolean 'saves the settings frm the registry
+    Public Function SetStoredSettings(storedPhoneSettings As Settings) As Boolean 'saves the settings frm the registry
 
         'saves the stored settings to the reghistry
 

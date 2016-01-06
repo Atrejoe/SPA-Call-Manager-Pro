@@ -20,7 +20,7 @@ Public Class FrmSetup
 
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btnsave.Click
+    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Btnsave.Click
 
 
         MyPhoneSettings.password = txtpassword.Text
@@ -50,7 +50,7 @@ Public Class FrmSetup
         End If
     End Sub
 
-    Public Sub LoadCSVtoPhoneBook(ByVal filename As String)
+    Public Sub LoadCSVtoPhoneBook(filename As String)
         'loads the phone book fron 'filenname'
         Dim TempPhoneBook As New List(Of PhoneBookEntry)
 
@@ -87,7 +87,7 @@ Public Class FrmSetup
 
     End Sub
 
-    Public Sub ExportPhoneBooktoCSV(ByVal filename As String)
+    Public Sub ExportPhoneBooktoCSV(filename As String)
 
 
         Try
