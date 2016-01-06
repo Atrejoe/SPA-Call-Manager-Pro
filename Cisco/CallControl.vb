@@ -1,6 +1,6 @@
 ﻿Public Module CallControl
 
-    Public Enum eAction
+    Public Enum EAction
         Hold = 1
         [Resume] = 2
         [End] = 3
@@ -10,9 +10,9 @@
         Dial = 7
     End Enum
 
-    Public Function ConstructHeaderMessage(PhoneStatus As SPhoneStatus, PhoneSettings As Settings) As String
+    Public Function ConstructHeaderMessage(phoneStatus As SPhoneStatus, phoneSettings As Settings) As String
 
-        Dim SPATemplate As String = "NOTIFY sip:" & PhoneSettings.StationName & "@" & PhoneSettings.PhoneIP & ":" & PhoneSettings.PhonePort & " SIP/2.0" & vbCr & _
+        Dim spaTemplate As String = "NOTIFY sip:" & PhoneSettings.StationName & "@" & PhoneSettings.PhoneIP & ":" & PhoneSettings.PhonePort & " SIP/2.0" & vbCr & _
                       "Via: SIP/2.0/UDP " & PhoneSettings.LocalIP & ":" & PhoneSettings.LocalPort & vbCr & _
                       "Max-Forwards: 70" & vbCr & _
                       "From: <sip:" & Environment.MachineName & "@" & PhoneSettings.LocalIP & ">;tag=1710726934" & vbCr & _
@@ -26,9 +26,9 @@
 
     End Function
 
-    Public Function PhoneAction(Action As eAction, PhoneStatus As SPhoneStatus, PhoneSettings As Settings) As String
+    Public Function PhoneAction(action As eAction, phoneStatus As SPhoneStatus, phoneSettings As Settings) As String
 
-        Dim SPACommand As String
+        Dim spaCommand As String
         Dim qt As String = Chr(34)
         SPACommand = ConstructHeaderMessage(PhoneStatus, PhoneSettings)
 
@@ -57,7 +57,7 @@
 
     Private ReadOnly Generator as New Random()
 
-    Private Function GetRandom(Min As Integer, Max As Integer) As Integer
+    Private Function GetRandom(min As Integer, max As Integer) As Integer
         
         Return Generator.Next(Min, Max)
 
@@ -65,9 +65,9 @@
 
     Public Function GetNumbers(phonenumber As String) As String
 
-        Dim newNumber As String = ""
+        Dim newNumber = ""
 
-        For x As Integer = 0 To phonenumber.Length - 1
+        For x = 0 To phonenumber.Length - 1
             If IsNumeric(phonenumber.Substring(x, 1)) = True Then
                 newNumber = newNumber & phonenumber.Substring(x, 1)
             ElseIf phonenumber.Substring(x, 1) = "+" Then

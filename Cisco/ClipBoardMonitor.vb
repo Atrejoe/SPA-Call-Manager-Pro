@@ -37,7 +37,7 @@ Public Class ClipBoardMonitor
                 SendMessage(mNextClipBoardViewerHWnd, m.Msg, m.WParam, m.LParam)
 
             Case Is = WM_CHANGECBCHAIN 'Another clipboard viewer has removed itself...
-                If m.WParam = CType(mNextClipBoardViewerHWnd, IntPtr) Then
+                If m.WParam = mNextClipBoardViewerHWnd Then
                     mNextClipBoardViewerHWnd = m.LParam
                 Else
                     SendMessage(mNextClipBoardViewerHWnd, m.Msg, m.WParam, m.LParam)
