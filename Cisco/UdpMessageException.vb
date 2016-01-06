@@ -1,6 +1,6 @@
 <Serializable>
 Public Class UdpMessageException
-    Inherits System.Exception
+    Inherits Exception
     Public Property UdpMessage As String
 
     Public Sub New(message As String, udpMessage As String)

@@ -4,24 +4,24 @@ Public Class FrmCall
 
     Dim CallBackColor As Color = Color.LightSlateGray
     Dim CallBorderColor As Color = Color.Black
-    Dim FrmCallPhoneStatus As ClsPhone.sPhoneStatus
+    Dim FrmCallPhoneStatus As SPhoneStatus
 
-    Private Sub FrmCall_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+    Private Sub FrmCall_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Dim g As Graphics = Me.CreateGraphics
-        g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+        g.SmoothingMode = SmoothingMode.AntiAlias
         DrawRoundRectForm(0, 0, Me.Width, Me.Height, 15)
         Me.BackColor = CallBorderColor
 
     End Sub
 
-    Private Sub FrmCall_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+    Private Sub FrmCall_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
 
         Dim g As Graphics = e.Graphics
         
         Dim textFont As New Font("trebuchet MS", 12, FontStyle.Bold)
        
-        e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
 
         Dim fillBrush As New LinearGradientBrush(New RectangleF(0, 0, me.Width, me.Height), Color.White, Color.Gray, LinearGradientMode.Vertical)
         drawRoundRectFill(g, fillBrush, 2, 2, me.Width - 4, me.Height - 4, 15)
@@ -36,26 +36,26 @@ Public Class FrmCall
 
     End Sub
 
-    Private Sub BtnAnswer_Click(sender As Object, e As System.EventArgs) Handles BtnAnswer.Click
+    Private Sub BtnAnswer_Click(sender As Object, e As EventArgs) Handles BtnAnswer.Click
         
-        Dim CallString As String = CallControl.PhoneAction(CallControl.eAction.Answer, FrmCallPhoneStatus, MyPhoneSettings)
+        Dim CallString As String = PhoneAction(eAction.Answer, FrmCallPhoneStatus, MyPhoneSettings)
 
         SendUdp(CallString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
     End Sub
 
-    Private Sub BtnAnswer_MouseEnter(sender As Object, e As System.EventArgs) Handles BtnAnswer.MouseEnter
+    Private Sub BtnAnswer_MouseEnter(sender As Object, e As EventArgs) Handles BtnAnswer.MouseEnter
 
         Me.Cursor = Cursors.Hand
 
     End Sub
 
-    Private Sub BtnAnswer_MouseLeave(sender As Object, e As System.EventArgs) Handles BtnAnswer.MouseLeave
+    Private Sub BtnAnswer_MouseLeave(sender As Object, e As EventArgs) Handles BtnAnswer.MouseLeave
 
         Me.Cursor = Cursors.Default
 
     End Sub
 
-    Private Sub BtnAnswer_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles BtnAnswer.Paint
+    Private Sub BtnAnswer_Paint(sender As Object, e As PaintEventArgs) Handles BtnAnswer.Paint
 
         Dim g As Graphics = e.Graphics
         Dim CallImage As New Bitmap(My.Resources.Phone1, 60, 60)
@@ -67,20 +67,20 @@ Public Class FrmCall
 
     End Sub
 
-    Private Sub BtnReject_Click(sender As Object, e As System.EventArgs) Handles BtnReject.Click
+    Private Sub BtnReject_Click(sender As Object, e As EventArgs) Handles BtnReject.Click
 
-        Dim callString As String = PhoneAction(CallControl.eAction.Reject, FrmCallPhoneStatus, MyPhoneSettings)
+        Dim callString As String = PhoneAction(eAction.Reject, FrmCallPhoneStatus, MyPhoneSettings)
 
         SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
     End Sub
 
-    Private Sub BtnReject_MouseEnter(sender As Object, e As System.EventArgs) Handles BtnReject.MouseEnter
+    Private Sub BtnReject_MouseEnter(sender As Object, e As EventArgs) Handles BtnReject.MouseEnter
 
         Me.Cursor = Cursors.Hand
 
     End Sub
 
-    Private Sub BtnReject_MouseLeave(sender As Object, e As System.EventArgs) Handles BtnReject.MouseLeave
+    Private Sub BtnReject_MouseLeave(sender As Object, e As EventArgs) Handles BtnReject.MouseLeave
 
         Me.Cursor = Cursors.Default
 
@@ -97,7 +97,7 @@ Public Class FrmCall
 
     End Sub
 
-    Public Sub New(MyPhoneStatus As ClsPhone.sPhoneStatus)
+    Public Sub New(MyPhoneStatus As SPhoneStatus)
 
         ' This call is required by the designer.
         InitializeComponent()

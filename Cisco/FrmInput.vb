@@ -1,7 +1,7 @@
 ﻿Public Class FrmInput
 
 
-    Private Sub FrmInput_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+    Private Sub FrmInput_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
 
         Me.PaintGradient(e.Graphics)
 

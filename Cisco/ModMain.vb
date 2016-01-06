@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Cisco.Utilities
 Imports Pss.Cisco.Models
@@ -26,13 +27,13 @@ Module ModMain
     <Extension>
     Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry),filename As String)
         Try
-            If IO.File.Exists(filename) Then
+            If File.Exists(filename) Then
                 'loads the phone book from 'filenname'
                 Dim tempPhoneBook As New List(Of PhoneBookEntry)
                 ' Reader to read from the file
 
                 Try
-                    Using sr As New IO.StreamReader(filename)
+                    Using sr As New StreamReader(filename)
                         Dim tmp() As String
                         ' Hold the amount of lines already read in a 'counter-variable'
 

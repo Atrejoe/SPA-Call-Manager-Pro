@@ -4,7 +4,7 @@ Imports Pss.Cisco.Models
 Public Class FrmSetup
 
     Dim validConfig As Boolean = False
-    Private Sub FrmSetup_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+    Private Sub FrmSetup_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Dim MyPhone As New ClsPhone
         ' saves the user seting son click
         'MyPhoneSettings = MyPhone.DownloadPhoneSettings(TxtphoneIP.Text)
@@ -20,7 +20,7 @@ Public Class FrmSetup
 
     End Sub
 
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Btnsave.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Btnsave.Click
 
 
         MyPhoneSettings.password = txtpassword.Text
@@ -41,7 +41,7 @@ Public Class FrmSetup
 
     End Sub
 
-    Private Sub btnImportCsv_Click(sender As System.Object, e As System.EventArgs) Handles btnImportCsv.Click
+    Private Sub btnImportCsv_Click(sender As Object, e As EventArgs) Handles btnImportCsv.Click
 
         OFDImport.Filter = "CSV files (*.csv)|*.csv"
         OFDImport.Title = "Select File to import phone list"
@@ -60,7 +60,7 @@ Public Class FrmSetup
             ' Hold the amount of lines already read in a 'counter-variable'
             Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
                 tmp = sr.ReadLine.Split(",".ToCharArray())
-                Dim entry = New Models.PhoneBookEntry
+                Dim entry = New PhoneBookEntry
                 With entry
 
                     .FirstName = StrConv(tmp(0).Trim, VbStrConv.ProperCase)
@@ -127,7 +127,7 @@ Public Class FrmSetup
 
     End Sub
 
-    Private Sub btnRecheck_Click(sender As System.Object, e As EventArgs) Handles btnRecheck.Click
+    Private Sub btnRecheck_Click(sender As Object, e As EventArgs) Handles btnRecheck.Click
         validConfig = CheckConfig(True)
     End Sub
 
@@ -198,7 +198,7 @@ Public Class FrmSetup
         Return ValidConfig
     End Function
 
-    Private Sub btnsharedFolder_Click(sender As System.Object, e As EventArgs) Handles btnsharedFolder.Click
+    Private Sub btnsharedFolder_Click(sender As Object, e As EventArgs) Handles btnsharedFolder.Click
 
         If TxtSharedFolder.Text <> "" Then
             SharedFBD.SelectedPath = TxtSharedFolder.Text
@@ -215,7 +215,7 @@ Public Class FrmSetup
 
     End Sub
 
-    Private Sub txtpassword_TextChanged(sender As System.Object, e As EventArgs) Handles txtpassword.TextChanged
+    Private Sub txtpassword_TextChanged(sender As Object, e As EventArgs) Handles txtpassword.TextChanged
 
         LoginPassword = txtpassword.Text
 

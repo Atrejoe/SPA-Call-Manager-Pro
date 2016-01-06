@@ -1,18 +1,19 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports System.IO
+Imports Pss.Cisco.Models
 
 Public Class FrmPhoneBook
     Dim GridRowId As Integer = 0
     Dim NewGridName As String = ""
 
-    Private Sub FrmPhoneBook_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+    Private Sub FrmPhoneBook_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         Me.PaintGradient(e.Graphics)
     End Sub
 
-    Private Sub btnSavePersonal_Click(sender As Object, e As System.EventArgs) Handles btnSavePersonal.Click
+    Private Sub btnSavePersonal_Click(sender As Object, e As EventArgs) Handles btnSavePersonal.Click
 
         Try
-            Dim entry = New Models.PhoneBookEntry
+            Dim entry = New PhoneBookEntry
             With entry
                 .FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
                 .Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
@@ -39,7 +40,7 @@ Public Class FrmPhoneBook
 
     End Sub
 
-    Public Sub New(entry As Models.PhoneBookEntry, GridID As Integer, GridName As String)
+    Public Sub New(entry As PhoneBookEntry, GridID As Integer, GridName As String)
         ' This call is required by the designer.
         InitializeComponent()
 
@@ -69,10 +70,10 @@ Public Class FrmPhoneBook
     End Sub
 
 
-    Private Sub btnSavedShared_Click(sender As System.Object, e As System.EventArgs) Handles btnSavedShared.Click
+    Private Sub btnSavedShared_Click(sender As Object, e As EventArgs) Handles btnSavedShared.Click
 
         Try
-            Dim entry = New Models.PhoneBookEntry
+            Dim entry = New PhoneBookEntry
             With entry
                 .FirstName = StrConv(TxtFirstname.Text, VbStrConv.ProperCase)
                 .Surname = StrConv(TxtSurname.Text, VbStrConv.ProperCase)
