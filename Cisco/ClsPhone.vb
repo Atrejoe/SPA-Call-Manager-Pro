@@ -31,8 +31,7 @@ Public Module ClsPhone
     Public Event UdpRxdata(phoneStatusdata As SPhoneStatus) 'event raised when phone sends data to pc
     Private ReadOnly RemoteIpEndPoint As New IPEndPoint(IPAddress.Any, 0) 'receiving ip address
     Private _strReturnData As String 'data received from phone
-    Private ReadOnly ReceivingUdpClient As New UdpClient 'UDP socket
-    Private ReadOnly UdpClient As New UdpClient
+    Private ReceivingUdpClient As UdpClient 'UDP socket
 
     'Private ReadOnly Property _Ipaddress As New List(Of String)
     'Public ReadOnly Property Ipaddress As List(Of String)
@@ -145,7 +144,7 @@ Public Module ClsPhone
     Public Sub Startlistening()
         'starts the listening process for messages from the phone
         Try
-            'receivingUdpClient = New System.Net.Sockets.UdpClient(UdpRXPort)
+            ReceivingUdpClient = New System.Net.Sockets.UdpClient(IpPort)
             BgwUDP.RunWorkerAsync()
         Catch ex As Exception
             ex.Log()
@@ -258,8 +257,11 @@ Public Module ClsPhone
         Try
 
             Dim bytCommand = Encoding.ASCII.GetBytes(message)
-            UdpClient.Connect(ipaddress, port)
-            UdpClient.Send(bytCommand, bytCommand.Length)
+            With New UdpClient
+                .Connect(ipaddress, port)
+                .Send(bytCommand, bytCommand.Length)
+            End With
+
 
         Catch ex As Exception
             Dim wrappedException As New UdpMessageException(String.Format("Error while sending UDP message, see inner exception for details. UDP Message was : {0}", message), message, ex)
