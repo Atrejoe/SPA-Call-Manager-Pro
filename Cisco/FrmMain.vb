@@ -545,6 +545,9 @@ Public Class FrmMain
             End If
 
             entryList.Clear()
+
+            'TODO: Parse list using :
+            '  <td>&nbsp;(?<name>[^,\n<]+),(?<Number>[^,\n<]+),(?<Time>[^,\n<]+)<
             Do
                 findElement = strdata.IndexOf("<td>&nbsp;", findElement + 1)
                 If findElement = -1 Then Exit Do
