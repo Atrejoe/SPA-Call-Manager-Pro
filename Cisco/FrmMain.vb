@@ -545,9 +545,11 @@ Public Class FrmMain
             End If
 
             entryList.Clear()
-            Do
+
+            While entryList.Count < 1000
+
                 findElement = strdata.IndexOf("<td>&nbsp;", findElement + 1)
-                If findElement = -1 Then Exit Do
+                If findElement = -1 Then Exit While
                 Dim number() As String = strdata.Substring(findElement + 10, strdata.IndexOf("<", findElement + 10) - (findElement + 10)).Split(",".ToCharArray())
 
                 Dim entry = New PhoneBookEntry()
@@ -583,7 +585,8 @@ Public Class FrmMain
 
                 entryList.Add(entry)
 
-            Loop Until Answered.Count >= 60
+            End While
+
 
         Catch ex As Exception
             ex.Log()
@@ -591,7 +594,7 @@ Public Class FrmMain
     End Sub
 
     Public Sub GetPhoneMissed(url As String)
-        GetPhoneEntries(URL, "Missed", "Missed Calls", Missed)
+        GetPhoneEntries(url, "Missed", "Missed Calls", Missed)
     End Sub
     Private Sub CallPhoneBookEntry(entry As PhoneBookEntry)
 
