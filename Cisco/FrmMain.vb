@@ -380,7 +380,12 @@ Public Class FrmMain
                     End Select
                     FrmFade(phoneStatusdata.Id) = True
                 Case Else
-                    Dim argumentEx As New ArgumentOutOfRangeException("phoneStatusdata.Status", phoneStatusdata.Status, String.Format("Phione status '{0}' was not handled.", phoneStatusdata.Status))
+                    Dim argumentEx As New ArgumentOutOfRangeException(
+                                            "phoneStatusdata.Status",
+                                            phoneStatusdata.Status,
+                                            String.Format("Phone status '{0}' was not handled for handling phone status data : {1}",
+                                                          phoneStatusdata.Status,
+                                                          phoneStatusdata.ToString()))
                     argumentEx.Log()
             End Select
 
