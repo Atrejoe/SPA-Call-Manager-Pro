@@ -26,6 +26,10 @@ Public Module ClsPhone
         Dim CallerName As String 'caller or called name
         Dim Id As Integer
         Dim Ref As Integer
+
+        Public Overrides Function ToString() As String
+            Return String.Format("[{0}]({1}) {2} <{3}> ({4}:{5})", Status, LineNumber, CallerNumber, CallerName, Id, Ref)
+        End Function
     End Structure
 
     Public Event UdpRxdata(phoneStatusdata As SPhoneStatus) 'event raised when phone sends data to pc
@@ -196,6 +200,8 @@ Public Module ClsPhone
             If spl IsNot Nothing Then
                 For x = 0 To spl.Length
 
+                    If (Not spl(x).Contains("=")) Then Continue For
+
                     Dim splLn = Split(spl(x), "=")
 
                     Try
@@ -236,7 +242,7 @@ Public Module ClsPhone
                                 If Not String.IsNullOrWhiteSpace(value) Then phoneStatus.CallerNumber = value.Substring(0, value.IndexOf("@") - 1)
                         End Select
                     Catch ex As Exception
-                        With (New Exception(String.Format("Exception while parsing '{0}'", splLn)))
+                        With (New Exception(String.Format("Exception while parsing '{0}' from message {1} : {2}", splLn, message, ex), ex))
                             .Log()
                         End With
                         'Log and resume next
@@ -245,7 +251,9 @@ Public Module ClsPhone
             End If
 
         Catch ex As Exception
-            ex.Log()
+            With (New Exception(String.Format("Exception while parsing '{0}'", message), ex))
+                .Log()
+            End With
         End Try
 
         Return phoneStatus

@@ -190,23 +190,24 @@ Public Class FrmMain
         Try
 
             phoneStatusdata.CallerName = ""
-            Dim tempNumber As String = LinePhoneStatus(phoneStatusdata.Id).CallerNumber
+            Dim phoneStatus As SPhoneStatus = LinePhoneStatus(phoneStatusdata.Id)
+            Dim tempNumber As String = phoneStatus.CallerNumber
 
             LinePhoneStatus(phoneStatusdata.Id) = phoneStatusdata
-            If LinePhoneStatus(phoneStatusdata.Id).CallerNumber = "" Then LinePhoneStatus(phoneStatusdata.Id).CallerNumber = tempNumber
-            If LinePhoneStatus(phoneStatusdata.Id).Status = EPhoneStatus.Dialing Then LinePhoneStatus(phoneStatusdata.Id).CallerNumber = ""
 
+            If String.IsNullOrWhiteSpace(phoneStatus.CallerNumber) Then phoneStatus.CallerNumber = tempNumber
+            If phoneStatus.Status = EPhoneStatus.Dialing Then phoneStatus.CallerNumber = ""
 
             For Each entry In MyPhoneBook
-                If LinePhoneStatus(phoneStatusdata.Id).CallerNumber = entry.Number Then
-                    LinePhoneStatus(phoneStatusdata.Id).CallerName = entry.DisplayName
-                    phoneStatusdata.CallerName = LinePhoneStatus(phoneStatusdata.Id).CallerName
+                If String.Equals(phoneStatus.CallerNumber, entry.Number) Then
+                    phoneStatus.CallerName = entry.DisplayName
+                    phoneStatusdata.CallerName = phoneStatus.CallerName
                 End If
             Next
 
             For Each entry In PhoneDir
-                If LinePhoneStatus(phoneStatusdata.Id).CallerNumber.Equals(entry.Number) Then
-                    LinePhoneStatus(phoneStatusdata.Id).CallerName = entry.DisplayName
+                If String.Equals(phoneStatus.CallerNumber, entry.Number) Then
+                    phoneStatus.CallerName = entry.DisplayName
                     phoneStatusdata.CallerName = entry.DisplayName
                 End If
             Next
@@ -216,7 +217,7 @@ Public Class FrmMain
                     MyPhoneStatus = phoneStatusdata
                     Select Case MyPhoneStatus.Id
                         Case 1
-                            LblLine1.Text = "Ringing " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine1.Text = "Ringing " & phoneStatus.CallerName
                             BtnDial1.Image = IlButtons.Images(0)
                             newFrmCallLine1 = New FrmCall(MyPhoneStatus)
                             newFrmCallLine1.Show()
@@ -228,7 +229,7 @@ Public Class FrmMain
                             End If
                             BtnHang1.Enabled = True
                         Case 2
-                            LblLine2.Text = "Ringing " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine2.Text = "Ringing " & phoneStatus.CallerName
                             BtnDial2.Image = IlButtons.Images(0)
                             newFrmCallLine2 = New FrmCall(MyPhoneStatus)
                             newFrmCallLine2.Show()
@@ -240,7 +241,7 @@ Public Class FrmMain
                             End If
                             BtnHang2.Enabled = True
                         Case 3
-                            LblLine3.Text = "Ringing " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine3.Text = "Ringing " & phoneStatus.CallerName
                             BtnDial3.Image = IlButtons.Images(0)
                             newFrmCallLine3 = New FrmCall(MyPhoneStatus)
                             newFrmCallLine3.Show()
@@ -252,7 +253,7 @@ Public Class FrmMain
                             If newFrmCallLine1 Is Nothing And newFrmCallLine2 Is Nothing Then newFrmCallLine3.Top = SystemInformation.WorkingArea.Height - (newFrmCallLine2.Height)
                             BtnHang3.Enabled = True
                         Case 4
-                            LblLine4.Text = "Ringing " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine4.Text = "Ringing " & phoneStatus.CallerName
                             BtnDial4.Image = IlButtons.Images(0)
                             newFrmCallLine4 = New FrmCall(MyPhoneStatus)
                             newFrmCallLine4.Show()
@@ -271,22 +272,22 @@ Public Class FrmMain
                 Case EPhoneStatus.Connected
                     Select Case phoneStatusdata.Id
                         Case 1
-                            LblLine1.Text = "Connected " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine1.Text = "Connected " & phoneStatus.CallerName
                             BtnDial1.Image = IlButtons.Images(0)
                             BtnHang1.Enabled = True
                             HoldFlash(1) = False
                         Case 2
-                            LblLine2.Text = "Connected " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine2.Text = "Connected " & phoneStatus.CallerName
                             BtnDial2.Image = IlButtons.Images(0)
                             BtnHang2.Enabled = True
                             HoldFlash(2) = False
                         Case 3
-                            LblLine3.Text = "Connected " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine3.Text = "Connected " & phoneStatus.CallerName
                             BtnDial3.Image = IlButtons.Images(0)
                             BtnHang3.Enabled = True
                             HoldFlash(3) = False
                         Case 4
-                            LblLine4.Text = "Connected " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine4.Text = "Connected " & phoneStatus.CallerName
                             BtnDial4.Image = IlButtons.Images(0)
                             BtnHang4.Enabled = True
                             HoldFlash(4) = False
@@ -295,60 +296,60 @@ Public Class FrmMain
                 Case EPhoneStatus.Dialing
                     Select Case phoneStatusdata.Id
                         Case 1
-                            LblLine1.Text = "Off hook " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine1.Text = "Off hook " & phoneStatus.CallerName
                             BtnDial1.Image = IlButtons.Images(0)
                             BtnHang1.Enabled = True
                         Case 2
-                            LblLine2.Text = "Off hook " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine2.Text = "Off hook " & phoneStatus.CallerName
                             BtnDial2.Image = IlButtons.Images(0)
                             BtnHang2.Enabled = True
                         Case 3
-                            LblLine3.Text = "Off hook " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine3.Text = "Off hook " & phoneStatus.CallerName
                             BtnDial3.Image = IlButtons.Images(0)
                             BtnHang3.Enabled = True
                         Case 4
-                            LblLine4.Text = "Off hook " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine4.Text = "Off hook " & phoneStatus.CallerName
                             BtnDial4.Image = IlButtons.Images(0)
                             BtnHang4.Enabled = True
                     End Select
                 Case EPhoneStatus.Calling
                     Select Case phoneStatusdata.Id
                         Case 1
-                            LblLine1.Text = "Calling " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine1.Text = "Calling " & phoneStatus.CallerName
                             BtnDial1.Image = IlButtons.Images(0)
                             BtnHang1.Enabled = True
                         Case 2
-                            LblLine2.Text = "Calling " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine2.Text = "Calling " & phoneStatus.CallerName
                             BtnDial2.Image = IlButtons.Images(0)
                             BtnHang2.Enabled = True
                         Case 3
-                            LblLine3.Text = "Calling " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine3.Text = "Calling " & phoneStatus.CallerName
                             BtnDial3.Image = IlButtons.Images(0)
                             BtnHang3.Enabled = True
                         Case 4
-                            LblLine4.Text = "Calling " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine4.Text = "Calling " & phoneStatus.CallerName
                             BtnDial4.Image = IlButtons.Images(0)
                             BtnHang4.Enabled = True
                     End Select
                 Case EPhoneStatus.Holding, EPhoneStatus.Hold
                     Select Case phoneStatusdata.Id
                         Case 1
-                            LblLine1.Text = "Holding " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine1.Text = "Holding " & phoneStatus.CallerName
                             BtnDial1.Image = IlButtons.Images(3)
                             HoldFlash(1) = True
                             BtnHang1.Enabled = True
                         Case 2
-                            LblLine2.Text = "Holding " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine2.Text = "Holding " & phoneStatus.CallerName
                             BtnDial2.Image = IlButtons.Images(3)
                             BtnHang2.Enabled = True
                             HoldFlash(2) = True
                         Case 3
-                            LblLine3.Text = "Holding " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine3.Text = "Holding " & phoneStatus.CallerName
                             BtnDial3.Image = IlButtons.Images(3)
                             BtnHang3.Enabled = True
                             HoldFlash(3) = True
                         Case 4
-                            LblLine4.Text = "Holding " & LinePhoneStatus(phoneStatusdata.Id).CallerName
+                            LblLine4.Text = "Holding " & phoneStatus.CallerName
                             BtnDial4.Image = IlButtons.Images(3)
                             BtnHang4.Enabled = True
                             HoldFlash(4) = True
@@ -379,8 +380,16 @@ Public Class FrmMain
                             HoldFlash(4) = False
                     End Select
                     FrmFade(phoneStatusdata.Id) = True
+
+                Case EPhoneStatus.Unknown
+                    'TODO:This should not be logged as exception, but may be logged as warning
                 Case Else
-                    Dim argumentEx As New ArgumentOutOfRangeException("phoneStatusdata.Status", phoneStatusdata.Status, String.Format("Phione status '{0}' was not handled.", phoneStatusdata.Status))
+                    Dim argumentEx As New ArgumentOutOfRangeException(
+                                            "phoneStatusdata.Status",
+                                            phoneStatusdata.Status,
+                                            String.Format("Phone status '{0}' was not handled for handling phone status data : {1}",
+                                                          phoneStatusdata.Status,
+                                                          phoneStatusdata.ToString()))
                     argumentEx.Log()
             End Select
 
