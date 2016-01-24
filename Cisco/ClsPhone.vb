@@ -200,6 +200,8 @@ Public Module ClsPhone
             If spl IsNot Nothing Then
                 For x = 0 To spl.Length
 
+                    If (Not spl(x).Contains("=")) Then Continue For
+
                     Dim splLn = Split(spl(x), "=")
 
                     Try
