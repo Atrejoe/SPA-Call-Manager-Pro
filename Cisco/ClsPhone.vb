@@ -245,7 +245,9 @@ Public Module ClsPhone
             End If
 
         Catch ex As Exception
-            ex.Log()
+            With (New Exception(String.Format("Exception while parsing '{0}'", message), ex))
+                .Log()
+            End With
         End Try
 
         Return phoneStatus
