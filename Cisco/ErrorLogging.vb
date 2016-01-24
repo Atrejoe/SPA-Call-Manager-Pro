@@ -8,6 +8,17 @@ Imports RollbarSharp
 ''' </summary>
 Public Module Er
 
+    Private ReadOnly Property Environment As String
+        Get
+#If DEBUG Then
+            Return "development"
+#Else
+            Return "release"
+#End If
+        End Get
+    End Property
+
+
     Private ReadOnly RayGunClient As New Lazy(Of RaygunClient)(AddressOf GetRayGunClient)
 
     Private Function GetRayGunClient() As RaygunClient
@@ -20,7 +31,7 @@ Public Module Er
         Dim config = New AirbrakeConfig
         With config
             .ApiKey = "75d5016c879ec50262d884effb5fa368"
-            .Environment = "development"
+            .Environment = Environment
             .AppVersion = ApplicationVersion.Value
             .ProjectName = "SPA Call Manager Pro"
         End With
@@ -33,7 +44,7 @@ Public Module Er
     Private Function GetRollbarClient() As RollbarClient
         Dim result =  New RollbarClient("ca971c37957e4899874dbf864f716501")
         With result.Configuration
-            .Environment = "development"
+            .Environment = Environment
             .CodeVersion = ApplicationVersion.Value
         End With
         Return result
