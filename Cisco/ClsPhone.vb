@@ -26,6 +26,10 @@ Public Module ClsPhone
         Dim CallerName As String 'caller or called name
         Dim Id As Integer
         Dim Ref As Integer
+
+        Public Overrides Function ToString() As String
+            Return String.Format("[{0}]({1}) {2} <{3}> ({4}:{5})", Status, LineNumber, CallerNumber, CallerName, Id, Ref)
+        End Function
     End Structure
 
     Public Event UdpRxdata(phoneStatusdata As SPhoneStatus) 'event raised when phone sends data to pc
