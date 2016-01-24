@@ -236,7 +236,7 @@ Public Module ClsPhone
                                 If Not String.IsNullOrWhiteSpace(value) Then phoneStatus.CallerNumber = value.Substring(0, value.IndexOf("@") - 1)
                         End Select
                     Catch ex As Exception
-                        With (New Exception(String.Format("Exception while parsing '{0}'", splLn)))
+                        With (New Exception(String.Format("Exception while parsing '{0}' from message {1} : {2}", splLn, message, ex), ex))
                             .Log()
                         End With
                         'Log and resume next
