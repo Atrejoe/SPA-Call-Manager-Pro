@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports Cisco.Utilities
+Imports Cisco.Utilities.ClsPhone
 Imports Pss.Cisco.Models
 
 Public Class FrmSetup
@@ -73,10 +75,10 @@ Public Class FrmSetup
 
         Try
 
-            For each entry in TempPhoneBook
+            For Each entry In TempPhoneBook
                 MyPhoneBook.Add(entry)
             Next
-            
+
         Catch ex As Exception
             ex.Log()
         End Try
@@ -88,7 +90,7 @@ Public Class FrmSetup
     End Sub
 
     Public Sub ExportPhoneBooktoCSV(filename As String)
-        
+
         Try
             Using outFile = My.Computer.FileSystem.OpenTextFileWriter(filename, False)
 
@@ -96,7 +98,7 @@ Public Class FrmSetup
                     With entry
                         If String.IsNullOrWhiteSpace(.DisplayName) _
                             OrElse String.IsNullOrWhiteSpace(.Number) Then Continue For
-                        
+
                         outFile.WriteLine(.FirstName & "," & .Surname & "," & .Number)
 
                     End With
@@ -143,10 +145,15 @@ Public Class FrmSetup
                         lblStationNameSet.Text = "Station Name Set"
                         imgLinksysKeySystemEnabled.Image = My.Resources.Cross
 
-                        
-                        ClsPhone.password = LoginPassword
-                        MyPhoneSettings = DownloadPhoneSettings(TxtphoneIP.Text)
-                        MyPhoneSettings = DownloadPhoneSettings(TxtphoneIP.Text)
+
+                        ClsPhone.Password = LoginPassword
+                        Dim warning = String.Empty
+                        MyPhoneSettings = DownloadPhoneSettings(TxtphoneIP.Text, MyPhoneSettings.LocalIP, warning)
+                        If (Not String.IsNullOrWhiteSpace(warning)) Then MsgBox(warning, MsgBoxStyle.Critical, "SPA Call Control Pro")
+
+                        MyPhoneSettings = DownloadPhoneSettings(TxtphoneIP.Text, MyPhoneSettings.LocalIP, warning)
+                        If (Not String.IsNullOrWhiteSpace(warning)) Then MsgBox(warning, MsgBoxStyle.Critical, "SPA Call Control Pro")
+
                         MyPhoneSettings.LocalPort = 514
                         MyPhoneSettings.PhoneIP = TxtphoneIP.Text
                         If MyPhoneSettings.CTI_Enable = "Yes" Then imgCTIEnabled.Image = My.Resources.Resources.greentick Else ValidConfig = False
@@ -184,8 +191,6 @@ Public Class FrmSetup
                 ValidConfig = False
                 CmbLocalIP.Focus()
             End If
-
-
 
         Else
             If checkIPaddress = True Then

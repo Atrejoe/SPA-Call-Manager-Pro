@@ -1,5 +1,7 @@
 Imports System.IO
 Imports System.Net
+Imports Cisco.Utilities
+Imports Cisco.Utilities.ClsPhone
 Imports Pss.Cisco.Models
 
 Public Class FrmMain
@@ -78,7 +80,7 @@ Public Class FrmMain
             MsgBox("IP address of handset has not been set up")
         Else
             Dim pingError As Exception = Nothing
-            Dim pingSuccess As Boolean = PingHandset(pingError)
+            Dim pingSuccess As Boolean = NetUtils.PingHandset(MyStoredPhoneSettings.PhoneIP, pingError)
 
             If Not pingSuccess Then
                 If pingError Is Nothing Then
@@ -93,7 +95,13 @@ Public Class FrmMain
                 MyPhoneSettings.password = MyStoredPhoneSettings.password
                 Password = MyPhoneSettings.password
                 LoginPassword = MyPhoneSettings.password
-                MyPhoneSettings = DownloadPhoneSettings(MyStoredPhoneSettings.PhoneIP)
+
+                Dim warning = String.Empty
+                MyPhoneSettings = DownloadPhoneSettings(MyStoredPhoneSettings.PhoneIP, MyStoredPhoneSettings.LocalIP, warning)
+
+                If (Not String.IsNullOrWhiteSpace(warning)) Then
+                    MsgBox(warning, MsgBoxStyle.Critical, "SPA Call Manager Pro")
+                End If
 
                 'check for incorrect data
                 If MyStoredPhoneSettings.LocalIP <> MyPhoneSettings.Debug_Server_Address Then MsgBox("The ""Debug Server Address"" specified in the phone setup isn't the same as this PC IP address.  The phone will be unable to send status updates to the PC until this is corrected on handset preparation.", MsgBoxStyle.Exclamation, "SPA Call Manager Pro")
@@ -984,6 +992,10 @@ Public Class FrmMain
             Application.Exit()
         End If
     End Sub
+
+    Private Function PingHandset() As Boolean
+        Return NetUtils.PingHandset(MyStoredPhoneSettings.PhoneIP)
+    End Function
 
     Private Sub TbDirectories_Click(sender As Object, e As EventArgs) Handles TbDirectories.Click
 

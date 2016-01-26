@@ -2,12 +2,14 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Cisco.Utilities
+Imports Cisco.Utilities.ClsPhone
 Imports Pss.Cisco.Models
 
 Module ModMain
     Public MyPhoneStatus As SPhoneStatus 'status of a call
     Public MyPhoneSettings As Settings 'structure of phone settings
     Public MyStoredPhoneSettings As Settings 'structure of stored settings
+
     Public OutsideLinePrefix As String = "9"
 
     Friend ReadOnly MyPhoneBook, MySharedPhoneBook, PhoneDir, Dialled, Missed, Answered As New SortableBindingList(Of PhoneBookEntry)(New List(Of PhoneBookEntry))
@@ -25,7 +27,7 @@ Module ModMain
     End Sub
 
     <Extension>
-    Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry),filename As String)
+    Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry), filename As String)
         Try
             If File.Exists(filename) Then
                 'loads the phone book from 'filenname'

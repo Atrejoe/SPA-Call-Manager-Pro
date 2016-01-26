@@ -1,4 +1,6 @@
 ﻿Imports System.Drawing.Drawing2D
+Imports Cisco.Utilities
+Imports Cisco.Utilities.ClsPhone
 
 Public Class FrmCall
 
@@ -37,9 +39,9 @@ Public Class FrmCall
 
     Private Sub BtnAnswer_Click(sender As Object, e As EventArgs) Handles BtnAnswer.Click
 
-        Dim callString As String = PhoneAction(eAction.Answer, _frmCallPhoneStatus, MyPhoneSettings)
+        Dim callString As String = PhoneAction(EAction.Answer, _frmCallPhoneStatus, MyPhoneSettings)
 
-        SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
+        ClsPhone.SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
     End Sub
 
     Private Sub BtnAnswer_MouseEnter(sender As Object, e As EventArgs) Handles BtnAnswer.MouseEnter
@@ -68,7 +70,7 @@ Public Class FrmCall
 
     Private Sub BtnReject_Click(sender As Object, e As EventArgs) Handles BtnReject.Click
 
-        Dim callString As String = PhoneAction(eAction.Reject, _frmCallPhoneStatus, MyPhoneSettings)
+        Dim callString As String = PhoneAction(EAction.Reject, _frmCallPhoneStatus, MyPhoneSettings)
 
         SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
     End Sub

@@ -1,4 +1,5 @@
 Imports System.Net.NetworkInformation
+Imports Cisco.Utilities
 
 ''' <summary>
 ''' Simple network utilities

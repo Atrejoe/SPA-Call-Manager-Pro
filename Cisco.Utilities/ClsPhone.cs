@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Xml;
-using Microsoft.VisualBasic;
 
 namespace Cisco.Utilities
 {
@@ -42,13 +37,18 @@ namespace Cisco.Utilities
             public string CallerName;
             public int Id;
             public int Ref;
+
+            public override string ToString()
+            {
+                return string.Format("[{0}]({1}) {2} <{3}> ({4}:{5})", Status, LineNumber, CallerNumber, CallerName, Id,Ref);
+            }
         }
 
         public static event UdpRxdataEventHandler UdpRxdata;
         public delegate void UdpRxdataEventHandler(SPhoneStatus phoneStatusdata);
         //event raised when phone sends data to pc
         //receiving ip address
-        private static readonly IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
+        private static IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
         //data received from phone
         private static string _strReturnData;
         //UDP socket
@@ -90,7 +90,14 @@ namespace Cisco.Utilities
 
         public static string Password { get; set; }
 
-        public static Settings DownloadPhoneSettings(string ipAddress)
+        /// <summary>
+        /// Downloads the phone settings.
+        /// </summary>
+        /// <param name="ipAddress">The ip address.</param>
+        /// <param name="localIp">The local ip address.</param>
+        /// <param name="warning">A critical warning.</param>
+        /// <returns></returns>
+        public static Settings DownloadPhoneSettings(string ipAddress, string localIp, out string warning)
         {
             // A Function to download settings from the Phones XML configuration file.
             string strUrl = "http://" + ipAddress + "/admin/spacfg.xml";
@@ -101,14 +108,13 @@ namespace Cisco.Utilities
                 if (!string.IsNullOrEmpty(Password))
                 {
                     NetworkCredential cred = new NetworkCredential("admin", Password);
-                    dynamic resolver = new XmlUrlResolver();
+                    var resolver = new XmlUrlResolver();
                     resolver.Credentials = cred;
                     reader.XmlResolver = resolver;
                 }
 
                 try
                 {
-                    var _with1 = _phoneSettings;
                     while ((reader.Read()))
                     {
                         switch (reader.NodeType)
@@ -118,35 +124,35 @@ namespace Cisco.Utilities
                                 {
                                     case "Product_Name":
                                         reader.Read();
-                                        _with1.PhoneModel = reader.Value;
+                                        _phoneSettings.PhoneModel = reader.Value;
                                         break;
                                     case "Software_Version":
                                         reader.Read();
-                                        _with1.PhoneSoftwareVersion = reader.Value;
+                                        _phoneSettings.PhoneSoftwareVersion = reader.Value;
                                         break;
                                     case "CTI_Enable":
                                         reader.Read();
-                                        _with1.CTI_Enable = reader.Value;
+                                        _phoneSettings.CTI_Enable = reader.Value;
                                         break;
                                     case "Debug_Server":
                                         reader.Read();
-                                        _with1.Debug_Server_Address = reader.Value;
+                                        _phoneSettings.Debug_Server_Address = reader.Value;
                                         break;
                                     case "SIP_Debug_Option_1_":
                                         reader.Read();
-                                        _with1.DebugLevel = reader.Value;
+                                        _phoneSettings.DebugLevel = reader.Value;
                                         break;
                                     case "Station_Name":
                                         reader.Read();
-                                        _with1.StationName = reader.Value;
+                                        _phoneSettings.StationName = reader.Value;
                                         break;
                                     case "Linksys_Key_System":
                                         reader.Read();
-                                        _with1.LinksysKeySystem = reader.Value;
+                                        _phoneSettings.LinksysKeySystem = reader.Value;
                                         break;
                                     case "SIP_Port_1_":
                                         reader.Read();
-                                        _with1.PhonePort = Convert.ToInt32(reader.Value);
+                                        _phoneSettings.PhonePort = Convert.ToInt32(reader.Value);
                                         break;
                                 }
                                 break;
@@ -158,10 +164,13 @@ namespace Cisco.Utilities
                     //  MsgBox("Loggin onto this phone requires an admin password.", MsgBoxStyle.Critical, "SPA Call Manager Pro")
                     //  Dim inputfrm As New FrmInput
                     //  inputfrm.ShowDialog()
+
+                    warning = null;
                 }
                 catch (Exception ex)
                 {
-                    Interaction.MsgBox("Unable to read configuration from " + strUrl + Constants.vbCrLf + "Error: " + ex.Message, MsgBoxStyle.Critical, "SPA Call Manager Pro");
+                    warning = "Unable to read configuration from " + strUrl + Environment.NewLine + "Error: " + ex.Message;
+
                     _phoneSettings.PhoneModel = "invalid";
                     _phoneSettings.PhoneSoftwareVersion = "invalid";
                     _phoneSettings.CTI_Enable = "invalid";
@@ -175,7 +184,7 @@ namespace Cisco.Utilities
 
             }
 
-            _phoneSettings.LocalIP = MyStoredPhoneSettings.LocalIP;
+            _phoneSettings.LocalIP = localIp;
 
             return _phoneSettings;
 
@@ -225,7 +234,7 @@ namespace Cisco.Utilities
 
             try
             {
-                dynamic receiveBytes = ReceivingUdpClient.Receive(RemoteIpEndPoint);
+                var receiveBytes = ReceivingUdpClient.Receive(ref RemoteIpEndPoint);
                 _strReturnData = Encoding.ASCII.GetString(receiveBytes);
             }
             catch (Exception ex)
@@ -266,26 +275,25 @@ namespace Cisco.Utilities
 
             //Function to handle the various different inbound messages from the phone.  
 
-            SPhoneStatus phoneStatus = null;
-
-
+            SPhoneStatus phoneStatus = default(SPhoneStatus);
+            
             try
             {
-                dynamic messageContent = message.Substring(message.IndexOf("<spa-status>", StringComparison.InvariantCultureIgnoreCase));
+                var messageContent = message.Substring(message.IndexOf("<spa-status>", StringComparison.InvariantCultureIgnoreCase));
 
-                string[] spl = messageContent.Split(" ".ToCharArray());
+                var spl = messageContent.Split(" ".ToCharArray());
                 if (spl != null)
                 {
 
-                    for (x = 0; x <= spl.Length; x++)
+                    for (var x = 0; x <= spl.Length; x++)
                     {
-                        dynamic splLn = Strings.Split(spl(x), "=");
+                        var splLn = spl[x].Split('=');
 
                         try
                         {
-                            string value = splLn(1).Trim(" \"".ToCharArray());
-                            string name = splLn(0);
-                            switch (name.Replace(Strings.Chr(34), ""))
+                            string value = splLn[1].Trim(" \"".ToCharArray());
+                            string name = splLn[0];
+                            switch (name.Replace("\"", ""))
                             {
                                 case "id":
                                     phoneStatus.Id = Convert.ToInt32(value);
@@ -341,9 +349,7 @@ namespace Cisco.Utilities
                         }
                         catch (Exception ex)
                         {
-                            var _with2 = (new Exception(string.Format("Exception while parsing '{0}'", splLn)));
-                            _with2.Log();
-                            //Log and resume next
+                            (new Exception(string.Format("Exception while parsing '{0}'", splLn), ex)).Log();
                         }
                     }
                 }
@@ -364,12 +370,10 @@ namespace Cisco.Utilities
 
             try
             {
-                dynamic bytCommand = Encoding.ASCII.GetBytes(message);
-                var _with3 = new UdpClient();
-                _with3.Connect(ipaddress, port);
-                _with3.Send(bytCommand, bytCommand.Length);
-
-
+                var bytCommand = Encoding.ASCII.GetBytes(message);
+                var client = new UdpClient();
+                client.Connect(ipaddress, port);
+                client.Send(bytCommand, bytCommand.Length);
             }
             catch (Exception ex)
             {
@@ -380,41 +384,6 @@ namespace Cisco.Utilities
         }
 
         #endregion
-
-    }
-
-
-    public struct Settings
-    {
-        // Product_Name
-        public string PhoneModel;
-        //Software_Version
-        public string PhoneSoftwareVersion;
-        // CTI_Enable
-        public string CTI_Enable;
-        //Address the phone will send data to
-        public string Debug_Server_Address;
-        // Station_Name
-        public string StationName;
-        // SIP_Debug_Option_1_
-        public string DebugLevel;
-        //local Ip address of the PC
-        public string LocalIP;
-        //Pc port
-        public int LocalPort;
-        //Ipaddress of phone
-        public string PhoneIP;
-        //phone port
-        public int PhonePort;
-        //Phone username
-        public string username;
-        //Phone password
-        public string password;
-        //Linksys Key System Setting
-        public string LinksysKeySystem;
-        //Shared data directory (excluding filename)
-        public string sharedDataDir;
-
 
     }
 }
