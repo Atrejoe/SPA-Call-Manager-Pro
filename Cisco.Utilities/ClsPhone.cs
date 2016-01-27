@@ -270,7 +270,7 @@ namespace Cisco.Utilities
 
         }
 
-        private static SPhoneStatus ProcessInboundPhoneMessage(string message)
+        internal static SPhoneStatus ProcessInboundPhoneMessage(string message)
         {
 
             //Function to handle the various different inbound messages from the phone.  
@@ -287,7 +287,9 @@ namespace Cisco.Utilities
 
                     for (var x = 0; x <= spl.Length; x++)
                     {
-                        var splLn = spl[x].Split('=');
+                        if (!spl[x].Contains("=")) continue;
+
+                        var splLn = spl[x].Split(new[] { '=', '/' });
 
                         try
                         {
