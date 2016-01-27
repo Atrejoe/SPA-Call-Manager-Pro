@@ -202,7 +202,7 @@ Public Module ClsPhone
 
                     If (Not spl(x).Contains("=")) Then Continue For
 
-                    Dim splLn = Split(spl(x), "=")
+                    Dim splLn = spl(x).Split("=/".ToCharArray())
 
                     Try
                         Dim value As String = splLn(1).Trim(" """.ToCharArray())
