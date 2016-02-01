@@ -239,6 +239,12 @@ Public Class FrmMain
                     LabelLine = Nothing
                     ButtonDial = Nothing
                     ButtonHang = Nothing
+
+                    With New Exception(String.Format("No line information in {0}", MyPhoneStatus))
+                        .Log()
+                    End With
+
+                    Exit Sub
             End Select
 
             'Manipulate UI controls according to status
