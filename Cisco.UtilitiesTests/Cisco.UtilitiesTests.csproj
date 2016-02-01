@@ -45,11 +45,14 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ClsPhoneTestVB.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,6 +60,10 @@
     <ProjectReference Include="..\Cisco.Utilities\Cisco.Utilities.csproj">
       <Project>{31030062-b639-4f33-936f-caed6a43ea63}</Project>
       <Name>Cisco.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cisco\Cisco.vbproj">
+      <Project>{ad22aa28-b7b6-4dad-815a-19c0f56a4a4e}</Project>
+      <Name>Cisco</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

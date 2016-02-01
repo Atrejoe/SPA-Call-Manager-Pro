@@ -186,7 +186,7 @@ Public Module ClsPhone
 
     End Sub
 
-    Private Function ProcessInboundPhoneMessage(message As String) As SPhoneStatus
+    Friend Function ProcessInboundPhoneMessage(message As String) As SPhoneStatus
 
         'Function to handle the various different inbound messages from the phone.  
 
@@ -198,11 +198,11 @@ Public Module ClsPhone
 
             Dim spl() As String = messageContent.Split(" ".ToCharArray())
             If spl IsNot Nothing Then
-                For x = 0 To spl.Length
+                For Each part In spl
 
-                    If (Not spl(x).Contains("=")) Then Continue For
+                    If (Not part.Contains("=")) Then Continue For
 
-                    Dim splLn = spl(x).Split("=/".ToCharArray())
+                    Dim splLn = part.Split("=/".ToCharArray())
 
                     Try
                         Dim value As String = splLn(1).Trim(" """.ToCharArray())
