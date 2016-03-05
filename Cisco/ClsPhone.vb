@@ -234,6 +234,15 @@ Public Module ClsPhone
                                     Case "hold"
                                         phoneStatus.Status = EPhoneStatus.Holding
                                     Case Else
+                                        Dim argumentEx As New ArgumentOutOfRangeException(
+                                            "state",
+                                            value,
+                                            String.Format("Phone status '{0}' could not be mapped to {1}  : {1}",
+                                                          value,
+                                                          GetType(EPhoneStatus),
+                                                          message))
+                                        argumentEx.Log()
+
                                         phoneStatus.Status = EPhoneStatus.Unknown
                                 End Select
                             Case "name"

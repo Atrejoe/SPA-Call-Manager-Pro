@@ -348,7 +348,8 @@ Public Class FrmMain
                     FrmFade(phoneStatusdata.Id) = True
 
                 Case EPhoneStatus.Unknown
-                    'TODO:This should not be logged as exception, but may be logged as warning
+                    Exit Select
+
                 Case Else
                     Dim argumentEx As New ArgumentOutOfRangeException(
                                             "phoneStatusdata.Status",
