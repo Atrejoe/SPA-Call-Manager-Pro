@@ -1,6 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Airbraker
-Imports Mindscape.Raygun4Net
 Imports RollbarSharp
 
 ''' <summary>
@@ -17,13 +16,6 @@ Public Module Er
 #End If
         End Get
     End Property
-
-
-    Private ReadOnly RayGunClient As New Lazy(Of RaygunClient)(AddressOf GetRayGunClient)
-
-    Private Function GetRayGunClient() As RaygunClient
-        Return New RaygunClient("xhok2LdPYDOhsf8VieW1BA==") With {.ApplicationVersion = ApplicationVersion.Value}
-    End Function
 
     Private ReadOnly AirBrakeClient As New Lazy(Of AirbrakeClient)(AddressOf GetAirbrakeClient)
 
@@ -81,15 +73,6 @@ Public Module Er
             anySuccess = True
         Catch ex As Exception
             Trace.TraceWarning("Logging to AirBrake failed : {0}", ex)
-        End Try
-
-        Try
-            'Send to Raygun
-            RayGunClient.Value.SendInBackground(exception)
-
-            anySuccess = True
-        Catch ex As Exception
-            Trace.TraceWarning("Logging to Raygun failed : {0}", ex)
         End Try
 
         Try
