@@ -25,47 +25,48 @@ Module ModMain
     End Sub
 
     <Extension>
-    Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry),filename As String)
+    Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry), filename As String)
         Try
-            If File.Exists(filename) Then
-                'loads the phone book from 'filenname'
-                Dim tempPhoneBook As New List(Of PhoneBookEntry)
-                ' Reader to read from the file
-
-                Try
-                    Using sr As New StreamReader(filename)
-                        Dim tmp() As String
-                        ' Hold the amount of lines already read in a 'counter-variable'
-
-                        Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
-
-                            tmp = sr.ReadLine.Split(",".ToCharArray())
-
-                            Dim entry = New PhoneBookEntry
-                            With entry
-                                .FirstName = tmp(0).Trim()
-                                .Surname = tmp(1).Trim()
-                                .Number = tmp(2).Trim()
-                            End With
-
-                            tempPhoneBook.Add(entry)
-
-                        Loop
-                    End Using
-
-                Catch ex As Exception
-                    ex.Log()
-                End Try
-
-                phoneBook.Clear()
-                For Each entry In tempPhoneBook.OrderBy(Function(sPhoneBook) sPhoneBook.Surname)
-                    phoneBook.Add(entry)
-                Next
-            Else
+            If Not File.Exists(filename) Then
                 With New ConfigurationErrorsException(String.Format("Phonebook could not be found at '{0}'", filename))
                     .Log()
                 End With
+                Return
             End If
+
+            'loads the phone book from 'filenname'
+            Dim tempPhoneBook As New List(Of PhoneBookEntry)
+            ' Reader to read from the file
+
+            Try
+                Using sr As New StreamReader(filename)
+                    Dim tmp() As String
+                    ' Hold the amount of lines already read in a 'counter-variable'
+
+                    Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
+
+                        tmp = sr.ReadLine.Split(",".ToCharArray())
+
+                        Dim entry = New PhoneBookEntry
+                        With entry
+                            .FirstName = tmp(0).Trim()
+                            .Surname = tmp(1).Trim()
+                            .Number = tmp(2).Trim()
+                        End With
+
+                        tempPhoneBook.Add(entry)
+
+                    Loop
+                End Using
+
+            Catch ex As Exception
+                ex.Log()
+            End Try
+
+            phoneBook.Clear()
+            For Each entry In tempPhoneBook.OrderBy(Function(sPhoneBook) sPhoneBook.Surname)
+                phoneBook.Add(entry)
+            Next
         Catch ex As Exception
             ex.Log()
         End Try
