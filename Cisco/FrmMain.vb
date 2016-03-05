@@ -240,9 +240,11 @@ Public Class FrmMain
                     ButtonDial = Nothing
                     ButtonHang = Nothing
 
-                    With New Exception(String.Format("No line information in {0}", MyPhoneStatus))
-                        .Log()
-                    End With
+                    If MyPhoneStatus.Status = EPhoneStatus.Idle Then
+                        With New Exception(String.Format("No line information in {0}", MyPhoneStatus))
+                            .Log()
+                        End With
+                    End If
 
                     Exit Sub
             End Select
