@@ -135,19 +135,50 @@ Module ModMain
 
     Public Function SetStoredSettings(storedPhoneSettings As Settings) As Boolean 'saves the settings frm the registry
 
-        'saves the stored settings to the reghistry
+        'Validate and get hold of the registery
+        If IsNothing(storedPhoneSettings) Then
+            With New ArgumentNullException("storedPhoneSettings")
+                .Log()
+            End With
+            Return False
+        End If
 
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalIP", storedPhoneSettings.LocalIP)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalPort", storedPhoneSettings.LocalPort)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "CTI_Enable", storedPhoneSettings.CTI_Enable)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "Debug_Server_Address", storedPhoneSettings.Debug_Server_Address)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "DebugLevel", storedPhoneSettings.DebugLevel)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneModel", storedPhoneSettings.PhoneModel)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneSoftwareVersion", storedPhoneSettings.PhoneSoftwareVersion)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "StationName", storedPhoneSettings.StationName)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneIP", storedPhoneSettings.PhoneIP)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhonePort", storedPhoneSettings.PhonePort)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\SharedPhoneDir", "Path", FrmSetup.TxtSharedFolder.Text)
+        Dim computer = My.Computer
+
+        If IsNothing(computer) Then
+            With New Exception("Unable to access 'My.Computer'")
+                .Log()
+            End With
+            Return False
+        End If
+
+        Dim registry = computer.Registry
+
+        If IsNothing(registry) Then
+            With New Exception("Unable to access 'My.Computer.Registry'")
+                .Log()
+            End With
+            Return False
+        End If
+
+        'saves the stored settings to the registry
+
+        Try
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalIP", storedPhoneSettings.LocalIP)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalPort", storedPhoneSettings.LocalPort)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "CTI_Enable", storedPhoneSettings.CTI_Enable)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "Debug_Server_Address", storedPhoneSettings.Debug_Server_Address)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "DebugLevel", storedPhoneSettings.DebugLevel)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneModel", storedPhoneSettings.PhoneModel)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneSoftwareVersion", storedPhoneSettings.PhoneSoftwareVersion)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "StationName", storedPhoneSettings.StationName)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneIP", storedPhoneSettings.PhoneIP)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhonePort", storedPhoneSettings.PhonePort)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\SharedPhoneDir", "Path", FrmSetup.TxtSharedFolder.Text)
+        Catch ex As Exception
+            ex.Log()
+            Return False
+        End Try
 
         Return True
     End Function
