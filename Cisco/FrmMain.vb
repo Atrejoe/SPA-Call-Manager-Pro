@@ -240,13 +240,15 @@ Public Class FrmMain
                     ButtonDial = Nothing
                     ButtonHang = Nothing
 
-                    If MyPhoneStatus.Status = EPhoneStatus.Idle Then
-                        With New Exception(String.Format("No line information in {0}", MyPhoneStatus))
-                            .Log()
-                        End With
-                    End If
-
-                    Exit Sub
+                    Select Case MyPhoneStatus.Status
+                        Case EPhoneStatus.Idle
+                            'Uninterestig event
+                            Exit Sub
+                        Case Else
+                            With New Exception(String.Format("No line information in {0}", MyPhoneStatus))
+                                .Log()
+                            End With
+                    End Select
             End Select
 
             'Manipulate UI controls according to status
