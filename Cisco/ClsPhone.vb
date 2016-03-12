@@ -17,6 +17,10 @@ Public Module ClsPhone
         Holding = 6
         Hold = 7
         Unknown = 8
+        OnHook = 9
+        OffHook = 10
+        [On] = 11
+        Off = 12
     End Enum
     'structure defining current status of phone
     Public Structure SPhoneStatus
@@ -216,10 +220,13 @@ Public Module ClsPhone
                                 phoneStatus.LineNumber = CInt(value)
                             Case "state"
 
-                                Select Case value
+                                Select Case value.ToLower()
                                     Case "dialing"
                                         phoneStatus.Status = EPhoneStatus.Dialing
                                     Case "connected"
+                                        phoneStatus.Status = EPhoneStatus.Connected
+                                    Case "proceeding"
+                                        'Assume this happen when resuming a call on hold
                                         phoneStatus.Status = EPhoneStatus.Connected
                                     Case "idle"
                                         phoneStatus.Status = EPhoneStatus.Idle
@@ -233,11 +240,31 @@ Public Module ClsPhone
                                         phoneStatus.Status = EPhoneStatus.Holding
                                     Case "hold"
                                         phoneStatus.Status = EPhoneStatus.Holding
+                                    Case "onhook"
+                                        phoneStatus.Status = EPhoneStatus.OnHook
+                                    Case "offhook"
+                                        phoneStatus.Status = EPhoneStatus.OffHook
+                                    Case "off"
+                                        phoneStatus.Status = EPhoneStatus.Off
+                                    Case "on"
+                                        phoneStatus.Status = EPhoneStatus.On
+
+                                    Case "invalid"
+
+                                        Dim argumentEx As New ArgumentOutOfRangeException(
+                                            "state",
+                                            value,
+                                            String.Format("Phone status '{0}' is not handled yet. Full message was : {1}",
+                                                          value,
+                                                          message))
+                                        argumentEx.Log()
+
+                                        phoneStatus.Status = EPhoneStatus.Unknown
                                     Case Else
                                         Dim argumentEx As New ArgumentOutOfRangeException(
                                             "state",
                                             value,
-                                            String.Format("Phone status '{0}' could not be mapped to {1}  : {1}",
+                                            String.Format("Phone status '{0}' could not be mapped to {1}. Full message was : {2}",
                                                           value,
                                                           GetType(EPhoneStatus),
                                                           message))

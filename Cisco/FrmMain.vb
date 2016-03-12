@@ -320,6 +320,16 @@ Public Class FrmMain
                             LabelLine.Text = "Off hook " & phoneStatus.CallerName
                             ButtonDial.Image = IlButtons.Images(0)
                             ButtonHang.Enabled = True
+                            HoldFlash(phoneStatusdata.Id) = False
+                    End Select
+
+                Case EPhoneStatus.OffHook
+                    Select Case phoneStatusdata.Id
+                        Case 1, 2, 3, 4
+                            LabelLine.Text = "Off hook " & phoneStatus.CallerName
+                            ButtonDial.Image = IlButtons.Images(3)
+                            ButtonHang.Enabled = True
+                            HoldFlash(phoneStatusdata.Id) = True
                     End Select
 
                 Case EPhoneStatus.Calling
@@ -328,6 +338,7 @@ Public Class FrmMain
                             LabelLine.Text = "Calling " & phoneStatus.CallerName
                             ButtonDial.Image = IlButtons.Images(0)
                             ButtonHang.Enabled = True
+                            HoldFlash(phoneStatusdata.Id) = False
                     End Select
 
                 Case EPhoneStatus.Holding, EPhoneStatus.Hold
@@ -339,7 +350,21 @@ Public Class FrmMain
                             ButtonHang.Enabled = True
                     End Select
 
-                Case EPhoneStatus.Idle
+                Case EPhoneStatus.Off
+                    For Each phoneStatusdataId In {1, 2, 3, 4}
+                        ButtonDial.Image = IlButtons.Images(1)
+                        HoldFlash(phoneStatusdataId) = True
+                        ButtonHang.Enabled = False
+                    Next
+
+                Case EPhoneStatus.On
+                    For Each phoneStatusdataId In {1, 2, 3, 4}
+                        ButtonDial.Image = IlButtons.Images(2)
+                        HoldFlash(phoneStatusdataId) = False
+                        ButtonHang.Enabled = False
+                    Next
+
+                Case EPhoneStatus.Idle, EPhoneStatus.OnHook
                     Select Case phoneStatusdata.Id
                         Case 1, 2, 3, 4
                             LabelLine.Text = String.Format("Line {0}", phoneStatusdata.Id)
@@ -751,8 +776,9 @@ Public Class FrmMain
                 Dim callString As String = PhoneAction(EAction.Resume, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                 SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
 
-            Case EPhoneStatus.Idle
-                ' If the line is idle then dial number in number box
+            Case EPhoneStatus.Idle, EPhoneStatus.OnHook, EPhoneStatus.OffHook
+
+                ' If the line is idle, on hook or offhook then dial number in number box
                 If numberToCall <> "" Then
                     If IsNumeric(numberToCall) = True Then
                         LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = numberToCall
@@ -765,6 +791,7 @@ Public Class FrmMain
                     Dim callString As String = PhoneAction(EAction.Dial, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                     SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
                 End If
+
             Case EPhoneStatus.Ringing
                 ' If the line is ringing then answer
                 Dim callString As String = PhoneAction(EAction.Answer, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
