@@ -34,8 +34,8 @@
     <ProductName>SPA Call Manager Pro</ProductName>
     <PublisherName>SPACallManager.com</PublisherName>
     <SuiteName>SPA Call Manager Pro</SuiteName>
-    <ApplicationRevision>16</ApplicationRevision>
-    <ApplicationVersion>1.0.0.16</ApplicationVersion>
+    <ApplicationRevision>17</ApplicationRevision>
+    <ApplicationVersion>1.0.0.17</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
