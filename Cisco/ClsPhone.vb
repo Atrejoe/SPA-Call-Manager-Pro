@@ -275,7 +275,12 @@ Public Module ClsPhone
                             Case "name"
                                 If Not String.IsNullOrWhiteSpace(value) Then phoneStatus.CallerNumber = value
                             Case "uri"
-                                If Not String.IsNullOrWhiteSpace(value) Then phoneStatus.CallerNumber = value.Substring(0, value.IndexOf("@") - 1)
+                                Dim length = value.Length
+                                If value.Contains("@") Then
+                                    length = value.IndexOf("@")
+                                End If
+
+                                If Not String.IsNullOrWhiteSpace(value) Then phoneStatus.CallerNumber = value.Substring(0, length)
                         End Select
                     Catch ex As Exception
                         With (New Exception(String.Format("Exception while parsing '{0}' from message {1} : {2}", splLn, message, ex), ex))
