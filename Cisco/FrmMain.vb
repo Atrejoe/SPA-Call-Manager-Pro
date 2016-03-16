@@ -19,8 +19,12 @@ Public Class FrmMain
         ' This call is required by the designer.
         InitializeComponent()
 
-        ' Add any initialization after the InitializeComponent() call.
+        'Log application start
+        With New Exception("Application has started")
+            .Log(informationOnly:=True)
+        End With
 
+        ' Add any initialization after the InitializeComponent() call.
         DgvPersonal.AutoGenerateColumns = False
         DgvPersonal.DataSource = MyPhoneBook
 

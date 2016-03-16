@@ -34,7 +34,7 @@ Public Module Er
     Private ReadOnly RollbarClient As New Lazy(Of RollbarClient)(AddressOf GetRollbarClient)
 
     Private Function GetRollbarClient() As RollbarClient
-        Dim result =  New RollbarClient("ca971c37957e4899874dbf864f716501")
+        Dim result = New RollbarClient("ca971c37957e4899874dbf864f716501")
         With result.Configuration
             .Environment = Environment
             .CodeVersion = ApplicationVersion.Value
@@ -61,24 +61,32 @@ Public Module Er
     Public Sub Log(exception As Exception,
                    <CallerMemberName> Optional method As String = Nothing,
                    <CallerFilePath> Optional file As String = Nothing,
-                   <CallerLineNumber> Optional lineNumber As Integer = 0)
+                   <CallerLineNumber> Optional lineNumber As Integer = 0,
+                   Optional informationOnly As Boolean = False)
 
         Trace.TraceWarning("Logging exception : {0}", exception)
 
         Dim anySuccess = False
-        Try
-            'Send to Airbrake
-            AirBrakeClient.Value.Send(exception, method, file, lineNumber)
+        If Not informationOnly Then
 
-            anySuccess = True
-        Catch ex As Exception
-            Trace.TraceWarning("Logging to AirBrake failed : {0}", ex)
-        End Try
+            Try
+                'Send to Airbrake
+                AirBrakeClient.Value.Send(exception, method, file, lineNumber)
+
+                anySuccess = True
+            Catch ex As Exception
+                Trace.TraceWarning("Logging to AirBrake failed : {0}", ex)
+            End Try
+        End If
 
         Try
+            If informationOnly Then
+                RollbarClient.Value.SendInfoMessage(exception.Message, modelAction:=AddressOf AssignPersonFromEnvironment).Wait()
+            Else
+                RollbarClient.Value.SendException(exception, modelAction:=AddressOf AssignPersonFromEnvironment).Wait()
+            End If
+
             'Send to Rollbar
-            RollbarClient.Value.SendException(exception)
-
             anySuccess = True
         Catch ex As Exception
             Trace.TraceWarning("Logging to Rollbar failed : {0}", ex)
@@ -90,4 +98,26 @@ Public Module Er
 
 
     End Sub
+
+    Public Sub AssignPersonFromEnvironment(model As Serialization.DataModel)
+        Try
+            model.Person = GetPersonFromEnvironment()
+        Catch ex As Exception
+            'Ignore for now
+        End Try
+    End Sub
+
+    Public Function GetPersonFromEnvironment() As Serialization.PersonModel
+        Dim id = String.Format("{0}\{1}", System.Environment.MachineName, System.Environment.UserName)
+        If id.Length > 40 Then id = id.Substring(0, 40)
+
+        Dim result As New Serialization.PersonModel With {
+            .Id = id,
+            .Username = System.Environment.UserName
+        }
+
+        Return result
+
+    End Function
+
 End Module
