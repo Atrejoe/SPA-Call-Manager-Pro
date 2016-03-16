@@ -341,6 +341,15 @@ Public Class FrmMain
                             HoldFlash(phoneStatusdata.Id) = False
                     End Select
 
+                Case EPhoneStatus.Answering
+                    Select Case phoneStatusdata.Id
+                        Case 1, 2, 3, 4
+                            LabelLine.Text = "Answering " & phoneStatus.CallerName
+                            ButtonDial.Image = IlButtons.Images(0)
+                            HoldFlash(phoneStatusdata.Id) = False
+                            ButtonHang.Enabled = True
+                    End Select
+
                 Case EPhoneStatus.Holding, EPhoneStatus.Hold
                     Select Case phoneStatusdata.Id
                         Case 1, 2, 3, 4
