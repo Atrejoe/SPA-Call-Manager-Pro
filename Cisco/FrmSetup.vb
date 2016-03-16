@@ -51,7 +51,7 @@ Public Class FrmSetup
     End Sub
 
     Public Sub LoadCSVtoPhoneBook(filename As String)
-        'loads the phone book fron 'filenname'
+        'loads the phone book from 'filenname'
         Dim TempPhoneBook As New List(Of PhoneBookEntry)
 
         ' Reader to read from the file
