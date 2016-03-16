@@ -1,0 +1,118 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Cisco
+</name>
+</assembly>
+<members>
+<member name="T:Pss.Cisco.Er">
+ <summary>
+ Simple exception logging, testing multiple exception logging frameworks just for kicks
+ </summary>
+</member>
+<member name="M:Pss.Cisco.Er.Log(System.Exception,System.String,System.String,System.Int32)">
+ <summary>
+ Logs the specified exception.
+ </summary>
+ <param name="exception">The exception to log.</param>
+ <param name="method">The method, referring to the caller.</param>
+ <param name="file">The file, referring to the caller.</param>
+ <param name="lineNumber">The line number, referring to the caller.</param>
+ <remarks>This should be made configurable and pluggable. For now these are test-logging recipient.</remarks>
+</member>
+<member name="F:Pss.Cisco.FrmMain.flashIndex">
+ <summary>
+ Very simple way of keeping track flash status of dialing image
+ </summary>
+</member>
+<member name="T:Pss.Cisco.Models.PhoneBookEntry">
+ <summary>
+ A basic phonebook entry
+ </summary>
+</member>
+<member name="T:Pss.Cisco.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.config">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.cr1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.Cross">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.Dialup">
+<summary>
+  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.greentick">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.line">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.lineIDLE">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.phone">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.Phone1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.Phone2">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Pss.Cisco.My.Resources.Resources.report_add">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="T:Pss.Cisco.NetworkUtils">
+ <summary>
+ Simple network utilities
+ </summary>
+</member>
+<member name="M:Pss.Cisco.NetworkUtils.PingHandset(System.Exception@)">
+ <summary>
+ Pings the handset, as setup in <see cref="F:Pss.Cisco.Settings.PhoneIP"/>
+ </summary>
+ <param name="exception">Optional exception, will be specified when pinging not only was unsuccessfull, be threw an exception too.</param>
+ <returns><c>true</c> when ping was successfull, otherwise <c>false</c>.</returns>
+</member>
+</members>
+</doc>
