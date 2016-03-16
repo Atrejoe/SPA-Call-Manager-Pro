@@ -81,8 +81,8 @@ Public Class FrmSetup
             ex.Log()
         End Try
 
-        SavePhoneBook(Path.Combine(DataDir & "CiscoPhone\Phonebook.csv"))
-        LoadPhoneBook(Path.Combine(DataDir & "CiscoPhone\Phonebook.csv"))
+        SavePhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
+        LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
         Me.Close()
 
     End Sub

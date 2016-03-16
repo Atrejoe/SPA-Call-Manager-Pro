@@ -138,12 +138,12 @@ Public Class FrmMain
     End Sub
 
     Private Sub InitializePhonebooks()
-        LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
+        LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"), True)
 
         If MyStoredPhoneSettings.sharedDataDir <> "" Then
             FSW.Path = MyStoredPhoneSettings.sharedDataDir
             FrmSetup.TxtSharedFolder.Text = MyStoredPhoneSettings.sharedDataDir
-            LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"))
+            LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"), True)
         End If
 
         RefillCombinedPhonebook()

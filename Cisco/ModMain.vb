@@ -16,22 +16,27 @@ Module ModMain
     Public DataDir As String 'holds the file path to where the phonedata is held
     Public LoginPassword As String = ""
 
-    Public Sub LoadPhoneBook(filename As String)
-        MyPhoneBook.Load(filename)
+    Public Sub LoadPhoneBook(filename As String, Optional createIfMissing As Boolean = False)
+        MyPhoneBook.Load(filename, createIfMissing)
     End Sub
 
-    Public Sub LoadSharedPhoneBook(filename As String)
-        MySharedPhoneBook.Load(filename)
+    Public Sub LoadSharedPhoneBook(filename As String, Optional createIfMissing As Boolean = False)
+        MySharedPhoneBook.Load(filename, createIfMissing)
     End Sub
 
     <Extension>
-    Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry), filename As String)
+    Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry), filename As String, createIfMissing As Boolean)
         Try
             If Not File.Exists(filename) Then
-                With New ConfigurationErrorsException(String.Format("Phonebook could not be found at '{0}'", filename))
-                    .Log()
-                End With
-                Return
+                If createIfMissing Then
+                    Save(New List(Of PhoneBookEntry)(), filename)
+                    Return
+                Else
+                    With New ConfigurationErrorsException(String.Format("Phonebook could not be found at '{0}'", filename))
+                        .Log()
+                    End With
+                    Return
+                End If
             End If
 
             'loads the phone book from 'filenname'
