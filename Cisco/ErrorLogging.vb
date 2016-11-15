@@ -55,9 +55,9 @@ Public Module Er
 
         Try
             If informationOnly Then
-                RollbarClient.Value.SendInfoMessage(exception.Message, modelAction:=AddressOf AssignPersonFromEnvironment).Wait()
+                RollbarClient.Value.SendInfoMessage(exception.Message).Wait()
             Else
-                RollbarClient.Value.SendException(exception, modelAction:=AddressOf AssignPersonFromEnvironment).Wait()
+                RollbarClient.Value.SendException(exception).Wait()
             End If
 
             'Send to Rollbar
@@ -70,28 +70,6 @@ Public Module Er
             MsgBox(String.Format("Reporting an error failed. Please contact the developer regarding the error. Error details : {0}", exception), MsgBoxStyle.OkOnly, "Failed to report error")
         End If
 
-
     End Sub
-
-    Public Sub AssignPersonFromEnvironment(model As Serialization.DataModel)
-        Try
-            model.Person = GetPersonFromEnvironment()
-        Catch ex As Exception
-            'Ignore for now
-        End Try
-    End Sub
-
-    Public Function GetPersonFromEnvironment() As Serialization.PersonModel
-        Dim id = String.Format("{0}\{1}", System.Environment.MachineName, System.Environment.UserName)
-        If id.Length > 40 Then id = id.Substring(0, 40)
-
-        Dim result As New Serialization.PersonModel With {
-            .Id = id,
-            .Username = System.Environment.UserName
-        }
-
-        Return result
-
-    End Function
 
 End Module
