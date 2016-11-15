@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Airbraker
 Imports RollbarSharp
 
 ''' <summary>
@@ -16,20 +15,6 @@ Public Module Er
 #End If
         End Get
     End Property
-
-    Private ReadOnly AirBrakeClient As New Lazy(Of AirbrakeClient)(AddressOf GetAirbrakeClient)
-
-    Private Function GetAirbrakeClient() As AirbrakeClient
-        Dim config = New AirbrakeConfig
-        With config
-            .ApiKey = "75d5016c879ec50262d884effb5fa368"
-            .Environment = Environment
-            .AppVersion = ApplicationVersion.Value
-            .ProjectName = "SPA Call Manager Pro"
-        End With
-
-        Return New AirbrakeClient(config)
-    End Function
 
     Private ReadOnly RollbarClient As New Lazy(Of RollbarClient)(AddressOf GetRollbarClient)
 
@@ -67,17 +52,6 @@ Public Module Er
         Trace.TraceWarning("Logging exception : {0}", exception)
 
         Dim anySuccess = False
-        If Not informationOnly Then
-
-            Try
-                'Send to Airbrake
-                AirBrakeClient.Value.Send(exception, method, file, lineNumber)
-
-                anySuccess = True
-            Catch ex As Exception
-                Trace.TraceWarning("Logging to AirBrake failed : {0}", ex)
-            End Try
-        End If
 
         Try
             If informationOnly Then
