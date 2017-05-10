@@ -657,61 +657,66 @@ Public Class FrmMain
     End Sub
 
     Private Sub DGWMissed_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWMissed.CellContentClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
+        Dim grid = CType(sender, DataGridView)
+        If (grid.CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = Missed(DGWMissed.CurrentCell.RowIndex)
+        If TypeOf (grid.Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
+            Dim entry = Missed(grid.CurrentCell.RowIndex)
             CallPhoneBookEntry(entry)
         End If
 
     End Sub
 
     Private Sub DgvPersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvPersonal.CellContentClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
+        Dim grid = CType(sender, DataGridView)
+        If (grid.CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
+        If TypeOf (grid.Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
+            Dim entry = MyPhoneBook(grid.CurrentCell.RowIndex)
             CallPhoneBookEntry(entry)
         End If
 
     End Sub
 
     Private Sub DGVPhoneDir_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGVPhoneDir.CellContentClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
+        Dim grid = CType(sender, DataGridView)
+        If (grid.CurrentCell Is Nothing) Then Return
 
         'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = PhoneDir(DgvPersonal.CurrentCell.RowIndex)
+        If TypeOf (grid.Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
+            Dim entry = PhoneDir(grid.CurrentCell.RowIndex)
             CallPhoneBookEntry(entry)
         End If
 
     End Sub
 
     Private Sub DgvPersonal_DoubleClick(sender As Object, e As EventArgs) Handles DgvPersonal.DoubleClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
+        Dim grid = CType(sender, DataGridView)
+        If (grid.CurrentCell Is Nothing) Then Return
 
-        If Not TypeOf (CType(sender, DataGridView).CurrentCell.OwningColumn) Is DataGridViewButtonColumn Then
-            Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
+        If Not TypeOf (grid.CurrentCell.OwningColumn) Is DataGridViewButtonColumn Then
+            Dim entry = MyPhoneBook(grid.CurrentCell.RowIndex)
 
-            Dim newFrmPhonebook As New FrmPhoneBook(entry, DgvPersonal.CurrentCell.RowIndex, DgvPersonal.Name)
+            Dim newFrmPhonebook As New FrmPhoneBook(entry, grid.CurrentCell.RowIndex, DgvPersonal.Name)
             newFrmPhonebook.ShowDialog()
         End If
 
     End Sub
 
     Private Sub DgvPersonal_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvPersonal.KeyDown
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
+        Dim grid = CType(sender, DataGridView)
+        If (grid.CurrentCell Is Nothing) Then Return
 
         ' Deletes the entry in the selected row by hitting the delete key
 
         If e.KeyData = Keys.Delete Then
-            Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
+            Dim entry = MyPhoneBook(grid.CurrentCell.RowIndex)
             Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & entry.DisplayName & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
             If result = MsgBoxResult.Yes Then
                 'removes entry from the myphonebook array
-                MyPhoneBook.RemoveAt(DgvPersonal.CurrentCell.RowIndex)
+                MyPhoneBook.RemoveAt(grid.CurrentCell.RowIndex)
                 SavePhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
                 LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
             End If
