@@ -6,3 +6,4 @@ Cisco Setup/
 *.suo
 Cisco.v3.ncrunchsolution.user
 Cisco.Utilities/Cisco.Utilities.csproj.user
+packages/
