@@ -1,8 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Cisco.Utilities
-
-'Logs al throws exceptions in Cisco
-<Assembly: ExceptionLogged()>
 
 ''' <summary>
 ''' Simple exception logging, testing multiple exception logging frameworks just for kicks
@@ -21,15 +17,18 @@ Public Module ErrorLogging
     Public Sub Log(exception As Exception,
                    <CallerMemberName> Optional method As String = Nothing,
                    <CallerFilePath> Optional file As String = Nothing,
-                   <CallerLineNumber> Optional lineNumber As Integer = 0)
+                   <CallerLineNumber> Optional lineNumber As Integer = 0,
+                   Optional informationOnly As Boolean = False)
 
         Trace.TraceWarning("Logging exception : {0}", exception)
 
         Dim anySuccess = Global.Cisco.Utilities.ErrorLogging.Log(exception, method, file, lineNumber)
 
+        'Send to Rollbar
         If Not anySuccess Then
             MsgBox(String.Format("Reporting an error failed. Please contact the developer regarding the error. Error details : {0}", exception), MsgBoxStyle.OkOnly, "Failed to report error")
         End If
 
     End Sub
+
 End Module

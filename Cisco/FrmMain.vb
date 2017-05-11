@@ -21,8 +21,12 @@ Public Class FrmMain
         ' This call is required by the designer.
         InitializeComponent()
 
-        ' Add any initialization after the InitializeComponent() call.
+        'Log application start
+        With New Exception("Application has started")
+            .Log(informationOnly:=True)
+        End With
 
+        ' Add any initialization after the InitializeComponent() call.
         DgvPersonal.AutoGenerateColumns = False
         DgvPersonal.DataSource = MyPhoneBook
 
@@ -146,12 +150,12 @@ Public Class FrmMain
     End Sub
 
     Private Sub InitializePhonebooks()
-        LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
+        LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"), True)
 
         If MyStoredPhoneSettings.sharedDataDir <> "" Then
             FSW.Path = MyStoredPhoneSettings.sharedDataDir
             FrmSetup.TxtSharedFolder.Text = MyStoredPhoneSettings.sharedDataDir
-            LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"))
+            LoadSharedPhoneBook(Path.Combine(MyStoredPhoneSettings.sharedDataDir, "Phonebook.csv"), True)
         End If
 
         RefillCombinedPhonebook()
@@ -247,6 +251,16 @@ Public Class FrmMain
                     LabelLine = Nothing
                     ButtonDial = Nothing
                     ButtonHang = Nothing
+
+                    Select Case MyPhoneStatus.Status
+                        Case EPhoneStatus.Idle
+                            'Uninterestig event
+                            Exit Sub
+                        Case Else
+                            With New Exception(String.Format("No line information in {0}", MyPhoneStatus))
+                                .Log()
+                            End With
+                    End Select
             End Select
 
             'Manipulate UI controls according to status
@@ -318,6 +332,16 @@ Public Class FrmMain
                             LabelLine.Text = "Off hook " & phoneStatus.CallerName
                             ButtonDial.Image = IlButtons.Images(0)
                             ButtonHang.Enabled = True
+                            HoldFlash(phoneStatusdata.Id) = False
+                    End Select
+
+                Case EPhoneStatus.OffHook
+                    Select Case phoneStatusdata.Id
+                        Case 1, 2, 3, 4
+                            LabelLine.Text = "Off hook " & phoneStatus.CallerName
+                            ButtonDial.Image = IlButtons.Images(3)
+                            ButtonHang.Enabled = True
+                            HoldFlash(phoneStatusdata.Id) = True
                     End Select
 
                 Case EPhoneStatus.Calling
@@ -325,6 +349,16 @@ Public Class FrmMain
                         Case 1, 2, 3, 4
                             LabelLine.Text = "Calling " & phoneStatus.CallerName
                             ButtonDial.Image = IlButtons.Images(0)
+                            ButtonHang.Enabled = True
+                            HoldFlash(phoneStatusdata.Id) = False
+                    End Select
+
+                Case EPhoneStatus.Answering
+                    Select Case phoneStatusdata.Id
+                        Case 1, 2, 3, 4
+                            LabelLine.Text = "Answering " & phoneStatus.CallerName
+                            ButtonDial.Image = IlButtons.Images(0)
+                            HoldFlash(phoneStatusdata.Id) = False
                             ButtonHang.Enabled = True
                     End Select
 
@@ -337,7 +371,21 @@ Public Class FrmMain
                             ButtonHang.Enabled = True
                     End Select
 
-                Case EPhoneStatus.Idle
+                Case EPhoneStatus.Off
+                    For Each phoneStatusdataId In {1, 2, 3, 4}
+                        ButtonDial.Image = IlButtons.Images(1)
+                        HoldFlash(phoneStatusdataId) = True
+                        ButtonHang.Enabled = False
+                    Next
+
+                Case EPhoneStatus.On
+                    For Each phoneStatusdataId In {1, 2, 3, 4}
+                        ButtonDial.Image = IlButtons.Images(2)
+                        HoldFlash(phoneStatusdataId) = False
+                        ButtonHang.Enabled = False
+                    Next
+
+                Case EPhoneStatus.Idle, EPhoneStatus.OnHook
                     Select Case phoneStatusdata.Id
                         Case 1, 2, 3, 4
                             LabelLine.Text = String.Format("Line {0}", phoneStatusdata.Id)
@@ -348,7 +396,8 @@ Public Class FrmMain
                     FrmFade(phoneStatusdata.Id) = True
 
                 Case EPhoneStatus.Unknown
-                    'TODO:This should not be logged as exception, but may be logged as warning
+                    Exit Select
+
                 Case Else
                     Dim argumentEx As New ArgumentOutOfRangeException(
                                             "phoneStatusdata.Status",
@@ -599,78 +648,62 @@ Public Class FrmMain
             Dim entry = Answered(e.RowIndex)
             CallPhoneBookEntry(entry)
         End If
-
     End Sub
 
-
-
+#Region "Dialling From Grids"
     Private Sub DGWdialled_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWdialled.CellContentClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
-
-        'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = Dialled(DGWdialled.CurrentCell.RowIndex)
-            CallPhoneBookEntry(entry)
-        End If
-
+        DialEntry(DGWdialled, e, Dialled)
     End Sub
 
     Private Sub DGWMissed_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWMissed.CellContentClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
-
-        'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = Missed(DGWMissed.CurrentCell.RowIndex)
-            CallPhoneBookEntry(entry)
-        End If
-
+        DialEntry(DGWMissed, e, Missed)
     End Sub
 
     Private Sub DgvPersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvPersonal.CellContentClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
-
-        'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
-            CallPhoneBookEntry(entry)
-        End If
-
+        DialEntry(DgvPersonal, e, MyPhoneBook)
     End Sub
 
     Private Sub DGVPhoneDir_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGVPhoneDir.CellContentClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
-
+        DialEntry(DGVPhoneDir, e, PhoneDir)
+    End Sub
+    Private Sub DialEntry(grid As DataGridView, e As DataGridViewCellEventArgs, phonebook As IList(Of PhoneBookEntry))
         'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = PhoneDir(DgvPersonal.CurrentCell.RowIndex)
+        If (grid.CurrentCell Is Nothing) Then Return
+
+        'Assumes that if the column is a button column, the button must be meant to dial :(
+        If TypeOf (grid.Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
+            Dim entry = phonebook(e.RowIndex)
             CallPhoneBookEntry(entry)
         End If
-
     End Sub
 
+#End Region
+
     Private Sub DgvPersonal_DoubleClick(sender As Object, e As EventArgs) Handles DgvPersonal.DoubleClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
+        Dim grid = CType(sender, DataGridView)
+        If (grid.CurrentCell Is Nothing) Then Return
 
-        If Not TypeOf (CType(sender, DataGridView).CurrentCell.OwningColumn) Is DataGridViewButtonColumn Then
-            Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
+        If Not TypeOf (grid.CurrentCell.OwningColumn) Is DataGridViewButtonColumn Then
+            Dim entry = MyPhoneBook(grid.CurrentCell.RowIndex)
 
-            Dim newFrmPhonebook As New FrmPhoneBook(entry, DgvPersonal.CurrentCell.RowIndex, DgvPersonal.Name)
+            Dim newFrmPhonebook As New FrmPhoneBook(entry, grid.CurrentCell.RowIndex, DgvPersonal.Name)
             newFrmPhonebook.ShowDialog()
         End If
 
     End Sub
 
     Private Sub DgvPersonal_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvPersonal.KeyDown
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
+        Dim grid = CType(sender, DataGridView)
+        If (grid.CurrentCell Is Nothing) Then Return
 
         ' Deletes the entry in the selected row by hitting the delete key
 
         If e.KeyData = Keys.Delete Then
-            Dim entry = MyPhoneBook(DgvPersonal.CurrentCell.RowIndex)
+            Dim entry = MyPhoneBook(grid.CurrentCell.RowIndex)
             Dim result As MsgBoxResult = MsgBox("Do you wish to delete" & vbCrLf & entry.DisplayName & "?", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "Phone Book")
             If result = MsgBoxResult.Yes Then
                 'removes entry from the myphonebook array
-                MyPhoneBook.RemoveAt(DgvPersonal.CurrentCell.RowIndex)
+                MyPhoneBook.RemoveAt(grid.CurrentCell.RowIndex)
                 SavePhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
                 LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
             End If
@@ -748,8 +781,9 @@ Public Class FrmMain
                 Dim callString As String = PhoneAction(EAction.Resume, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                 SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
 
-            Case EPhoneStatus.Idle
-                ' If the line is idle then dial number in number box
+            Case EPhoneStatus.Idle, EPhoneStatus.OnHook, EPhoneStatus.OffHook
+
+                ' If the line is idle, on hook or offhook then dial number in number box
                 If numberToCall <> "" Then
                     If IsNumeric(numberToCall) = True Then
                         LinePhoneStatus(MyPhoneStatus.Id).CallerNumber = numberToCall
@@ -762,6 +796,7 @@ Public Class FrmMain
                     Dim callString As String = PhoneAction(EAction.Dial, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)
                     SendUdp(callString, MyPhoneSettings.PhoneIP, MyStoredPhoneSettings.PhonePort)
                 End If
+
             Case EPhoneStatus.Ringing
                 ' If the line is ringing then answer
                 Dim callString As String = PhoneAction(EAction.Answer, LinePhoneStatus(MyPhoneStatus.Id), MyPhoneSettings)

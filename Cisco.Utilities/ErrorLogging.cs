@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Airbraker;
-using Mindscape.Raygun4Net;
 using RollbarSharp;
 
 namespace Cisco.Utilities
@@ -25,29 +23,6 @@ namespace Cisco.Utilities
 #endif
             }
         }
-
-        private static readonly Lazy<RaygunClient> RayGunClient = new Lazy<RaygunClient>(GetRayGunClient);
-        private static RaygunClient GetRayGunClient()
-        {
-            return new RaygunClient("xhok2LdPYDOhsf8VieW1BA==") { ApplicationVersion = ApplicationVersion.Value };
-        }
-
-
-        private static readonly Lazy<AirbrakeClient> AirBrakeClient = new Lazy<AirbrakeClient>(GetAirbrakeClient);
-
-        private static AirbrakeClient GetAirbrakeClient()
-        {
-            var config = new AirbrakeConfig()
-            {
-                ApiKey = "75d5016c879ec50262d884effb5fa368",
-                Environment = Environment,
-                AppVersion = ApplicationVersion.Value,
-                ProjectName = "SPA Call Manager Pro"
-            };
-
-            return new AirbrakeClient(config);
-        }
-
 
         private static readonly Lazy<RollbarClient> RollbarClient = new Lazy<RollbarClient>(GetRollbarClient);
         private static RollbarClient GetRollbarClient()
@@ -85,29 +60,6 @@ namespace Cisco.Utilities
             Trace.TraceWarning("Logging exception : {0}", exception);
 
             var anySuccess = false;
-            try
-            {
-                //Send to Airbrake
-                AirBrakeClient.Value.Send(exception, method, file, lineNumber);
-
-                anySuccess = true;
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceWarning("Logging to AirBrake failed : {0}", ex);
-            }
-
-            try
-            {
-                //Send to Raygun
-                RayGunClient.Value.SendInBackground(exception);
-
-                anySuccess = true;
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceWarning("Logging to Raygun failed : {0}", ex);
-            }
 
             try
             {
@@ -129,6 +81,4 @@ namespace Cisco.Utilities
             //}
         }
     }
-
-
 }

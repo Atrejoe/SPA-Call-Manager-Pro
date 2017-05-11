@@ -18,56 +18,62 @@ Module ModMain
     Public DataDir As String 'holds the file path to where the phonedata is held
     Public LoginPassword As String = ""
 
-    Public Sub LoadPhoneBook(filename As String)
-        MyPhoneBook.Load(filename)
+    Public Sub LoadPhoneBook(filename As String, Optional createIfMissing As Boolean = False)
+        MyPhoneBook.Load(filename, createIfMissing)
     End Sub
 
-    Public Sub LoadSharedPhoneBook(filename As String)
-        MySharedPhoneBook.Load(filename)
+    Public Sub LoadSharedPhoneBook(filename As String, Optional createIfMissing As Boolean = False)
+        MySharedPhoneBook.Load(filename, createIfMissing)
     End Sub
 
     <Extension>
-    Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry), filename As String)
+    Private Sub Load(phoneBook As ICollection(Of PhoneBookEntry), filename As String, createIfMissing As Boolean)
         Try
-            If File.Exists(filename) Then
-                'loads the phone book from 'filenname'
-                Dim tempPhoneBook As New List(Of PhoneBookEntry)
-                ' Reader to read from the file
-
-                Try
-                    Using sr As New StreamReader(filename)
-                        Dim tmp() As String
-                        ' Hold the amount of lines already read in a 'counter-variable'
-
-                        Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
-
-                            tmp = sr.ReadLine.Split(",".ToCharArray())
-
-                            Dim entry = New PhoneBookEntry
-                            With entry
-                                .FirstName = tmp(0).Trim()
-                                .Surname = tmp(1).Trim()
-                                .Number = tmp(2).Trim()
-                            End With
-
-                            tempPhoneBook.Add(entry)
-
-                        Loop
-                    End Using
-
-                Catch ex As Exception
-                    ex.Log()
-                End Try
-
-                phoneBook.Clear()
-                For Each entry In tempPhoneBook.OrderBy(Function(sPhoneBook) sPhoneBook.Surname)
-                    phoneBook.Add(entry)
-                Next
-            Else
-                With New ConfigurationErrorsException(String.Format("Phonebook could not be found at '{0}'", filename))
-                    .Log()
-                End With
+            If Not File.Exists(filename) Then
+                If createIfMissing Then
+                    Save(New List(Of PhoneBookEntry)(), filename)
+                    Return
+                Else
+                    With New ConfigurationErrorsException(String.Format("Phonebook could not be found at '{0}'", filename))
+                        .Log()
+                    End With
+                    Return
+                End If
             End If
+
+            'loads the phone book from 'filenname'
+            Dim tempPhoneBook As New List(Of PhoneBookEntry)
+            ' Reader to read from the file
+
+            Try
+                Using sr As New StreamReader(filename)
+                    Dim tmp() As String
+                    ' Hold the amount of lines already read in a 'counter-variable'
+
+                    Do While sr.Peek <> -1 ' Is -1 when no data exists on the next line of the CSV file
+
+                        tmp = sr.ReadLine.Split(",".ToCharArray())
+
+                        Dim entry = New PhoneBookEntry
+                        With entry
+                            .FirstName = tmp(0).Trim()
+                            .Surname = tmp(1).Trim()
+                            .Number = tmp(2).Trim()
+                        End With
+
+                        tempPhoneBook.Add(entry)
+
+                    Loop
+                End Using
+
+            Catch ex As Exception
+                ex.Log()
+            End Try
+
+            phoneBook.Clear()
+            For Each entry In tempPhoneBook.OrderBy(Function(sPhoneBook) sPhoneBook.Surname)
+                phoneBook.Add(entry)
+            Next
         Catch ex As Exception
             ex.Log()
         End Try
@@ -136,19 +142,50 @@ Module ModMain
 
     Public Function SetStoredSettings(storedPhoneSettings As Settings) As Boolean 'saves the settings frm the registry
 
-        'saves the stored settings to the reghistry
+        'Validate and get hold of the registery
+        If IsNothing(storedPhoneSettings) Then
+            With New ArgumentNullException("storedPhoneSettings")
+                .Log()
+            End With
+            Return False
+        End If
 
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalIP", storedPhoneSettings.LocalIP)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalPort", storedPhoneSettings.LocalPort)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "CTI_Enable", storedPhoneSettings.CTI_Enable)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "Debug_Server_Address", storedPhoneSettings.Debug_Server_Address)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "DebugLevel", storedPhoneSettings.DebugLevel)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneModel", storedPhoneSettings.PhoneModel)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneSoftwareVersion", storedPhoneSettings.PhoneSoftwareVersion)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "StationName", storedPhoneSettings.StationName)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneIP", storedPhoneSettings.PhoneIP)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhonePort", storedPhoneSettings.PhonePort)
-        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\SharedPhoneDir", "Path", FrmSetup.TxtSharedFolder.Text)
+        Dim computer = My.Computer
+
+        If IsNothing(computer) Then
+            With New Exception("Unable to access 'My.Computer'")
+                .Log()
+            End With
+            Return False
+        End If
+
+        Dim registry = computer.Registry
+
+        If IsNothing(registry) Then
+            With New Exception("Unable to access 'My.Computer.Registry'")
+                .Log()
+            End With
+            Return False
+        End If
+
+        'saves the stored settings to the registry
+
+        Try
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalIP", storedPhoneSettings.LocalIP)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "LocalPort", storedPhoneSettings.LocalPort)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "CTI_Enable", storedPhoneSettings.CTI_Enable)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "Debug_Server_Address", storedPhoneSettings.Debug_Server_Address)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "DebugLevel", storedPhoneSettings.DebugLevel)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneModel", storedPhoneSettings.PhoneModel)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneSoftwareVersion", storedPhoneSettings.PhoneSoftwareVersion)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "StationName", storedPhoneSettings.StationName)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhoneIP", storedPhoneSettings.PhoneIP)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\Phone", "PhonePort", storedPhoneSettings.PhonePort)
+            registry.SetValue("HKEY_CURRENT_USER\Software\PssLinksys\SharedPhoneDir", "Path", FrmSetup.TxtSharedFolder.Text)
+        Catch ex As Exception
+            ex.Log()
+            Return False
+        End Try
 
         Return True
     End Function

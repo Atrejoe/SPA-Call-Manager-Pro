@@ -53,7 +53,7 @@ Public Class FrmSetup
     End Sub
 
     Public Sub LoadCSVtoPhoneBook(filename As String)
-        'loads the phone book fron 'filenname'
+        'loads the phone book from 'filenname'
         Dim TempPhoneBook As New List(Of PhoneBookEntry)
 
         ' Reader to read from the file
@@ -83,8 +83,8 @@ Public Class FrmSetup
             ex.Log()
         End Try
 
-        SavePhoneBook(Path.Combine(DataDir & "CiscoPhone\Phonebook.csv"))
-        LoadPhoneBook(Path.Combine(DataDir & "CiscoPhone\Phonebook.csv"))
+        SavePhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
+        LoadPhoneBook(Path.Combine(DataDir, "CiscoPhone\Phonebook.csv"))
         Me.Close()
 
     End Sub
