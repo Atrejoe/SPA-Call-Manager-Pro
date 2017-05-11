@@ -640,57 +640,36 @@ Public Class FrmMain
             Dim entry = Answered(e.RowIndex)
             CallPhoneBookEntry(entry)
         End If
-
     End Sub
 
-
-
+#Region "Dialling From Grids"
     Private Sub DGWdialled_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWdialled.CellContentClick
-        If (CType(sender, DataGridView).CurrentCell Is Nothing) Then Return
-
-        'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (CType(sender, DataGridView).Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = Dialled(DGWdialled.CurrentCell.RowIndex)
-            CallPhoneBookEntry(entry)
-        End If
-
+        DialEntry(DGWdialled, e, Dialled)
     End Sub
 
     Private Sub DGWMissed_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGWMissed.CellContentClick
-        Dim grid = CType(sender, DataGridView)
-        If (grid.CurrentCell Is Nothing) Then Return
-
-        'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (grid.Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = Missed(grid.CurrentCell.RowIndex)
-            CallPhoneBookEntry(entry)
-        End If
-
+        DialEntry(DGWMissed, e, Missed)
     End Sub
 
     Private Sub DgvPersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvPersonal.CellContentClick
-        Dim grid = CType(sender, DataGridView)
-        If (grid.CurrentCell Is Nothing) Then Return
-
-        'calls the number in the grid row, when the call button is clicked 
-        If TypeOf (grid.Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = MyPhoneBook(grid.CurrentCell.RowIndex)
-            CallPhoneBookEntry(entry)
-        End If
-
+        DialEntry(DgvPersonal, e, MyPhoneBook)
     End Sub
 
     Private Sub DGVPhoneDir_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGVPhoneDir.CellContentClick
-        Dim grid = CType(sender, DataGridView)
+        DialEntry(DGVPhoneDir, e, PhoneDir)
+    End Sub
+    Private Sub DialEntry(grid As DataGridView, e As DataGridViewCellEventArgs, phonebook As IList(Of PhoneBookEntry))
+        'calls the number in the grid row, when the call button is clicked 
         If (grid.CurrentCell Is Nothing) Then Return
 
-        'calls the number in the grid row, when the call button is clicked 
+        'Assumes that if the column is a button column, the button must be meant to dial :(
         If TypeOf (grid.Columns(e.ColumnIndex)) Is DataGridViewButtonColumn Then
-            Dim entry = PhoneDir(grid.CurrentCell.RowIndex)
+            Dim entry = phonebook(e.RowIndex)
             CallPhoneBookEntry(entry)
         End If
-
     End Sub
+
+#End Region
 
     Private Sub DgvPersonal_DoubleClick(sender As Object, e As EventArgs) Handles DgvPersonal.DoubleClick
         Dim grid = CType(sender, DataGridView)
