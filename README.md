@@ -1,6 +1,8 @@
 # SPA Call Manager Pro
 Call management &amp; personal directory for Linksys &amp; Cisco phones.
 
+> Maintenance warning: since I no longer have this phone to my disposal, development stopped.
+
 This is the free (as in beer) open-sourced version from [spacallmanager.com](http://www.spacallmanager.com/)  
 
 # Installation instructions
